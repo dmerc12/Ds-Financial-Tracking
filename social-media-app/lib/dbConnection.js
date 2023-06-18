@@ -2,7 +2,7 @@ import mysql from "mysql2/promise";
 
 const mysql = require('mysql2/promise');
 
-export async function db([ query, values = []]) {
+export async function dbConnection([ query, values = []]) {
     const dbConnection = await mysql.createConnection({
         user: process.env.USER,
         password: process.env.PASSWORD
