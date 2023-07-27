@@ -1,6 +1,14 @@
+USERNAME=root
+PASSWORD=Mercer1282!
+HOST=localhost
+DB=mysql
+PORT=3306
+
 CREATE SCHEMA social_media_app
 
 CREATE TABLE social_media_app.users(user_id INT AUTO_INCREMENT PRIMARY KEY, first_name VARCHAR(50), last_name VARCHAR(50), username VARCHAR(30), passwrd VARCHAR(60), email VARCHAR(255), birthdate DATE, created DATETIME);
+
+CREATE TABLE social_media_app.sessions(session_id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, expiration DATETIME, CONSTRAINT user_session_fk FOREIGN KEY (user_id) REFERENCES social_media_app.users(user_id));
 
 CREATE TABLE social_media_app.posts(post_id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, content TEXT, image_url TEXT, created DATETIME, CONSTRAINT user_post_fk FOREIGN KEY (user_id) REFERENCES social_media_app.users(user_id));
 
