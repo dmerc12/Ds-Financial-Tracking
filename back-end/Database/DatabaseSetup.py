@@ -10,28 +10,28 @@ cursor = connection.cursor()
 
 cursor.execute('''
     CREATE TABLE Category (
-        category_id INTEGER AUTOINCREMENT PRIMARY KEY,
+        category_id INTEGER PRIMARY KEY AUTOINCREMENT,
         category_name TEXT
     )
 ''')
 
 cursor.execute('''
     CREATE TABLE Expense (
-        expense_id INTEGER AUTOINCREMENT PRIMARY KEY,
+        expense_id INTEGER PRIMARY KEY AUTOINCREMENT,
         date DATE,
         description TEXT,
-        amount FLOAT
+        amount FLOAT,
         category_id INTEGER,
         FOREIGN KEY (category_id) REFERENCES Category(category_id)
     )
 ''')
 
 cursor.execute('''
-    CREATE TABLE Expense (
-        deposit_id INTEGER AUTOINCREMENT PRIMARY KEY,
+    CREATE TABLE Deposit (
+        deposit_id INTEGER PRIMARY KEY AUTOINCREMENT,
         date DATE,
         description TEXT,
-        amount FLOAT
+        amount FLOAT,
         category_id INTEGER,
         FOREIGN KEY (category_id) REFERENCES Category(category_id)
     )
