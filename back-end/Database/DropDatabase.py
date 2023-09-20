@@ -1,24 +1,21 @@
-import sqlite3
-import os
+from Database.config import Connection
 
-database_path = os.path.join(os.getcwd(), "Database.db")
 
-connection = sqlite3.connect(database_path)
-cursor = connection.cursor()
+def drop_table(table_name):
+    connection = Connection.db_connection()
+    cursor = connection.cursor()
 
-cursor.execute("""
-    DROP TABLE IF EXISTS Expense
-""")
+    try:
+        cursor.execute(f'DROP TABLE IF EXISTS {table_name}')
+        connection.commit()
+        print(f'{table_name} table dropped successfully!')
+    except Exception as error:
+        print(f'Error dropping {table_name} table: {str(error)}')
+    finally:
+        connection.close()
 
-cursor.execute("""
-    DROP TABLE IF EXISTS Deposit
-""")
+if __name__ == "__main__":
+    tables_to_drop = ["Expense", "Deposit", "Category"]
 
-cursor.execute("""
-    DROP TABLE IF EXISTS Category
-""")
-
-connection.commit()
-connection.close()
-
-print("Database teardown completed successfully!")
+    for table in tables_to_drop:
+        drop_table(table)

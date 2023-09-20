@@ -1,6 +1,7 @@
 import sqlite3
 import os
 
+
 class Connection:
     @staticmethod
     def db_connection():
@@ -9,7 +10,7 @@ class Connection:
 
             new_connection = sqlite3.connect(database_path)
             return new_connection
-        except sqlite3.Error as error:
+        except sqlite3.Error:
             raise sqlite3.Error("Could not connect to the database, please try again!")
 
 connection = Connection.db_connection()
