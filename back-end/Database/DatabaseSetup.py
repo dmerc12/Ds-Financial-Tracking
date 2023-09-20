@@ -1,43 +1,51 @@
-import sqlite3
-import os
+from Database.config import Connection
 
-current_directory = os.getcwd()
 
-database_path = os.path.join(current_directory, "Database.db")
+def create_table(sql, table_name):
+    connection = Connection.db_connection()
+    cursor = connection.cursor()
 
-connection = sqlite3.connect(database_path)
-cursor = connection.cursor()
+    try:
+        cursor.execute(sql)
+        connection.commit()
+        print(f'{table_name} table successfully created!')
+    except Exception as error:
+        print(f'Error creating {table_name} table: {str(error)}')
+    finally:
+        connection.close()
 
-cursor.execute('''
-    CREATE TABLE Category (
-        category_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        category_name TEXT
-    )
-''')
+if __name__ == "__main__":
+    category_table_sql = '''
+        CREATE TABLE Category (
+            category_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            category_name TEXT
+        )
+    '''
 
-cursor.execute('''
-    CREATE TABLE Expense (
-        expense_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        date DATE,
-        description TEXT,
-        amount FLOAT,
-        category_id INTEGER,
-        FOREIGN KEY (category_id) REFERENCES Category(category_id)
-    )
-''')
+    expense_table_sql = '''
+        CREATE TABLE Expense (
+            expense_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            date DATE,
+            description TEXT,
+            amount FLOAT,
+            category_id INTEGER,
+            FOREIGN KEY (category_id) REFERENCES Category(category_id)
+        )
+    '''
 
-cursor.execute('''
-    CREATE TABLE Deposit (
-        deposit_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        date DATE,
-        description TEXT,
-        amount FLOAT,
-        category_id INTEGER,
-        FOREIGN KEY (category_id) REFERENCES Category(category_id)
-    )
-''')
+    deposit_table_sql = '''
+        CREATE TABLE Deposit (
+            deposit_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            date DATE,
+            description TEXT,
+            amount FLOAT,
+            category_id INTEGER,
+            FOREIGN KEY (category_id) REFERENCES Category(category_id)
+        )
+    '''
 
-connection.commit()
-connection.close()
+    create_table(category_table_sql, "Category")
+    create_table(expense_table_sql, "Expense")
+    create_table(deposit_table_sql, "Deposit")
 
-print("Database setup successfully!")
+    print("Database setup successfully!")
