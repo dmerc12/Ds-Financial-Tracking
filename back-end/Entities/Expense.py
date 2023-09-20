@@ -1,5 +1,4 @@
 class Expense:
-
     def __init__(self, expense_id: int, category_id: int, date: str, description: str, amount: float):
         self.expense_id = expense_id
         self.category_id = category_id
