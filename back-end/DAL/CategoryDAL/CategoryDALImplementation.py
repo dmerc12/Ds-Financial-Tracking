@@ -34,13 +34,24 @@ class CategoryDALImplementation(CategoryDALInterface):
             categories.append(category)
             logging.info("Finishing DAL method get all categories with result: "
                          + str(category.convert_to_dictionary()))
+            print(str(category.convert_to_dictionary()))
         cursor.close()
         connection.commit()
         connection.close()
         return categories
 
     def update_category(self, category: Category) -> Category:
-        pass
+        logging.info("Beginning DAL method update category with data: " + str(category.convert_to_dictionary()))
+        sql = "UPDATE Category SET category_name=? WHERE category_id=?"
+        connection = Connection.db_connection()
+        cursor = connection.cursor()
+        cursor.execute(sql, (category.category_name, category.category_id))
+        print(str(category.convert_to_dictionary()))
+        cursor.close()
+        connection.commit()
+        connection.close()
+        logging.info("Finishing DAL method update category with result: " + str(category.convert_to_dictionary()))
+        return category
 
     def delete_category(self, category_id: int) -> bool:
         pass
