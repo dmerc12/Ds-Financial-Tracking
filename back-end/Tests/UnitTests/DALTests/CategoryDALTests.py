@@ -19,4 +19,5 @@ def test_update_category_success():
     assert result.category_name != test_category.category_name
 
 def test_delete_category_success():
-    pass
+    result = category_dao.delete_category(current_category_id)
+    assert result

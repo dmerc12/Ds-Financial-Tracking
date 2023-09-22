@@ -34,7 +34,6 @@ class CategoryDALImplementation(CategoryDALInterface):
             categories.append(category)
             logging.info("Finishing DAL method get all categories with result: "
                          + str(category.convert_to_dictionary()))
-            print(str(category.convert_to_dictionary()))
         cursor.close()
         connection.commit()
         connection.close()
@@ -46,7 +45,6 @@ class CategoryDALImplementation(CategoryDALInterface):
         connection = Connection.db_connection()
         cursor = connection.cursor()
         cursor.execute(sql, (category.category_name, category.category_id))
-        print(str(category.convert_to_dictionary()))
         cursor.close()
         connection.commit()
         connection.close()
@@ -54,4 +52,13 @@ class CategoryDALImplementation(CategoryDALInterface):
         return category
 
     def delete_category(self, category_id: int) -> bool:
-        pass
+        logging.info("Beginning DAL method delete category with category ID: " + str(category_id))
+        sql = "DELETE FROM Category WHERE category_id=?"
+        connection = Connection.db_connection()
+        cursor = connection.cursor()
+        cursor.execute(sql, (category_id,))
+        cursor.close()
+        connection.commit()
+        connection.close()
+        logging.info("Finishing DAL method delete category")
+        return True
