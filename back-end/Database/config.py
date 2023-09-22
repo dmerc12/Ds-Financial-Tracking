@@ -14,4 +14,4 @@ class Connection:
             raise sqlite3.Error("Could not connect to the database, please try again!")
 
 connection = Connection.db_connection()
-print(connection)
+print("Connected to the database successfully!")

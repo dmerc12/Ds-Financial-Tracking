@@ -10,7 +10,8 @@ class CategoryDALImplementation(CategoryDALInterface):
 
     def create_category(self, category: Category) -> Category:
         logging.info("Beginning DAL method create category with data: " + str(category.convert_to_dictionary()))
-        sql = f"INSERT INTO Category (category_name) VALUES ({category.category_name}) RETURNING category_id"
+        sql = "INSERT INTO Category (category_name) VALUES (?) RETURNING category_id".format(category.category_name)
+        print(sql)
         connection = Connection.db_connection()
         cursor = connection.cursor()
         cursor.execute(sql)
