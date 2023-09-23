@@ -10,21 +10,55 @@ class CategoryDALImplementation(CategoryDALInterface):
 
     def create_category(self, category: Category) -> Category:
         logging.info("Beginning DAL method create category with data: " + str(category.convert_to_dictionary()))
-        sql = f"INSERT INTO Category (category_name) VALUES ({category.category_name}) RETURNING category_id"
+        sql = "INSERT INTO Category (category_name) VALUES (?) RETURNING category_id"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql, (category.category_name,))
+        category.category_id = cursor.fetchone()[0]
+        cursor.close()
         connection.commit()
         connection.close()
-        category.category_id = cursor.fetchone()[0]
         logging.info("Finishing DAL method create category with result: " + str(category.convert_to_dictionary()))
         return category
 
     def get_all_categories(self) -> List[Category]:
-        pass
+        logging.info("Beginning DAL method get all categories")
+        sql = "SELECT * FROM Category"
+        connection = Connection.db_connection()
+        cursor = connection.cursor()
+        cursor.execute(sql)
+        category_records = cursor.fetchall()
+        categories = []
+        for category in category_records:
+            category = Category(*category)
+            categories.append(category)
+            logging.info("Finishing DAL method get all categories with result: "
+                         + str(category.convert_to_dictionary()))
+        cursor.close()
+        connection.commit()
+        connection.close()
+        return categories
 
     def update_category(self, category: Category) -> Category:
-        pass
+        logging.info("Beginning DAL method update category with data: " + str(category.convert_to_dictionary()))
+        sql = "UPDATE Category SET category_name=? WHERE category_id=?"
+        connection = Connection.db_connection()
+        cursor = connection.cursor()
+        cursor.execute(sql, (category.category_name, category.category_id))
+        cursor.close()
+        connection.commit()
+        connection.close()
+        logging.info("Finishing DAL method update category with result: " + str(category.convert_to_dictionary()))
+        return category
 
     def delete_category(self, category_id: int) -> bool:
-        pass
+        logging.info("Beginning DAL method delete category with category ID: " + str(category_id))
+        sql = "DELETE FROM Category WHERE category_id=?"
+        connection = Connection.db_connection()
+        cursor = connection.cursor()
+        cursor.execute(sql, (category_id,))
+        cursor.close()
+        connection.commit()
+        connection.close()
+        logging.info("Finishing DAL method delete category")
+        return True
