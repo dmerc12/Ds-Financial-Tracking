@@ -1,16 +1,16 @@
 from Database.config import Connection
 
 
-def create_table(sql, table_name):
+def create_data(sql, data_name):
     connection = Connection.db_connection()
     cursor = connection.cursor()
 
     try:
         cursor.execute(sql)
         connection.commit()
-        print(f'{table_name} table successfully created!')
+        print(f'{data_name} successfully created!')
     except Exception as error:
-        print(f'Error creating {table_name} table: {str(error)}')
+        print(f'Error creating {data_name}: {str(error)}')
     finally:
         connection.close()
 
@@ -20,6 +20,10 @@ if __name__ == "__main__":
             category_id INTEGER PRIMARY KEY AUTOINCREMENT,
             category_name TEXT
         )
+    '''
+
+    test_category = '''
+        INSERT INTO CATEGORY (category_id, category_name) VALUES (-1, 'test category')
     '''
 
     expense_table_sql = '''
@@ -44,8 +48,9 @@ if __name__ == "__main__":
         )
     '''
 
-    create_table(category_table_sql, "Category")
-    create_table(expense_table_sql, "Expense")
-    create_table(deposit_table_sql, "Deposit")
+    create_data(category_table_sql, "Category table")
+    create_data(test_category, "Test category")
+    create_data(expense_table_sql, "Expense table")
+    create_data(deposit_table_sql, "Deposit table")
 
     print("Database setup successfully!")

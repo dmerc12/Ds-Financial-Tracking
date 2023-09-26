@@ -32,8 +32,8 @@ class CategoryDALImplementation(CategoryDALInterface):
         for category in category_records:
             category = Category(*category)
             categories.append(category)
-            logging.info("Finishing DAL method get all categories with result: "
-                         + str(category.convert_to_dictionary()))
+            logging.info("Finishing DAL method get all categories with result: " +
+                         str(category.convert_to_dictionary()))
         cursor.close()
         connection.commit()
         connection.close()

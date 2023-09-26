@@ -12,7 +12,7 @@ def test_create_category_success():
 
 def test_get_all_categories_success():
     result = category_dao.get_all_categories()
-    assert len(result) > 0
+    assert len(result) > 1
 
 def test_update_category_success():
     result = category_dao.update_category(updated_category)
