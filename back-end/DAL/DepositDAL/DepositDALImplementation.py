@@ -9,7 +9,7 @@ class DepositDALImplementation(DepositDALInterface):
 
     def create_deposit(self, deposit: Deposit) -> Deposit:
         logging.info("Beginning DAL method create deposit with data: " + str(deposit.convert_to_dictionary()))
-        sql = "INSERT INTO Deposit (category_id, date, description, amount)VALUES(?, ?, ? , ?) RETURNING deposit_id"
+        sql = "INSERT INTO Deposit (category_id, date, description, amount) VALUES (?, ?, ? , ?) RETURNING deposit_id"
         connection = Connection.db_connection()
         cursor = connection.cursor()
         cursor.execute(sql, (deposit.category_id, deposit.date, deposit.description, deposit.amount))
