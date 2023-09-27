@@ -10,6 +10,10 @@ def test_create_category_success():
     result = category_dao.create_category(test_category)
     assert result.category_id != 0
 
+def test_get_category_success():
+    result = category_dao.get_category(current_category_id)
+    assert result is not None
+
 def test_get_all_categories_success():
     result = category_dao.get_all_categories()
     assert len(result) > 1

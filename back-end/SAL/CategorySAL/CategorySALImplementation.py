@@ -13,6 +13,9 @@ class CategorySALImplementation(CategorySALInterface):
     def create_category(self, category: Category) -> Category:
         pass
 
+    def get_category(self, category_id: int) -> Category:
+        pass
+
     def get_all_categories(self) -> List[Category]:
         pass
 

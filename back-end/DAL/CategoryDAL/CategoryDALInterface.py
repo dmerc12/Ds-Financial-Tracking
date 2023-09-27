@@ -11,6 +11,10 @@ class CategoryDALInterface(ABC):
         pass
 
     @abstractmethod
+    def get_category(self, category_id: int) -> Category:
+        pass
+
+    @abstractmethod
     def get_all_categories(self) -> List[Category]:
         pass
 
