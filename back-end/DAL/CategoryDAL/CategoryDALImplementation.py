@@ -28,6 +28,8 @@ class CategoryDALImplementation(CategoryDALInterface):
         cursor = connection.cursor()
         cursor.execute(sql, (category_id,))
         category_info = cursor.fetchone()
+        cursor.close()
+        connection.close()
         if category_info is None:
             category = Category(0, '')
             logging.info("Finishing DAL method get category, category not found")

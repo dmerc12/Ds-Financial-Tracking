@@ -13,6 +13,10 @@ def test_create_deposit_success():
     result = deposit_dao.create_deposit(test_deposit)
     assert result.deposit_id != 0
 
+def test_get_deposit_success():
+    result = deposit_dao.get_deposit(current_deposit_id)
+    assert result is not None
+
 def test_get_all_deposits_success():
     result = deposit_dao.get_all_deposits()
     assert len(result) > 0

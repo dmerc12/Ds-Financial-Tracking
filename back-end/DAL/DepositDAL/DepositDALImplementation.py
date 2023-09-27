@@ -20,6 +20,24 @@ class DepositDALImplementation(DepositDALInterface):
         logging.info("Finishing DAL method create deposit with result: " + str(deposit.convert_to_dictionary()))
         return deposit
 
+    def get_deposit(self, deposit_id: int) -> Deposit:
+        logging.info("Beginning DAL method get deposit with deposit ID: " + str(deposit_id))
+        sql = "SELECT * FROM Deposit WHERE deposit_id=?"
+        connection = Connection.db_connection()
+        cursor = connection.cursor()
+        cursor.execute(sql, (deposit_id,))
+        deposit_info = cursor.fetchone()
+        cursor.close()
+        connection.close()
+        if deposit_info is None:
+            deposit = Deposit(0, 0, '', '', 0.00)
+            logging.info("Finishing DAL method get deposit, deposit not found")
+            return deposit
+        else:
+            deposit = Deposit(*deposit_info)
+            logging.info("Finishing DAL method get deposit with deposit: " + str(deposit.convert_to_dictionary()))
+            return deposit
+
     def get_all_deposits(self) -> List[Deposit]:
         logging.info("Beginning DAL method get all deposits")
         sql = "SELECT * FROM Deposit"
@@ -33,7 +51,6 @@ class DepositDALImplementation(DepositDALInterface):
             deposits.append(deposit)
             logging.info("Finishing DAL method get all categories with result: " + str(deposit.convert_to_dictionary()))
         cursor.close()
-        connection.commit()
         connection.close()
         return deposits
 

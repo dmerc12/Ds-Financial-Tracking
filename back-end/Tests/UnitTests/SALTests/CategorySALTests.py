@@ -9,52 +9,90 @@ category_sao = CategorySALImplementation(category_dao)
 successful_category = Category(0, 'test')
 
 def test_sal_create_category_name_empty():
-    pass
+    try:
+        test_category = Category(0, '')
+        category_sao.create_category(test_category)
+        assert False
+    except CustomError as error:
+        assert str(error) == "The category name field cannot be left empty, please try again!"
 
 def test_sal_create_category_already_exists():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == ""
 
 def test_sal_create_category_name_not_string():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == ""
 
 def test_sal_create_category_success():
     pass
 
 def test_sal_get_category_not_found():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == ""
 
 def test_sal_get_category_id_not_integer():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == ""
 
 def test_sal_get_category_success():
     pass
 
 def test_sal_get_all_categories_none_found():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == ""
 
 def test_sal_get_all_categories_success():
     pass
 
 def test_sal_update_category_nothing_changed():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == ""
 
 def test_sal_update_category_already_exists():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == ""
 
 def test_sal_update_category_name_empty():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == ""
 
 def test_sal_update_category_name_not_string():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == ""
 
 def test_sal_update_category_success():
     pass
 
 def test_sal_delete_category_not_found():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == ""
 
 def test_sal_delete_category_id_not_integer():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == ""
 
 def test_sal_delete_category_success():
     pass

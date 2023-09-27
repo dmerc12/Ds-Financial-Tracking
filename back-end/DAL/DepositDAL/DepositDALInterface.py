@@ -10,6 +10,10 @@ class DepositDALInterface(ABC):
         pass
 
     @abstractmethod
+    def get_deposit(self, deposit_id: int) -> Deposit:
+        pass
+
+    @abstractmethod
     def get_all_deposits(self) -> List[Deposit]:
         pass
 
