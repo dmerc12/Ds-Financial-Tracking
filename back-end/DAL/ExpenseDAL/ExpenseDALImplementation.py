@@ -21,6 +21,24 @@ class ExpenseDALImplementation(ExpenseDALInterface):
         logging.info("Finishing DAL method create expense with result: " + str(expense.convert_to_dictionary()))
         return expense
 
+    def get_expense(self, expense_id: int) -> Expense:
+        logging.info("Beginning DAL method get expense with expense ID: " + str(expense_id))
+        sql = "SELECT * FROM Expense WHERE expense_id=?"
+        connection = Connection.db_connection()
+        cursor = connection.cursor()
+        cursor.execute(sql, (expense_id,))
+        expense_info = cursor.fetchone()
+        cursor.close()
+        connection.close()
+        if expense_info is None:
+            expense = Expense(0, 0, '', '', 0.00)
+            logging.info("Finishing DAL method get expense, expense not found")
+            return expense
+        else:
+            expense = Expense(*expense_info)
+            logging.info("Finishing DAL method get expense with expense: " + str(expense.convert_to_dictionary()))
+            return expense
+
     def get_all_expenses(self) -> List[Expense]:
         logging.info("Beginning DAL method get all expenses")
         sql = "SELECT * FROM Expense"
