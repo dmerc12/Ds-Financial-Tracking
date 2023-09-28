@@ -21,6 +21,24 @@ class CategoryDALImplementation(CategoryDALInterface):
         logging.info("Finishing DAL method create category with result: " + str(category.convert_to_dictionary()))
         return category
 
+    def get_category(self, category_id: int) -> Category:
+        logging.info("Beginning DAL method get category with category ID: " + str(category_id))
+        sql = "SELECT * FROM Category WHERE category_id=?"
+        connection = Connection.db_connection()
+        cursor = connection.cursor()
+        cursor.execute(sql, (category_id,))
+        category_info = cursor.fetchone()
+        cursor.close()
+        connection.close()
+        if category_info is None:
+            category = Category(0, '')
+            logging.info("Finishing DAL method get category, category not found")
+            return category
+        else:
+            category = Category(*category_info)
+            logging.info("Finishing DAL method get category with category: " + str(category.convert_to_dictionary()))
+            return category
+
     def get_all_categories(self) -> List[Category]:
         logging.info("Beginning DAL method get all categories")
         sql = "SELECT * FROM Category"

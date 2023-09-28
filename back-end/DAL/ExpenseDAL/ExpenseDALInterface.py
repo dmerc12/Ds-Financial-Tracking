@@ -10,6 +10,10 @@ class ExpenseDALInterface(ABC):
         pass
 
     @abstractmethod
+    def get_expense(self, expense_id: int) -> Expense:
+        pass
+
+    @abstractmethod
     def get_all_expenses(self) -> List[Expense]:
         pass
 

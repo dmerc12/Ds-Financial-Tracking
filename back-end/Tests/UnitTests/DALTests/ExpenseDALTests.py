@@ -13,6 +13,10 @@ def test_create_expense_success():
     result = expense_dao.create_expense(test_expense)
     assert result.expense_id != 0
 
+def test_get_expense_success():
+    result = expense_dao.get_expense(current_expense_id)
+    assert result is not None
+
 def test_get_all_expenses_success():
     result = expense_dao.get_all_expenses()
     assert len(result) > 0
