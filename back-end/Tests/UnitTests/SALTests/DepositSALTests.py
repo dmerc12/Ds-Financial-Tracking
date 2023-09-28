@@ -14,82 +14,148 @@ updated_deposit = Deposit(current_deposit_id, -1, str(datetime.now() - timedelta
                           'updated description', 10.00)
 
 def test_sal_create_deposit_category_id_not_integer():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "The category ID field must be an integer, please try again!"
 
 def test_sal_create_deposit_category_not_found():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "Category not found, please try again!"
 
 def test_sal_create_deposit_date_not_string():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "The date field must be a string, please try again!"
 
 def test_sal_create_deposit_date_empty():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "The date field cannot be left empty, please try again!"
 
 def test_sal_create_deposit_description_not_string():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "The description field must be a string, please try again!"
 
 def test_sal_create_deposit_description_empty():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "The description field cannot be left empty, please try again!"
 
 def test_sal_create_deposit_amount_not_float():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "The amount field must be a float, please try again!"
 
 def test_sal_create_deposit_amount_negative_or_0():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "The amount field must be positive and cannot be 0.00, please try again!"
 
 def test_sal_create_deposit_success():
     pass
 
 def test_sal_get_deposit_id_not_integer():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "The deposit ID field must be an integer, please try again!"
 
 def test_sal_get_deposit_not_found():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "Deposit not found, please try again!"
 
 def test_sal_get_deposit_success():
     pass
 
 def test_sal_get_all_deposits_none_found():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "No deposits found, please try again!"
 
 def test_sal_get_all_deposits_success():
     pass
 
 def test_sal_update_deposit_nothing_changed():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "Nothing changed, please try again!"
 
 def test_sal_update_deposit_category_id_not_integer():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "The category ID field must be an integer, please try again!"
 
 def test_sal_update_deposit_category_not_found():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "Category not found, please try again!"
 
 def test_sal_update_deposit_date_not_string():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "The date field must be a string, please try again!"
 
 def test_sal_update_deposit_date_empty():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "The date field cannot be left empty, please try again!"
 
 def test_sal_update_deposit_description_not_string():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "The description field must be a string, please try again!"
 
 def test_sal_update_deposit_description_empty():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "The description field cannot be left empty, please try again!"
 
 def test_sal_update_deposit_amount_not_float():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "The amount field must be a float, please try again!"
 
 def test_sal_update_deposit_amount_negative_or_0():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "The amount field must be positive and cannot be 0.00, please try again!"
 
 def test_sal_update_deposit_success():
     pass
 
 def test_sal_delete_deposit_not_found():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "Deposit not found, please try again!"
 
 def test_sal_delete_deposit_id_not_integer():
-    pass
+    try:
+        pass
+    except CustomError as error:
+        assert str(error) == "The deposit ID field must be an integer, please try again!"
 
 def test_sal_delete_deposit_success():
     pass
