@@ -1,3 +1,4 @@
+import unittest.mock as mock
 from DAL.CategoryDAL.CategoryDALImplementation import CategoryDALImplementation
 from SAL.CategorySAL.CategorySALImplementation import CategorySALImplementation
 from Entities.Category import Category
@@ -57,11 +58,12 @@ def test_sal_get_category_success():
     assert result is not None
 
 def test_sal_get_all_categories_none_found():
-    try:
-        category_sao.get_all_categories()
-        assert False
-    except CustomError as error:
-        assert str(error) == "No categories found, please try again!"
+    with mock.patch.object(category_sao.category_dao, 'get_all_categories', return_value=[]):
+        try:
+            category_sao.get_all_categories()
+            assert False
+        except CustomError as error:
+            assert str(error) == "No categories found, please try again!"
 
 def test_sal_get_all_categories_success():
     result = category_sao.get_all_categories()
