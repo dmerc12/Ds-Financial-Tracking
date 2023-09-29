@@ -1,13 +1,17 @@
 import unittest.mock as mock
 from datetime import datetime, timedelta
 
+from DAL.CategoryDAL.CategoryDALImplementation import CategoryDALImplementation
 from DAL.DepositDAL.DepositDALImplementation import DepositDALImplementation
+from SAL.CategorySAL.CategorySALImplementation import CategorySALImplementation
 from SAL.DepositSAL.DepositSALImplementation import DepositSALImplementation
 from Entities.Deposit import Deposit
 from Entities.CustomError import CustomError
 
+category_dao = CategoryDALImplementation()
+category_sao = CategorySALImplementation(category_dao)
 deposit_dao = DepositDALImplementation()
-deposit_sao = DepositSALImplementation(deposit_dao)
+deposit_sao = DepositSALImplementation(deposit_dao, category_sao)
 
 successful_deposit = Deposit(0, -1, str(datetime.now().date()), 'test description', 5.00)
 current_deposit_id = 1
@@ -114,7 +118,8 @@ def test_sal_get_all_deposits_success():
 
 def test_sal_update_deposit_nothing_changed():
     try:
-        test_deposit = Deposit(current_deposit_id, -1, str(datetime.now().date()), 'test description', 5.00)
+        test_deposit = Deposit(current_deposit_id, successful_deposit.category_id, successful_deposit.date,
+                               successful_deposit.description, successful_deposit.amount)
         deposit_sao.update_deposit(test_deposit)
         assert False
     except CustomError as error:
