@@ -120,6 +120,8 @@ def test_sal_update_expense_nothing_changed():
     try:
         test_expense = Expense(current_expense_id, successful_expense.category_id, successful_expense.date,
                                successful_expense.description, successful_expense.amount)
+        print("test expense: " + str(test_expense.convert_to_dictionary()))
+        print("successful expense: " + str(successful_expense.convert_to_dictionary()))
         expense_sao.update_expense(test_expense)
         assert False
     except CustomError as error:
