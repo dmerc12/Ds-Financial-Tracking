@@ -9,6 +9,10 @@ from Entities.CustomError import CustomError
 
 class ExpenseSALImplementation(ExpenseSALInterface):
 
+    def __init__(self, expense_dao: ExpenseDALImplementation, category_sao: CategorySALImplementation):
+        self.expense_dao = expense_dao
+        self.category_sao = category_sao
+
     def create_expense(self, expense: Expense) -> Expense:
         pass
 
@@ -23,8 +27,3 @@ class ExpenseSALImplementation(ExpenseSALInterface):
 
     def delete_expense(self, expense_id: int) -> bool:
         pass
-
-    def __init__(self, expense_dao: ExpenseDALImplementation, category_sao: CategorySALImplementation):
-        self.expense_dao = expense_dao
-        self.category_sao = category_sao
-
