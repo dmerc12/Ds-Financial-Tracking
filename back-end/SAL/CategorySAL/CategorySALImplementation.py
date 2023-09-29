@@ -51,7 +51,7 @@ class CategorySALImplementation(CategorySALInterface):
             logging.warning("Error in SAL method get all categories, none found")
             raise CustomError("No categories found, please try again!")
         else:
-            logging.info("Finishing SAL method get all categories with categories")
+            logging.info("Finishing SAL method get all categories")
             return categories
 
     def update_category(self, category: Category) -> Category:
