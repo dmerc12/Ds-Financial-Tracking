@@ -1,22 +1,15 @@
-import os
-
-import mysql.connector
+import sqlite3
 
 
 class Connection:
     @staticmethod
     def db_connection():
         try:
-            new_connection = mysql.connector.connect(
-                host=os.environ.get("HOST"),
-                dbname=os.environ.get("DBNAME"),
-                user=os.environ.get("USER"),
-                password=os.environ.get("PASSWORD"),
-                port=os.environ.get("PORT")
-            )
+            new_connection = sqlite3.connect('/Users/dylanmercer12/Desktop/Projects/FinancialTrackingApp/back-end/'
+                                             'Database/Database.db')
             return new_connection
-        except mysql.connector.Error:
-            raise mysql.connector.Error("Could not connect to the database, please try again!")
+        except sqlite3.Error:
+            raise sqlite3.Error("Could not connect to the database, please try again!")
 
 connection = Connection.db_connection()
 print("Connected to the database successfully!")
