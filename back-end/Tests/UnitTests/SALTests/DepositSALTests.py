@@ -116,15 +116,6 @@ def test_sal_get_all_deposits_success():
     result = deposit_sao.get_all_deposits()
     assert len(result) > 0
 
-def test_sal_update_deposit_nothing_changed():
-    try:
-        test_deposit = Deposit(current_deposit_id, successful_deposit.category_id, successful_deposit.date,
-                               successful_deposit.description, successful_deposit.amount)
-        deposit_sao.update_deposit(test_deposit)
-        assert False
-    except CustomError as error:
-        assert str(error) == "Nothing changed, please try again!"
-
 def test_sal_update_deposit_category_id_not_integer():
     try:
         test_deposit = Deposit(current_deposit_id, '', str(datetime.now().date()), 'test description', 5.00)

@@ -69,14 +69,6 @@ def test_sal_get_all_categories_success():
     result = category_sao.get_all_categories()
     assert len(result) > 0
 
-def test_sal_update_category_nothing_changed():
-    try:
-        changed_category = Category(current_category_id, successful_category.category_name)
-        category_sao.update_category(changed_category)
-        assert False
-    except CustomError as error:
-        assert str(error) == "Nothing changed, please try again!"
-
 def test_sal_update_category_already_exists():
     try:
         changed_category = Category(current_category_id, 'test category')

@@ -4,3 +4,27 @@
 2023-10-07 16:52:41,524 - API - INFO - Finishing API function create category with result: {'categoryId': 1, 'categoryName': 'new category'}
 2023-10-07 16:53:32,971 - API - INFO - Beginning API function get all categories
 2023-10-07 16:53:32,974 - API - INFO - Finishing API function get all categories with categories: <generator object get_all_categories.<locals>.<genexpr> at 0x108137370>
+2023-10-07 17:14:29,414 - API - INFO - Beginning API function update category with data: {'categoryId': 1, 'categoryName': 'updated name'}
+2023-10-07 17:14:29,426 - API - INFO - Finishing API function update category with result: {'categoryId': 1, 'categoryName': 'updated name'}
+2023-10-07 17:21:13,006 - API - INFO - Beginning API function update category with data: {'categoryId': 1, 'categoryName': 'updated name'}
+2023-10-07 17:21:13,007 - API - INFO - Finishing API function update category with result: {'categoryId': 1, 'categoryName': 'updated name'}
+2023-10-07 17:21:15,180 - API - INFO - Beginning API function update category with data: {'categoryId': 1, 'categoryName': 'updated name'}
+2023-10-07 17:21:15,181 - API - INFO - Finishing API function update category with result: {'categoryId': 1, 'categoryName': 'updated name'}
+2023-10-07 17:21:23,979 - API - INFO - Beginning API function update category with data: {'categoryId': 1, 'categoryName': 'updated name'}
+2023-10-07 17:21:23,983 - API - INFO - Finishing API function update category with result: {'categoryId': 1, 'categoryName': 'updated name'}
+2023-10-07 17:23:41,437 - API - INFO - Beginning API function update category with data: {'categoryId': 1, 'categoryName': ''}
+2023-10-07 17:23:41,439 - API - ERROR - Error with API function update category with error: Nothing changed, please try again!
+2023-10-07 17:23:58,227 - API - INFO - Beginning API function update category with data: {'categoryId': 1, 'categoryName': 'updated name'}
+2023-10-07 17:23:58,228 - API - INFO - Finishing API function update category with result: {'categoryId': 1, 'categoryName': 'updated name'}
+2023-10-07 17:24:03,485 - API - INFO - Beginning API function update category with data: {'categoryId': 1, 'categoryName': 'updated name'}
+2023-10-07 17:24:03,486 - API - INFO - Finishing API function update category with result: {'categoryId': 1, 'categoryName': 'updated name'}
+2023-10-07 17:24:15,331 - API - INFO - Beginning API function update category with data: {'categoryId': 1, 'categoryName': ''}
+2023-10-07 17:24:15,332 - API - ERROR - Error with API function update category with error: Nothing changed, please try again!
+2023-10-07 17:28:57,103 - API - INFO - Beginning API function update category with data: {'categoryId': 1, 'categoryName': 'updated name'}
+2023-10-07 17:28:57,108 - API - INFO - Finishing API function update category with result: {'categoryId': 1, 'categoryName': 'updated name'}
+2023-10-07 17:29:02,450 - API - INFO - Beginning API function update category with data: {'categoryId': 1, 'categoryName': 'updated name'}
+2023-10-07 17:29:02,451 - API - INFO - Finishing API function update category with result: {'categoryId': 1, 'categoryName': 'updated name'}
+2023-10-07 17:29:05,291 - API - INFO - Beginning API function update category with data: {'categoryId': 1, 'categoryName': ''}
+2023-10-07 17:29:05,291 - API - ERROR - Error with API function update category with error: The category name field cannot be left empty, please try again!
+2023-10-07 17:35:37,892 - API - INFO - Beginning API function update category with data: {'categoryId': 1, 'categoryName': 5}
+2023-10-07 17:35:37,894 - API - ERROR - Error with API function update category with error: The category name field must be a string, please try again!

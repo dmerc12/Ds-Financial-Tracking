@@ -69,12 +69,7 @@ class ExpenseSALImplementation(ExpenseSALInterface):
 
     def update_expense(self, expense: Expense) -> Expense:
         logging.info("Beginning SAL method update expense with data: " + str(expense.convert_to_dictionary()))
-        current_info = self.get_expense(expense.expense_id)
-        if current_info.category_id == expense.category_id and current_info.date == expense.date and \
-                current_info.description == expense.description and current_info.amount == expense.amount:
-            logging.warning("Error in SAL method update expense, nothing changed")
-            raise CustomError("Nothing changed, please try again!")
-        elif type(expense.category_id) != int:
+        if type(expense.category_id) != int:
             logging.warning("Error in SAL method update expense, category ID not an integer")
             raise CustomError("The category ID field must be an integer, please try again!")
         elif type(expense.date) != str:
@@ -97,6 +92,7 @@ class ExpenseSALImplementation(ExpenseSALInterface):
             raise CustomError("The amount field must be positive and cannot be 0.00, please try again!")
         else:
             self.category_sao.get_category(expense.category_id)
+            self.get_expense(expense.expense_id)
             result = self.expense_dao.update_expense(expense)
             logging.info("Finishing SAL method update expense with result: " + str(result.convert_to_dictionary()))
             return result

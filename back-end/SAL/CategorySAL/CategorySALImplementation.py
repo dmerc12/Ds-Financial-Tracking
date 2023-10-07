@@ -56,17 +56,14 @@ class CategorySALImplementation(CategorySALInterface):
 
     def update_category(self, category: Category) -> Category:
         logging.info("Beginning SAL method update category with data: " + str(category.convert_to_dictionary()))
-        current_category_info = self.category_dao.get_category(category.category_id)
-        if category.category_name == current_category_info.category_name:
-            logging.warning("Error in SAL method update category, nothing changed")
-            raise CustomError("Nothing changed, please try again!")
-        elif category.category_name == '':
+        if category.category_name == '':
             logging.warning("Error in SAL method update category, category name empty")
             raise CustomError("The category name field cannot be left empty, please try again!")
         elif type(category.category_name) != str:
             logging.warning("Error in SAL method update category, category name not a string")
             raise CustomError("The category name field must be a string, please try again!")
         else:
+            self.get_category(category.category_id)
             existing_categories = self.category_dao.get_all_categories()
             for existing_category in existing_categories:
                 if category.category_name == existing_category.category_name:
