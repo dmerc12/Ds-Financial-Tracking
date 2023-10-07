@@ -28,3 +28,19 @@
 2023-10-07 17:29:05,291 - API - ERROR - Error with API function update category with error: The category name field cannot be left empty, please try again!
 2023-10-07 17:35:37,892 - API - INFO - Beginning API function update category with data: {'categoryId': 1, 'categoryName': 5}
 2023-10-07 17:35:37,894 - API - ERROR - Error with API function update category with error: The category name field must be a string, please try again!
+2023-10-07 18:33:44,089 - API - INFO - Beginning API function update category with data: {'categoryId': -48975370, 'categoryName': 'test'}
+2023-10-07 18:33:44,093 - API - ERROR - Error with API function update category with error: Category not found, please try again!
+2023-10-07 18:37:15,389 - API - INFO - Beginning API function get all categories
+2023-10-07 18:37:15,390 - API - ERROR - Error with API function get all categories with error: No categories found, please try again!
+2023-10-07 18:37:23,856 - API - INFO - Beginning API function create category with name: new category
+2023-10-07 18:37:23,860 - API - INFO - Finishing API function create category with result: {'categoryId': 1, 'categoryName': 'new category'}
+2023-10-07 18:37:27,366 - API - INFO - Beginning API function get all categories
+2023-10-07 18:37:27,368 - API - INFO - Finishing API function get all categories with categories: <generator object get_all_categories.<locals>.<genexpr> at 0x10486f5e0>
+2023-10-07 18:37:35,297 - API - INFO - Beginning API function update category with data: {'categoryId': 1, 'categoryName': 'new category'}
+2023-10-07 18:37:35,298 - API - ERROR - Error with API function update category with error: A category with this name already exists, please try again!
+2023-10-07 18:42:15,749 - API - INFO - Beginning API function delete category with category ID: 1
+2023-10-07 18:42:15,754 - API - INFO - Finishing API function delete category
+2023-10-07 18:43:11,107 - API - INFO - Beginning API function delete category with category ID: 
+2023-10-07 18:43:11,108 - API - ERROR - Error with API function delete category with error: The category ID field must be an integer, please try again!
+2023-10-07 18:44:09,350 - API - INFO - Beginning API function delete category with category ID: -408537395348
+2023-10-07 18:44:09,352 - API - ERROR - Error with API function delete category with error: Category not found, please try again!
