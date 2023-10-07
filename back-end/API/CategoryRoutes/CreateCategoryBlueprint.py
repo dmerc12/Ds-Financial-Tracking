@@ -14,7 +14,7 @@ def create_category():
     try:
         category_info = request.json
         current_app.logger.info("Beginning API function create category with data: " + str(category_info))
-        new_category = Category(0, category_info["categoryName"])
+        new_category = Category(category_id=0, category_name=category_info["categoryName"])
         result = category_sao.create_category(new_category)
         current_app.logger.info("Finishing API function create category with result: " +
                                 str(result.convert_to_dictionary()))
