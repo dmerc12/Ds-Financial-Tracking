@@ -3,6 +3,8 @@ import os
 from flask import Flask
 from flask_cors import CORS
 
+from API.CategoryRoutes.CreateCategoryBlueprint import create_category_route
+
 def create_back_end_api(config):
     app: Flask = Flask(__name__)
     CORS(app)
@@ -20,5 +22,7 @@ def create_back_end_api(config):
     handler.setFormatter(formatter)
     app.logger.addHandler(handler)
     app.logger.setLevel(log_level)
+
+    app.register_blueprint(create_category_route)
 
     return app
