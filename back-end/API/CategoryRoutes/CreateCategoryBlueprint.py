@@ -12,9 +12,9 @@ category_sao = CategorySALImplementation(category_dao)
 @create_category_route.route("/api/create/category", methods=["POST"])
 def create_category():
     try:
-        category_info = request.json
-        current_app.logger.info("Beginning API function create category with data: " + str(category_info))
-        new_category = Category(category_id=0, category_name=category_info["categoryName"])
+        category_name = request.json["categoryName"]
+        current_app.logger.info("Beginning API function create category with name: " + str(category_name))
+        new_category = Category(category_id=0, category_name=category_name)
         result = category_sao.create_category(new_category)
         current_app.logger.info("Finishing API function create category with result: " +
                                 str(result.convert_to_dictionary()))

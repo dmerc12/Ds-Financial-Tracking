@@ -19,7 +19,7 @@ def update_category():
         result = category_sao.update_category(updated_category)
         current_app.logger.info("Finishing API function update category with result: " +
                                 str(result.convert_to_dictionary()))
-        return jsonify(result.convert_to_dictionary()), 200
+        return jsonify(result.convert_to_dictionary()), 202
     except CustomError as error:
         current_app.logger.error("Error with API function update category with error: " + str(error))
         response = {

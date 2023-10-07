@@ -70,7 +70,8 @@ class ExpenseSALImplementation(ExpenseSALInterface):
     def update_expense(self, expense: Expense) -> Expense:
         logging.info("Beginning SAL method update expense with data: " + str(expense.convert_to_dictionary()))
         current_info = self.get_expense(expense.expense_id)
-        if current_info.category_id == expense.category_id and current_info.date == expense.date and current_info.description == expense.description and current_info.amount == expense.amount and current_info.expense_id == expense.expense_id:
+        if current_info.category_id == expense.category_id and current_info.date == expense.date and \
+                current_info.description == expense.description and current_info.amount == expense.amount:
             logging.warning("Error in SAL method update expense, nothing changed")
             raise CustomError("Nothing changed, please try again!")
         elif type(expense.category_id) != int:
