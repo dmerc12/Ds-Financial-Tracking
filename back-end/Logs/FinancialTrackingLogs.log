@@ -1,0 +1,6 @@
+2023-10-07 16:52:21,659 - API - INFO - Beginning API function get all categories
+2023-10-07 16:52:21,661 - API - ERROR - Error with API function get all categories with error: No categories found, please try again!
+2023-10-07 16:52:41,518 - API - INFO - Beginning API function create category with name: new category
+2023-10-07 16:52:41,524 - API - INFO - Finishing API function create category with result: {'categoryId': 1, 'categoryName': 'new category'}
+2023-10-07 16:53:32,971 - API - INFO - Beginning API function get all categories
+2023-10-07 16:53:32,974 - API - INFO - Finishing API function get all categories with categories: <generator object get_all_categories.<locals>.<genexpr> at 0x108137370>
