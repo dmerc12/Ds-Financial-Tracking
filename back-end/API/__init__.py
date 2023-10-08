@@ -5,6 +5,10 @@ from flask_cors import CORS
 
 from API.CategoryRoutes.CreateCategoryBlueprint import create_category_route
 from API.CategoryRoutes.GetAllCategoriesBlueprint import get_all_categories_route
+from API.CategoryRoutes.UpdateCategoryBlueprint import update_category_route
+from API.CategoryRoutes.DeleteCategoryBlueprint import delete_category_route
+
+from API.DepositRoutes.CreateDepositBlueprint import create_deposit_route
 
 def create_back_end_api(config):
     app: Flask = Flask(__name__)
@@ -26,5 +30,9 @@ def create_back_end_api(config):
 
     app.register_blueprint(create_category_route)
     app.register_blueprint(get_all_categories_route)
+    app.register_blueprint(update_category_route)
+    app.register_blueprint(delete_category_route)
+
+    app.register_blueprint(create_deposit_route)
 
     return app

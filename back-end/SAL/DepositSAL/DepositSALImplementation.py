@@ -30,9 +30,6 @@ class DepositSALImplementation(DepositSALInterface):
         elif deposit.description == "":
             logging.warning("Error in SAL method create deposit, description empty")
             raise CustomError("The description field cannot be left empty, please try again!")
-        elif type(deposit.amount) != float:
-            logging.warning("Error in SAL method create deposit, amount not a float")
-            raise CustomError("The amount field must be a float, please try again!")
         elif deposit.amount <= 0.00:
             logging.warning("Error in SAL method create deposit, amount negative or 0.00")
             raise CustomError("The amount field must be positive and cannot be 0.00, please try again!")
@@ -92,16 +89,10 @@ class DepositSALImplementation(DepositSALInterface):
             raise CustomError("The amount field must be positive and cannot be 0.00, please try again!")
         else:
             self.category_sao.get_category(deposit.category_id)
-            current_deposit_info = self.get_deposit(deposit.deposit_id)
-            if current_deposit_info.category_id == deposit.category_id and current_deposit_info.date == deposit.date \
-                and current_deposit_info.description == deposit.description and \
-                    current_deposit_info.amount == deposit.amount:
-                logging.warning("Error in SAL method update deposit, nothing changed")
-                raise CustomError("Nothing changed, please try again!")
-            else:
-                result = self.deposit_dao.update_deposit(deposit)
-                logging.info("Finishing SAL method update deposit with result: " + str(result.convert_to_dictionary()))
-                return result
+            self.get_deposit(deposit.deposit_id)
+            result = self.deposit_dao.update_deposit(deposit)
+            logging.info("Finishing SAL method update deposit with result: " + str(result.convert_to_dictionary()))
+            return result
 
     def delete_deposit(self, deposit_id: int) -> bool:
         logging.info("Beginning SAL method delete deposit with deposit ID: " + str(deposit_id))
