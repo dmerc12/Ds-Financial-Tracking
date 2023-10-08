@@ -66,14 +66,6 @@ def test_sal_create_deposit_description_empty():
     except CustomError as error:
         assert str(error) == "The description field cannot be left empty, please try again!"
 
-def test_sal_create_deposit_amount_not_float():
-    try:
-        test_deposit = Deposit(0, -1, str(datetime.now().date()), 'description', '10.00')
-        deposit_sao.create_deposit(test_deposit)
-        assert False
-    except CustomError as error:
-        assert str(error) == "The amount field must be a float, please try again!"
-
 def test_sal_create_deposit_amount_negative_or_0():
     try:
         test_deposit = Deposit(0, -1, str(datetime.now().date()), 'description', -10.00)

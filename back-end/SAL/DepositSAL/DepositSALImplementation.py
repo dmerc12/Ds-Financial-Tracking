@@ -30,9 +30,6 @@ class DepositSALImplementation(DepositSALInterface):
         elif deposit.description == "":
             logging.warning("Error in SAL method create deposit, description empty")
             raise CustomError("The description field cannot be left empty, please try again!")
-        elif type(deposit.amount) != float:
-            logging.warning("Error in SAL method create deposit, amount not a float")
-            raise CustomError("The amount field must be a float, please try again!")
         elif deposit.amount <= 0.00:
             logging.warning("Error in SAL method create deposit, amount negative or 0.00")
             raise CustomError("The amount field must be positive and cannot be 0.00, please try again!")
