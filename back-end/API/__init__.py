@@ -10,6 +10,7 @@ from API.CategoryRoutes.DeleteCategoryBlueprint import delete_category_route
 
 from API.DepositRoutes.CreateDepositBlueprint import create_deposit_route
 from API.DepositRoutes.GetAllDepositsBlueprint import get_all_deposits_route
+from API.DepositRoutes.DeleteDepositBlueprint import delete_deposit_route
 
 def create_back_end_api(config):
     app: Flask = Flask(__name__)
@@ -36,5 +37,7 @@ def create_back_end_api(config):
 
     app.register_blueprint(create_deposit_route)
     app.register_blueprint(get_all_deposits_route)
+
+    app.register_blueprint(delete_deposit_route)
 
     return app
