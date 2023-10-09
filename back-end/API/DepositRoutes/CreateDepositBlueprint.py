@@ -1,5 +1,4 @@
 from flask import Blueprint, request, current_app, jsonify
-
 from DAL.CategoryDAL.CategoryDALImplementation import CategoryDALImplementation
 from DAL.DepositDAL.DepositDALImplementation import DepositDALImplementation
 from SAL.CategorySAL.CategorySALImplementation import CategorySALImplementation

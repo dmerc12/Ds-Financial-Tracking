@@ -1,5 +1,4 @@
 from flask import Blueprint, jsonify, request, current_app
-
 from DAL.CategoryDAL.CategoryDALImplementation import CategoryDALImplementation
 from SAL.CategorySAL.CategorySALImplementation import CategorySALImplementation
 from Entities.CustomError import CustomError
@@ -16,7 +15,7 @@ def delete_category():
         current_app.logger.info("Beginning API function delete category with category ID: " + str(category_id))
         result = category_sao.delete_category(category_id)
         current_app.logger.info("Finishing API function delete category")
-        return jsonify({"message": str(result)}), 202
+        return jsonify(result), 202
     except CustomError as error:
         current_app.logger.error("Error with API function delete category with error: " + str(error))
         response = {
