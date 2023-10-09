@@ -84,3 +84,17 @@
 2023-10-07 19:43:25,030 - API - INFO - Finishing API function create deposit with result: {'depositId': 7, 'categoryId': 1, 'date': '2023-10-07', 'description': 'test', 'amount': 5.0}
 2023-10-07 19:43:26,414 - API - INFO - Beginning API function create deposit with data: {'categoryId': 1, 'date': '2023-10-07', 'description': 'test', 'amount': 5.0}
 2023-10-07 19:43:26,420 - API - INFO - Finishing API function create deposit with result: {'depositId': 8, 'categoryId': 1, 'date': '2023-10-07', 'description': 'test', 'amount': 5.0}
+2023-10-08 20:07:43,068 - API - INFO - Beginning API function get all deposits
+2023-10-08 20:07:43,077 - API - ERROR - Error with API function get all deposits with error: No deposits found, please try again!
+2023-10-08 20:08:30,844 - API - INFO - Beginning API function get all deposits
+2023-10-08 20:08:30,847 - API - ERROR - Error with API function get all deposits with error: No deposits found, please try again!
+2023-10-08 20:08:36,499 - API - INFO - Beginning API function create deposit with data: {'categoryId': 1, 'date': '2023-10-07', 'description': 'test', 'amount': 5.0}
+2023-10-08 20:08:36,500 - API - ERROR - Error with API function create deposit with error: Category not found, please try again!
+2023-10-08 20:08:41,116 - API - INFO - Beginning API function create deposit with data: {'categoryId': 1, 'date': '2023-10-07', 'description': 'test', 'amount': 5.0}
+2023-10-08 20:08:41,117 - API - ERROR - Error with API function create deposit with error: Category not found, please try again!
+2023-10-08 20:08:50,262 - API - INFO - Beginning API function create category with name: new category
+2023-10-08 20:08:50,265 - API - INFO - Finishing API function create category with result: {'categoryId': 1, 'categoryName': 'new category'}
+2023-10-08 20:08:54,439 - API - INFO - Beginning API function create deposit with data: {'categoryId': 1, 'date': '2023-10-07', 'description': 'test', 'amount': 5.0}
+2023-10-08 20:08:54,443 - API - INFO - Finishing API function create deposit with result: {'depositId': 1, 'categoryId': 1, 'date': '2023-10-07', 'description': 'test', 'amount': 5.0}
+2023-10-08 20:08:58,357 - API - INFO - Beginning API function get all deposits
+2023-10-08 20:08:58,359 - API - INFO - Finishing API function get all deposits with deposits: <generator object get_all_deposits.<locals>.<genexpr> at 0x10ad53d30>

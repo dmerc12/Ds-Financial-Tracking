@@ -1,4 +1,4 @@
-from flask import Blueprint, request, current_app, jsonify
+from flask import Blueprint, current_app, jsonify
 from DAL.CategoryDAL.CategoryDALImplementation import CategoryDALImplementation
 from SAL.CategorySAL.CategorySALImplementation import CategorySALImplementation
 from Entities.CustomError import CustomError
