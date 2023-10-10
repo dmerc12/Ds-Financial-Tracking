@@ -104,3 +104,15 @@
 2023-10-08 20:33:46,121 - API - ERROR - Error with API function delete deposit with error: The deposit ID field must be an integer, please try again!
 2023-10-08 20:34:45,506 - API - INFO - Beginning API function delete deposit with deposit ID: -7598462983
 2023-10-08 20:34:45,508 - API - ERROR - Error with API function delete deposit with error: Deposit not found, please try again!
+2023-10-09 22:06:10,167 - API - INFO - Beginning API function create category with name: new category
+2023-10-09 22:06:10,172 - API - ERROR - Error with API function create category with error: A category with this name already exists, please try again!
+2023-10-09 22:08:21,361 - API - INFO - Beginning API function update deposit with data: {'depositId': 1, 'categoryId': 1, 'date': '1997-9-27', 'description': 'updated description', 'amount': 50.0}
+2023-10-09 22:08:21,364 - API - ERROR - Error with API function update deposit with error: Deposit not found, please try again!
+2023-10-09 22:08:30,662 - API - INFO - Beginning API function create deposit with data: {'categoryId': 1, 'date': '2023-10-07', 'description': 'test', 'amount': 5.0}
+2023-10-09 22:08:30,668 - API - INFO - Finishing API function create deposit with result: {'depositId': 2, 'categoryId': 1, 'date': '2023-10-07', 'description': 'test', 'amount': 5.0}
+2023-10-09 22:08:35,225 - API - INFO - Beginning API function update deposit with data: {'depositId': 1, 'categoryId': 1, 'date': '1997-9-27', 'description': 'updated description', 'amount': 50.0}
+2023-10-09 22:08:35,228 - API - ERROR - Error with API function update deposit with error: Deposit not found, please try again!
+2023-10-09 22:08:47,877 - API - INFO - Beginning API function update deposit with data: {'depositId': 1, 'categoryId': 1, 'date': '1997-9-27', 'description': 'updated description', 'amount': 50.0}
+2023-10-09 22:08:47,880 - API - ERROR - Error with API function update deposit with error: Deposit not found, please try again!
+2023-10-09 22:14:00,627 - API - INFO - Beginning API function update deposit with data: {'depositId': 1, 'categoryId': 1, 'date': '1997-9-27', 'description': 'updated description', 'amount': 50.0}
+2023-10-09 22:14:00,629 - API - ERROR - Error with API function update deposit with error: Deposit not found, please try again!
