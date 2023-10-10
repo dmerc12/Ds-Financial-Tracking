@@ -4,7 +4,7 @@ from DAL.ExpenseDAL.ExpenseDALImplementation import ExpenseDALImplementation
 from Entities.Expense import Expense
 
 expense_dao = ExpenseDALImplementation()
-test_expense = Expense(0, 1, str(datetime.now()), 'test description', 25.00)
+test_expense = Expense(0, -1, str(datetime.now()), 'test description', 25.00)
 current_expense_id = 1
 updated_expense = Expense(current_expense_id, test_expense.category_id,
                           str(datetime.now() - timedelta(hours=2, minutes=17, seconds=43)), 'updated', 50.00)

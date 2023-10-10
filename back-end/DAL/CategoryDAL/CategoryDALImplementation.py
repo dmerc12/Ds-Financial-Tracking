@@ -10,7 +10,7 @@ class CategoryDALImplementation(CategoryDALInterface):
 
     def create_category(self, category: Category) -> Category:
         logging.info("Beginning DAL method create category with data: " + str(category.convert_to_dictionary()))
-        sql = "INSERT INTO Category (category_name) VALUES (?) RETURNING category_id"
+        sql = "INSERT INTO financial_tracker.Category (category_name) VALUES (%s) RETURNING category_id;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
         cursor.execute(sql, (category.category_name,))
@@ -23,7 +23,7 @@ class CategoryDALImplementation(CategoryDALInterface):
 
     def get_category(self, category_id: int) -> Category:
         logging.info("Beginning DAL method get category with category ID: " + str(category_id))
-        sql = "SELECT * FROM Category WHERE category_id=?"
+        sql = "SELECT * FROM financial_tracker.Category WHERE category_id=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
         cursor.execute(sql, (category_id,))
@@ -41,7 +41,7 @@ class CategoryDALImplementation(CategoryDALInterface):
 
     def get_all_categories(self) -> List[Category]:
         logging.info("Beginning DAL method get all categories")
-        sql = "SELECT * FROM Category"
+        sql = "SELECT * FROM financial_tracker.Category;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
         cursor.execute(sql)
@@ -59,7 +59,7 @@ class CategoryDALImplementation(CategoryDALInterface):
 
     def update_category(self, category: Category) -> Category:
         logging.info("Beginning DAL method update category with data: " + str(category.convert_to_dictionary()))
-        sql = "UPDATE Category SET category_name=? WHERE category_id=?"
+        sql = "UPDATE financial_tracker.Category SET category_name=%s WHERE category_id=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
         cursor.execute(sql, (category.category_name, category.category_id))
@@ -71,7 +71,7 @@ class CategoryDALImplementation(CategoryDALInterface):
 
     def delete_category(self, category_id: int) -> bool:
         logging.info("Beginning DAL method delete category with category ID: " + str(category_id))
-        sql = "DELETE FROM Category WHERE category_id=?"
+        sql = "DELETE FROM financial_tracker.Category WHERE category_id=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
         cursor.execute(sql, (category_id,))

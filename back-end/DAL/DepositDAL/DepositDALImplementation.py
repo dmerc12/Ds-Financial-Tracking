@@ -9,7 +9,8 @@ class DepositDALImplementation(DepositDALInterface):
 
     def create_deposit(self, deposit: Deposit) -> Deposit:
         logging.info("Beginning DAL method create deposit with data: " + str(deposit.convert_to_dictionary()))
-        sql = "INSERT INTO Deposit (category_id, date, description, amount) VALUES (?, ?, ? , ?) RETURNING deposit_id"
+        sql = "INSERT INTO financial_tracker.Deposit (category_id, date, description, amount) VALUES " \
+              "(%s, %s, %s , %s) RETURNING deposit_id;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
         cursor.execute(sql, (deposit.category_id, deposit.date, deposit.description, deposit.amount))
@@ -22,7 +23,7 @@ class DepositDALImplementation(DepositDALInterface):
 
     def get_deposit(self, deposit_id: int) -> Deposit:
         logging.info("Beginning DAL method get deposit with deposit ID: " + str(deposit_id))
-        sql = "SELECT * FROM Deposit WHERE deposit_id=?"
+        sql = "SELECT * FROM financial_tracker.Deposit WHERE deposit_id=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
         cursor.execute(sql, (deposit_id,))
@@ -40,7 +41,7 @@ class DepositDALImplementation(DepositDALInterface):
 
     def get_all_deposits(self) -> List[Deposit]:
         logging.info("Beginning DAL method get all deposits")
-        sql = "SELECT * FROM Deposit"
+        sql = "SELECT * FROM financial_tracker.Deposit;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
         cursor.execute(sql)
@@ -56,7 +57,8 @@ class DepositDALImplementation(DepositDALInterface):
 
     def update_deposit(self, deposit: Deposit) -> Deposit:
         logging.info("Beginning DAL method update deposit with data: " + str(deposit.convert_to_dictionary()))
-        sql = "UPDATE Deposit SET category_id=?, date=?, description=?, amount=? WHERE deposit_id=?"
+        sql = "UPDATE financial_tracker.Deposit SET category_id=%s, date=%s, description=%s, amount=%s WHERE " \
+              "deposit_id=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
         cursor.execute(sql, (deposit.category_id, deposit.date, deposit.description, deposit.amount,
@@ -69,7 +71,7 @@ class DepositDALImplementation(DepositDALInterface):
 
     def delete_deposit(self, deposit_id: int) -> bool:
         logging.info("Beginning DAL method delete deposit with deposit ID: " + str(deposit_id))
-        sql = "DELETE FROM Deposit WHERE deposit_id=?"
+        sql = "DELETE FROM financial_tracker.Deposit WHERE deposit_id=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
         cursor.execute(sql, (deposit_id,))
