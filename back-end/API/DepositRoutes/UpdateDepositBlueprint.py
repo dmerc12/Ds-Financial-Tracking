@@ -6,7 +6,7 @@ from SAL.DepositSAL.DepositSALImplementation import DepositSALImplementation
 from Entities.Deposit import Deposit
 from Entities.CustomError import CustomError
 
-update_deposit_route = Blueprint("update_deposit_route", __name__)
+update_deposit_route = Blueprint('update_deposit_route', __name__)
 
 category_dao = CategoryDALImplementation()
 category_sao = CategorySALImplementation(category_dao)
