@@ -6,13 +6,23 @@ def drop_table(table_name):
     cursor = connection.cursor()
 
     try:
-        cursor.execute(f'DROP TABLE IF EXISTS {table_name}')
+        cursor.execute(f'DROP TABLE IF EXISTS financial_tracker.{table_name};')
         connection.commit()
         print(f'{table_name} table dropped successfully!')
     except Exception as error:
         print(f'Error dropping {table_name} table: {str(error)}')
     finally:
         connection.close()
+
+    try:
+        cursor.execute("DROP SCHEMA IF EXISTS financial_tracker CASCADE;")
+        connection.commit()
+        print("Schema successfully dropped!")
+    except Exception as error:
+        print(f'Error dropping schema: {str(error)}')
+    finally:
+        connection.close()
+
 
 if __name__ == "__main__":
     tables_to_drop = ["Expense", "Deposit", "Category"]

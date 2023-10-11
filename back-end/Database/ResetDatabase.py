@@ -6,10 +6,8 @@ def truncate_table(table_name):
     cursor = connection.cursor()
 
     try:
-        cursor.execute(f'DELETE FROM {table_name}')
-        cursor.execute(f"UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name='{table_name}'")
+        cursor.execute(f'TRUNCATE TABLE financial_tracker.{table_name} restart identity cascade;')
         connection.commit()
-        print(f"Auto-increment ID reset for {table}")
         print(f'{table_name} truncated successfully!')
     except Exception as error:
         print(f'Error truncating {table_name}: {str(error)}')
@@ -25,7 +23,7 @@ if __name__ == "__main__":
     main_connection = Connection.db_connection()
     main_cursor = main_connection.cursor()
 
-    # main_cursor.execute("INSERT INTO CATEGORY (category_id, category_name) VALUES (-1, 'test category')")
+    main_cursor.execute("INSERT INTO financial_tracker.CATEGORY (category_id, category_name) VALUES (-1, 'test category');")
     print("Test category created successfully!")
 
     main_connection.commit()

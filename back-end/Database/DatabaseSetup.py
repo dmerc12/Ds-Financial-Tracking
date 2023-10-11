@@ -15,39 +15,42 @@ def create_data(sql, data_name):
         connection.close()
 
 if __name__ == "__main__":
+    schema_sql = "CREATE SCHEMA financial_tracker;"
+
     category_table_sql = '''
-        CREATE TABLE Category (
-            category_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        CREATE TABLE financial_tracker.Category (
+            category_id SERIAL PRIMARY KEY,
             category_name TEXT
-        )
+        );
     '''
 
-    # test_category = '''
-    #     INSERT INTO CATEGORY (category_id, category_name) VALUES (-1, 'test category')
-    # '''
+    test_category = '''
+        INSERT INTO CATEGORY (category_id, category_name) VALUES (-1, 'test category');
+    '''
 
     expense_table_sql = '''
-        CREATE TABLE Expense (
-            expense_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        CREATE TABLE financial_tracker.Expense (
+            expense_id SERIAL PRIMARY KEY,
             date DATE,
             description TEXT,
             amount FLOAT,
             category_id INTEGER,
-            FOREIGN KEY (category_id) REFERENCES Category(category_id)
-        )
+            FOREIGN KEY (category_id) REFERENCES financial_tracker.Category(category_id)
+        );
     '''
 
     deposit_table_sql = '''
-        CREATE TABLE Deposit (
-            deposit_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        CREATE TABLE financial_tracker.Deposit (
+            deposit_id SERIAL PRIMARY KEY,
             date DATE,
             description TEXT,
             amount FLOAT,
             category_id INTEGER,
-            FOREIGN KEY (category_id) REFERENCES Category(category_id)
-        )
+            FOREIGN KEY (category_id) REFERENCES financial_tracker.Category(category_id)
+        );
     '''
 
+    create_data(schema_sql, "Financial tracking schema")
     create_data(category_table_sql, "Category table")
     create_data(test_category, "Test category")
     create_data(expense_table_sql, "Expense table")
