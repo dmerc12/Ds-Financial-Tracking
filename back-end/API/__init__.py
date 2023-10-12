@@ -13,6 +13,11 @@ from API.DepositRoutes.GetAllDepositsBlueprint import get_all_deposits_route
 from API.DepositRoutes.UpdateDepositBlueprint import update_deposit_route
 from API.DepositRoutes.DeleteDepositBlueprint import delete_deposit_route
 
+from API.ExpenseRoutes.CreateExpenseBlueprint import create_expense_route
+from API.ExpenseRoutes.GetAllExpensesBlueprint import get_all_expenses_route
+from API.ExpenseRoutes.UpdateExpenseBlueprint import update_expense_route
+from API.ExpenseRoutes.DeleteExpenseBlueprint import delete_expense_route
+
 def create_back_end_api(config):
     app: Flask = Flask(__name__)
     CORS(app)
@@ -40,5 +45,10 @@ def create_back_end_api(config):
     app.register_blueprint(get_all_deposits_route)
     app.register_blueprint(update_deposit_route)
     app.register_blueprint(delete_deposit_route)
+
+    app.register_blueprint(create_expense_route)
+    app.register_blueprint(get_all_expenses_route)
+    app.register_blueprint(update_expense_route)
+    app.register_blueprint(delete_expense_route)
 
     return app
