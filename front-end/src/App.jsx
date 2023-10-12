@@ -2,6 +2,7 @@ import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Navbar } from './components/Navbar';
 import { Home } from './pages/Home';
 import { ManageCategories } from './pages/ManageCategories';
 import { ManageDeposits } from './pages/ManageDeposits';
@@ -11,9 +12,12 @@ function App() {
 
   return (
     <>
+      <Navbar />
+
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/home' element={<Home />} />
           <Route path='/manage/categories' element={<ManageCategories />} />
           <Route path='/manage/deposits' element={<ManageDeposits />} />
           <Route path='/manage/expenses' element={<ManageExpenses />} />
