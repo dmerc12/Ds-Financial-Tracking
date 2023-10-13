@@ -86,6 +86,16 @@ export const DeleteCategoryModal = ({ category, fetchCategories }) => {
             ) : (
                <form className='form' onSubmit={onSubmit}>
                   <div className='form-field'>
+                     <label className='form-label' htmlFor='categoryId'>Category ID: </label>
+                     <input className='form-input' name='categoryId' value={category.categoryId} disabled type='number' />
+                  </div>
+
+                  <div className='form-field'>
+                  <label className='form-label' htmlFor='categoryName'>Category Name: </label>
+                     <input className='form-input' name='categoryName' value={category.categoryName} disabled type='text' />
+                  </div>
+
+                  <div className='form-field'>
                      <label className='form-label'>Are you sure?</label>
                   </div>
 
