@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useFetch } from '../../hooks/useFetch';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FaSpinner, FaSync } from 'react-icons/fa';
 import { FiTrash2 } from 'react-icons/fi';
@@ -12,11 +11,9 @@ export const DeleteCategoryModal = ({ category, fetchCategories }) => {
       loading: false,
       failedToFetch: false,
       visible: false
-    });
+   });
 
    const { fetchData } = useFetch();
-
-   const navigate = useNavigate();
 
    const showModal = () => {
       setModalState.visible(true);
@@ -42,9 +39,9 @@ export const DeleteCategoryModal = ({ category, fetchCategories }) => {
 
          if (responseStatus === 202) {
             setModalState((prevState) => ({
-                ...prevState,
-                loading: false,
-                visible: false
+               ...prevState,
+               loading: false,
+               visible: false
             }));
             fetchCategories();
             toast.success("Category successfully deleted!", {toastId: 'customId'});
@@ -68,33 +65,34 @@ export const DeleteCategoryModal = ({ category, fetchCategories }) => {
    };
 
    return (
-       <>
-            <FiTrash2 onClick={showModal} id={`deleteCategoryModal${category.categoryId}`} cursor='pointer' size={15}/>
+      <>
+         <FiTrash2 onClick={showModal} id={`deleteCategoryModal${category.categoryId}`} cursor='pointer' size={15}/>
 
-            <Modal visible={visible} onClose={closeModal}>
-                {modalState.loading ? (
-                    <div className='loading-indicator'>
-                        <FaSpinner className='spinner' />
-                    </div>
-                ) : modalState.failedToFetch ? (
-                    <div className='failed-to-fetch'>
-                        <AiOutlineExclamationCircle className='warning-icon' />
-                        <p>Cannot connect to the back end server.</p>
-                        <p>Please check your internet connection and try again.</p>
-                        <button className='retry-button' onClick={onSubmit}>
-                            <FaSync className='retry-icon' />
-                        </button>
-                    </div>
-                ) : (
-                    <form className='form' onSubmit={onSubmit}>
-                        <div className='form-field'>
-                            <label className='form-label'>Are you sure?</label>
-                        </div>
+         <Modal visible={visible} onClose={closeModal}>
+            {modalState.loading ? (
+               <div className='loading-indicator'>
+                  <FaSpinner className='spinner' />
+               </div>
+            ) : modalState.failedToFetch ? (
+               <div className='failed-to-fetch'>
+                  <AiOutlineExclamationCircle className='warning-icon' />
+                  <p>Cannot connect to the back end server.</p>
+                  <p>Please check your internet connection and try again.</p>
+                  <button className='retry-button' onClick={onSubmit}>
+                     <FaSync className='retry-icon' />
+                  </button>
+                  <button className='back-button' onClick={goBack}>GoBack</button>
+               </div>
+            ) : (
+               <form className='form' onSubmit={onSubmit}>
+                  <div className='form-field'>
+                     <label className='form-label'>Are you sure?</label>
+                  </div>
 
-                        <button className='form-btn-1' type='submit' id='deleteCategoryButton'>Delete Category</button>
-                    </form>
-                )}
-            </Modal>
-       </>
+                  <button className='form-btn-1' type='submit' id='deleteCategoryButton'>Delete Category</button>
+               </form>
+            )}
+         </Modal>
+      </>
    );
 }
