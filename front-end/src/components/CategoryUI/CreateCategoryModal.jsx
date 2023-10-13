@@ -49,6 +49,10 @@ export const CreateCategoryModal = ({ fetchCategories }) => {
             });
             fetchCategories();
             toast.success("Category successfully created!", {toastId: 'customId'});
+         } else if (responseStatus === 400) {
+            throw new Error(`${data.message}`);
+         } else {
+            throw new Error("Cannot connect to the back end server, please try again!");
          }
       } catch (error) {
          if (error.message === 'Failed to fetch') {
