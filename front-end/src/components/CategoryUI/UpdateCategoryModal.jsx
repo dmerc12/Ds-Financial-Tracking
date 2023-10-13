@@ -38,7 +38,21 @@ export const UpdateCategoryModal = ({ category, fetchCategories }) => {
             failedToFetch: false
         }));
         try {
-            
+            const { responseStatus, data } = await fetchData('/api/update/category', 'PUT', categoryForm);
+
+            if (responseStatus === 202) {
+                setModalState({
+                    failedToFetch: false,
+                    loading: false,
+                    visible: false
+                });
+                fetchCategories();
+                toast.success("Category successfully updated!", {toastId: 'customId'});
+            } else if (responseStatus === 400) {
+                throw new Error(`${data.message}`);
+            } else {
+                throw new Error("Cannot connect to the back end server, please try again!");
+            }
         } catch (error) {
             if (error.message === 'Failed to fetch') {
             setModalState((prevState) => ({
@@ -72,9 +86,22 @@ export const UpdateCategoryModal = ({ category, fetchCategories }) => {
                     <button className='retry-button' onClick={onSubmit}>
                         <FaSync className='retry-icon' />
                     </button>
+                    <button className='back-button' onClick={goBack}>Go Back</button>
                 </div>
                 ) : (
-                
+                    <form className='form' onSubmit={onSubmit}>
+                        <div className='form-field'>
+                            <label className='form-label' htmlFor='categoryId'>Category ID: </label>
+                            <input className='form-input' type='number' name='categoryId' disabled value={categoryForm.categoryId} />
+                        </div>
+
+                        <div className='form-field'>
+                            <label className='form-label' htmlFor='categoryName'>Category Name: </label>
+                            <input className='form-input' type='text' name='categoryName' value={categoryForm.categoryName} onChange={event => setCategoryForm.categoryName(event.target.value)} />
+                        </div>
+
+                        <button className='form-btn-1' type='submit' id='updateCategoryButton'>Update Category</button>
+                    </form>
                 )}
             </Modal>
         </>
