@@ -5,7 +5,7 @@ from selenium.webdriver.safari.webdriver import WebDriver
 
 class CategoryPOMs:
 
-    def __init(self, driver: WebDriver):
+    def __init__(self, driver: WebDriver):
         self.driver = driver
 
     def manage_categories_nav_button(self):
