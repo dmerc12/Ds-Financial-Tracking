@@ -90,7 +90,7 @@ export const CreateCategoryModal = ({ fetchCategories }) => {
                <form className='form' onSubmit={onSubmit}>
                   <div className='form-field'>
                      <label className='form-label' htmlFor='categoryName'>Category Name: </label>
-                     <input className='form-input' type='text' name='categoryName' id='newCategoryName' value={categoryForm.categoryName} onChange={event => setCategoryForm.categoryName(event.target.value)} />
+                     <input className='form-input' type='text' name='categoryName' id='createCategoryNameInput' value={categoryForm.categoryName} onChange={event => setCategoryForm.categoryName(event.target.value)} />
 
                      <button className='form-btn-1' type='submit' id='createCategoryButton'>Create Category</button>
                   </div>

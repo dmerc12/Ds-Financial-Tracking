@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useFetch } from '../../hooks/useFetch';
 import { toast } from 'react-toastify';
+import { FiEdit } from 'react-icons/fi';
 import { FaSpinner, FaSync } from 'react-icons/fa';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Modal } from '../Modal';
@@ -69,9 +70,7 @@ export const UpdateCategoryModal = ({ category, fetchCategories }) => {
 
    return (
         <>
-            <div className='component'>
-                <button onClick={showModal} className='action-btn' id=''></button>
-            </div>
+            <FiEdit onClick={showModal} cursor='pointer' size={15} id={`updateCategoryModal${category.categoryId}`} />
 
             <Modal visible={visible} onClose={closeModal}>
                 {modalState.loading ? (
@@ -97,7 +96,7 @@ export const UpdateCategoryModal = ({ category, fetchCategories }) => {
 
                         <div className='form-field'>
                             <label className='form-label' htmlFor='categoryName'>Category Name: </label>
-                            <input className='form-input' type='text' name='categoryName' value={categoryForm.categoryName} onChange={event => setCategoryForm.categoryName(event.target.value)} />
+                            <input className='form-input' type='text' name='categoryName' id='updateCategoryNameInput' value={categoryForm.categoryName} onChange={event => setCategoryForm.categoryName(event.target.value)} />
                         </div>
 
                         <button className='form-btn-1' type='submit' id='updateCategoryButton'>Update Category</button>
