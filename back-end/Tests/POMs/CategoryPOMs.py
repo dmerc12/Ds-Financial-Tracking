@@ -8,38 +8,38 @@ class CategoryPOMs:
     def __init__(self, driver: WebDriver):
         self.driver = driver
 
-    def manage_categories_nav_button(self):
+    def click_manage_categories_nav_button(self):
         element: WebElement = self.driver.find_element(By.ID, "manageCategoriesButton")
-        return element
+        return element.click()
 
-    def create_category_modal(self):
+    def click_create_category_modal(self):
         element: WebElement = self.driver.find_element(By.ID, "createCategoryModal")
-        return element
+        return element.click()
 
-    def create_category_name_input(self):
+    def input_create_category_name(self, category_name):
         element: WebElement = self.driver.find_element(By.ID, "createCategoryNameInput")
-        return element
+        return element.send_keys(category_name)
 
-    def create_category_button(self):
+    def click_create_category_button(self):
         element: WebElement = self.driver.find_element(By.ID, "createCategoryButton")
-        return element
+        return element.click()
 
-    def update_category_modal(self, category_id):
+    def click_update_category_modal(self, category_id):
         element: WebElement = self.driver.find_element(By.ID, f"updateCategoryModal{category_id}")
-        return element
+        return element.click()
 
-    def update_category_name_input(self):
+    def input_update_category_name(self, category_name):
         element: WebElement = self.driver.find_element(By.ID, "updateCategoryNameInput")
-        return element
+        return element.send_keys(category_name)
 
-    def update_category_button(self):
+    def click_update_category_button(self):
         element: WebElement = self.driver.find_element(By.ID, "updateCategoryButton")
-        return element
+        return element.click()
 
-    def delete_category_modal(self, category_id):
+    def click_delete_category_modal(self, category_id):
         element: WebElement = self.driver.find_element(By.ID, f"deleteCategoryModal{category_id}")
-        return element
+        return element.click()
 
-    def delete_category_button(self):
+    def click_delete_category_button(self):
         element: WebElement = self.driver.find_element(By.ID, "deleteCategoryButton")
-        return element
+        return element.click()
