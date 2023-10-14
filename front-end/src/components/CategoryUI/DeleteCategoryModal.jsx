@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { useFetch } from '../../hooks/useFetch';
 import { toast } from 'react-toastify';
 import { FaSpinner, FaSync } from 'react-icons/fa';
+import { FiTrash2 } from 'react-icons/fi';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Modal } from '../Modal';
 
-export const CreateCategoryModal = ({ fetchCategories }) => {
-   const [categoryForm, setCategoryForm] = useState({categoryName: ''});
+export const DeleteCategoryModal = ({ category, fetchCategories }) => {
    const [modalState, setModalState] = useState({
       loading: false,
       failedToFetch: false,
@@ -35,17 +35,16 @@ export const CreateCategoryModal = ({ fetchCategories }) => {
          failedToFetch: false
       }));
       try {
-         const { responseStatus, data } = await fetchData('/api/create/category', 'POST', categoryForm);
+         const { responseStatus, data } = await fetchData('/api/delete/category', 'DELETE', {categoryId: category.categoryId});
 
-         if (responseStatus === 201) {
-            setCategoryForm({categoryName: ''});
-            setModalState({
-               failedToFetch: false,
+         if (responseStatus === 202) {
+            setModalState((prevState) => ({
+               ...prevState,
                loading: false,
                visible: false
-            });
+            }));
             fetchCategories();
-            toast.success("Category successfully created!", {toastId: 'customId'});
+            toast.success("Category successfully deleted!", {toastId: 'customId'});
          } else if (responseStatus === 400) {
             throw new Error(`${data.message}`);
          } else {
@@ -55,8 +54,8 @@ export const CreateCategoryModal = ({ fetchCategories }) => {
          if (error.message === 'Failed to fetch') {
             setModalState((prevState) => ({
                ...prevState,
-               failedToFetch: true,
-               loading: false
+               loading: false,
+               failedToFetch: true
             }));
          } else {
             setModalState.loading(false);
@@ -67,9 +66,7 @@ export const CreateCategoryModal = ({ fetchCategories }) => {
 
    return (
       <>
-         <div className='component'>
-            <button onClick={showModal} className='action-btn' id='createCategoryModal'>Create Category</button>
-         </div>
+         <FiTrash2 onClick={showModal} id={`deleteCategoryModal${category.categoryId}`} cursor='pointer' size={15}/>
 
          <Modal visible={visible} onClose={closeModal}>
             {modalState.loading ? (
@@ -84,16 +81,25 @@ export const CreateCategoryModal = ({ fetchCategories }) => {
                   <button className='retry-button' onClick={onSubmit}>
                      <FaSync className='retry-icon' />
                   </button>
-                  <button className='back-button' onClick={goBack}>Go Back</button>
+                  <button className='back-button' onClick={goBack}>GoBack</button>
                </div>
             ) : (
                <form className='form' onSubmit={onSubmit}>
                   <div className='form-field'>
-                     <label className='form-label' htmlFor='categoryName'>Category Name: </label>
-                     <input className='form-input' type='text' name='categoryName' id='createCategoryNameInput' value={categoryForm.categoryName} onChange={event => setCategoryForm.categoryName(event.target.value)} />
-
-                     <button className='form-btn-1' type='submit' id='createCategoryButton'>Create Category</button>
+                     <label className='form-label' htmlFor='categoryId'>Category ID: </label>
+                     <input className='form-input' name='categoryId' value={category.categoryId} disabled type='number' />
                   </div>
+
+                  <div className='form-field'>
+                  <label className='form-label' htmlFor='categoryName'>Category Name: </label>
+                     <input className='form-input' name='categoryName' value={category.categoryName} disabled type='text' />
+                  </div>
+
+                  <div className='form-field'>
+                     <label className='form-label'>Are you sure?</label>
+                  </div>
+
+                  <button className='form-btn-1' type='submit' id='deleteCategoryButton'>Delete Category</button>
                </form>
             )}
          </Modal>
