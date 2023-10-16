@@ -25,7 +25,7 @@ if __name__ == "__main__":
     '''
 
     test_category = '''
-        INSERT INTO CATEGORY (category_id, category_name) VALUES (-1, 'test category');
+        INSERT INTO financial_tracker.CATEGORY (category_id, category_name) VALUES (-1, 'test category');
     '''
 
     expense_table_sql = '''
