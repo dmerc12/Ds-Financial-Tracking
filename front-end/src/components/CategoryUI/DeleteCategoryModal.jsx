@@ -8,42 +8,34 @@ import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Modal } from '../Modal';
 
 export const DeleteCategoryModal = ({ category, fetchCategories }) => {
-   const [modalState, setModalState] = useState({
-      loading: false,
-      failedToFetch: false,
-      visible: false
-   });
+   const [visible, setVisible] = useState(false);
+   const [loading, setLoading] = useState(false);
+   const [failedToFetch, setFailedToFetch] = useState(false);
 
    const { fetchData } = useFetch();
 
    const showModal = () => {
-      setModalState.visible(true);
+      setVisible(true);
    };
 
    const closeModal = () => {
-      setModalState.visible(false);
+      setVisible(false);
    };
 
    const goBack = () => {
-      setModalState.failedToFetch(false);
+      setFailedToFetch(false);
    };
 
    const onSubmit = async (event) => {
       event.preventDefault();
-      setModalState((prevState) => ({
-         ...prevState,
-         loading: true,
-         failedToFetch: false
-      }));
+      setLoading(true);
+      setFailedToFetch(false);
       try {
          const { responseStatus, data } = await fetchData('/api/delete/category', 'DELETE', {categoryId: category.categoryId});
 
          if (responseStatus === 202) {
-            setModalState((prevState) => ({
-               ...prevState,
-               loading: false,
-               visible: false
-            }));
+            setLoading(false);
+            setVisible(false);
             fetchCategories();
             toast.success("Category successfully deleted!", {toastId: 'customId'});
          } else if (responseStatus === 400) {
@@ -53,13 +45,10 @@ export const DeleteCategoryModal = ({ category, fetchCategories }) => {
          }
       } catch (error) {
          if (error.message === 'Failed to fetch') {
-            setModalState((prevState) => ({
-               ...prevState,
-               loading: false,
-               failedToFetch: true
-            }));
+            setFailedToFetch(true);
+            setLoading(false);
          } else {
-            setModalState.loading(false);
+            setLoading(false);
             toast.warn(error.message, {toastId: 'customId'});
          }
       }
@@ -69,12 +58,12 @@ export const DeleteCategoryModal = ({ category, fetchCategories }) => {
       <>
          <FiTrash2 onClick={showModal} id={`deleteCategoryModal${category.categoryId}`} cursor='pointer' size={15}/>
 
-         <Modal visible={modalState.visible} onClose={closeModal}>
-            {modalState.loading ? (
+         <Modal visible={visible} onClose={closeModal}>
+            {loading ? (
                <div className='loading-indicator'>
                   <FaSpinner className='spinner' />
                </div>
-            ) : modalState.failedToFetch ? (
+            ) : failedToFetch ? (
                <div className='failed-to-fetch'>
                   <AiOutlineExclamationCircle className='warning-icon' />
                   <p>Cannot connect to the back end server.</p>

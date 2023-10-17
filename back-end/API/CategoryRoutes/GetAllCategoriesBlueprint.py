@@ -14,8 +14,7 @@ def get_all_categories():
         current_app.logger.info("Beginning API function get all categories")
         categories = category_sao.get_all_categories()
         category_list = [category.convert_to_dictionary() for category in categories]
-        current_app.logger.info("Finishing API function get all categories with categories: " +
-                                str(category.convert_to_dictionary for category in category_list))
+        current_app.logger.info("Finishing API function get all categories with categories")
         return jsonify(category_list), 200
     except CustomError as error:
         current_app.logger.error("Error with API function get all categories with error: " + str(error))

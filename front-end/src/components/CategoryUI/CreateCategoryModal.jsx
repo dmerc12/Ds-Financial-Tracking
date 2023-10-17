@@ -8,43 +8,43 @@ import { Modal } from '../Modal';
 // eslint-disable-next-line react/prop-types
 export const CreateCategoryModal = ({ fetchCategories }) => {
    const [categoryForm, setCategoryForm] = useState({categoryName: ''});
-   const [modalState, setModalState] = useState({
-      loading: false,
-      failedToFetch: false,
-      visible: false
-   });
+   const [visible, setVisible] = useState(false);
+   const [loading, setLoading] = useState(false);
+   const [failedToFetch, setFailedToFetch] = useState(false);
 
    const { fetchData } = useFetch();
 
    const showModal = () => {
-      setModalState.visible(true);
+      setVisible(true);
    };
 
    const closeModal = () => {
-      setModalState.visible(false);
+      setVisible(false);
    };
 
    const goBack = () => {
-      setModalState.failedToFetch(false);
+      setFailedToFetch(false);
+   };
+
+   const onChange = (event) => {
+      const { name, value } = event.target;
+      setCategoryForm((prevForm) => ({
+         ...prevForm,
+         [name]: value
+      }));
    };
 
    const onSubmit = async (event) => {
       event.preventDefault();
-      setModalState((prevState) => ({
-         ...prevState,
-         loading: true,
-         failedToFetch: false
-      }));
+      setLoading(true);
+      setFailedToFetch(false);
       try {
          const { responseStatus, data } = await fetchData('/api/create/category', 'POST', categoryForm);
 
          if (responseStatus === 201) {
             setCategoryForm({categoryName: ''});
-            setModalState({
-               failedToFetch: false,
-               loading: false,
-               visible: false
-            });
+            setVisible(false);
+            setLoading(false);
             fetchCategories();
             toast.success("Category successfully created!", {toastId: 'customId'});
          } else if (responseStatus === 400) {
@@ -54,13 +54,10 @@ export const CreateCategoryModal = ({ fetchCategories }) => {
          }
       } catch (error) {
          if (error.message === 'Failed to fetch') {
-            setModalState((prevState) => ({
-               ...prevState,
-               failedToFetch: true,
-               loading: false
-            }));
+            setLoading(false);
+            setFailedToFetch(true);
          } else {
-            setModalState.loading(false);
+            setLoading(false);
             toast.warn(error.message, {toastId: 'customId'});
          }
       }
@@ -72,12 +69,12 @@ export const CreateCategoryModal = ({ fetchCategories }) => {
             <button onClick={showModal} className='action-btn' id='createCategoryModal'>Create Category</button>
          </div>
 
-         <Modal visible={modalState.visible} onClose={closeModal}>
-            {modalState.loading ? (
+         <Modal visible={visible} onClose={closeModal}>
+            {loading ? (
                <div className='loading-indicator'>
                   <FaSpinner className='spinner' />
                </div>
-            ) : modalState.failedToFetch ? (
+            ) : failedToFetch ? (
                <div className='failed-to-fetch'>
                   <AiOutlineExclamationCircle className='warning-icon' />
                   <p>Cannot connect to the back end server.</p>
@@ -91,7 +88,7 @@ export const CreateCategoryModal = ({ fetchCategories }) => {
                <form className='form' onSubmit={onSubmit}>
                   <div className='form-field'>
                      <label className='form-label' htmlFor='categoryName'>Category Name: </label>
-                     <input className='form-input' type='text' name='categoryName' id='createCategoryNameInput' value={categoryForm.categoryName} onChange={event => setCategoryForm.categoryName(event.target.value)} />
+                     <input className='form-input' type='text' name='categoryName' id='createCategoryNameInput' value={categoryForm.categoryName} onChange={onChange} />
 
                      <button className='form-btn-1' type='submit' id='createCategoryButton'>Create Category</button>
                   </div>

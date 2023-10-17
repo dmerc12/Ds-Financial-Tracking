@@ -12,42 +12,42 @@ export const UpdateCategoryModal = ({ category, fetchCategories }) => {
         categoryId: category.categoryId,
         categoryName: category.categoryName
     });
-    const [modalState, setModalState] = useState({
-        loading: false,
-        failedToFetch: false,
-        visible: false
-    });
+    const [visible, setVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [failedToFetch, setFailedToFetch] = useState(false);
 
     const { fetchData } = useFetch();
 
     const showModal = () => {
-        setModalState.visible(true);
+        setVisible(true);
     };
 
     const closeModal = () => {
-        setModalState.visible(false);
+        setVisible(false);
     };
 
     const goBack = () => {
-        setModalState.failedToFetch(false);
+        setFailedToFetch(false);
+    };
+
+    const onChange = (event) => {
+        const { name, value } = event.target;
+        setCategoryForm((prevForm) => ({
+            ...prevForm,
+            [name]: value
+        }));
     };
 
     const onSubmit = async (event) => {
         event.preventDefault();
-        setModalState((prevState) => ({
-            ...prevState,
-            loading: true,
-            failedToFetch: false
-        }));
+        setFailedToFetch(false);
+        setLoading(true);
         try {
             const { responseStatus, data } = await fetchData('/api/update/category', 'PUT', categoryForm);
 
             if (responseStatus === 202) {
-                setModalState({
-                    failedToFetch: false,
-                    loading: false,
-                    visible: false
-                });
+                setLoading(false);
+                setVisible(false);
                 fetchCategories();
                 toast.success("Category successfully updated!", {toastId: 'customId'});
             } else if (responseStatus === 400) {
@@ -57,14 +57,11 @@ export const UpdateCategoryModal = ({ category, fetchCategories }) => {
             }
         } catch (error) {
             if (error.message === 'Failed to fetch') {
-            setModalState((prevState) => ({
-                ...prevState,
-                loading: false,
-                failedToFetch: true
-            }));
+                setFailedToFetch(true);
+                setLoading(false);
             } else {
-            setModalState.loading(false);
-            toast.warn(error.message, {toastId: 'customId'});
+                setLoading(false);
+                toast.warn(error.message, {toastId: 'customId'});
             }
         }
    };
@@ -73,12 +70,12 @@ export const UpdateCategoryModal = ({ category, fetchCategories }) => {
         <>
             <FiEdit onClick={showModal} cursor='pointer' size={15} id={`updateCategoryModal${category.categoryId}`} />
 
-            <Modal visible={modalState.visible} onClose={closeModal}>
-                {modalState.loading ? (
+            <Modal visible={visible} onClose={closeModal}>
+                {loading ? (
                 <div className='loading-indicator'>
                     <FaSpinner className='spinner' />
                 </div>
-                ) : modalState.failedToFetch ? (
+                ) : failedToFetch ? (
                 <div className='failed-to-fetch'>
                     <AiOutlineExclamationCircle className='warning-icon' />
                     <p>Cannot connect to the back end server.</p>
@@ -97,7 +94,7 @@ export const UpdateCategoryModal = ({ category, fetchCategories }) => {
 
                         <div className='form-field'>
                             <label className='form-label' htmlFor='categoryName'>Category Name: </label>
-                            <input className='form-input' type='text' name='categoryName' id='updateCategoryNameInput' value={categoryForm.categoryName} onChange={event => setCategoryForm.categoryName(event.target.value)} />
+                            <input className='form-input' type='text' name='categoryName' id='updateCategoryNameInput' value={categoryForm.categoryName} onChange={onChange} />
                         </div>
 
                         <button className='form-btn-1' type='submit' id='updateCategoryButton'>Update Category</button>

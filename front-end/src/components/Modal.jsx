@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 export const Modal = ({ visible, onClose, children }) => {
     if (!visible) return null;
 
@@ -10,7 +11,7 @@ export const Modal = ({ visible, onClose, children }) => {
         <>
             <div className="modal-exterior-wrapper" id="wrapper" onClick={handleClose}>
                 <div className="modal-interior-wrapper">
-                    <button className="close-button" onclick={() => onClose()}>Close</button>
+                    <button className="close-button" onClick={() => onClose()}>Close</button>
                     <div className="modal">
                         {children}
                     </div>

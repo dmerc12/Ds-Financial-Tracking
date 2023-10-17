@@ -10,10 +10,8 @@ import { toast } from "react-toastify";
 
 export const CategoryList = () => {
     const [categories, setCategories] = useState([]);
-    const [listState, setListState] = useState({
-        loading: false,
-        failedToFetch: false
-    });
+    const [loading, setLoading] = useState(false);
+    const [failedToFetch, setFailedToFetch] = useState(false);
 
     const { fetchData } = useFetch();
 
@@ -21,22 +19,20 @@ export const CategoryList = () => {
 
     const goBack = () => {
         navigate('/home');
-        setListState.failedToFetch(false);
+        setFailedToFetch(false);
     };
     
     let categoryRows = [];
 
     const fetchCategories = async () => {
-        setListState({
-            loading: true,
-            failedToFetch: false
-        });
+        setLoading(true);
+        setFailedToFetch(false);
         try {
-            const { responseStatus, data } = await fetchData('/api/get/all/categories', 'GET', {});
+            const { responseStatus, data } = await fetchData('/api/get/all/categories', 'GET');
 
             if (responseStatus === 200) {
                 setCategories(data);
-                setListState.loading(false);
+                setLoading(false);
             } else if (responseStatus === 400) {
                 throw new Error(`${data.message}`);
             } else {
@@ -44,12 +40,10 @@ export const CategoryList = () => {
             }
         } catch (error) {
             if (error.message === 'Failed to fetch') {
-                setListState({
-                    loading: false,
-                    failedToFetch: true
-                });
+                setLoading(false);
+                setFailedToFetch(true)
                 } else {
-                setListState.loading(false);
+                setLoading(false);
                 toast.warn(error.message, {toastId: 'customId'});
                 }
         }
@@ -61,7 +55,7 @@ export const CategoryList = () => {
     }, []);
 
     if (categories.length > 0) {
-        for (let i=0; 9 < categories.length; i++) {
+        for (let i=0; i < categories.length; i++) {
             const category = categories[i];
             categoryRows.push(
                 <tr key={category.categoryId}>
@@ -78,11 +72,11 @@ export const CategoryList = () => {
     return (
         <>
             <CreateCategoryModal fetchCategories={fetchCategories} />
-            {listState.loading ? (
+            {loading ? (
                 <div className='loading-indicator'>
                 <FaSpinner className='spinner' />
             </div>
-        ) : listState.failedToFetch ? (
+        ) : failedToFetch ? (
             <div className='failed-to-fetch'>
                     <AiOutlineExclamationCircle className='warning-icon'/>
                     <p>Cannot connect to the back end server.</p>
