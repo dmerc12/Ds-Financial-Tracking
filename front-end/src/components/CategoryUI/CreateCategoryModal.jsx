@@ -31,7 +31,7 @@ export const CreateCategoryModal = ({ fetchCategories }) => {
       setCategoryForm((prevForm) => ({
          ...prevForm,
          [name]: value
-      }))
+      }));
    };
 
    const onSubmit = async (event) => {
