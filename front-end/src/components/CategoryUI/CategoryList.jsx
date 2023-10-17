@@ -29,7 +29,6 @@ export const CategoryList = () => {
         setFailedToFetch(false);
         try {
             const { responseStatus, data } = await fetchData('/api/get/all/categories', 'GET');
-            console.log(data)
 
             if (responseStatus === 200) {
                 setCategories(data);
