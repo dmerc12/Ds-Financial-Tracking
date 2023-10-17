@@ -29,6 +29,7 @@ export const CategoryList = () => {
         setFailedToFetch(false);
         try {
             const { responseStatus, data } = await fetchData('/api/get/all/categories', 'GET');
+            console.log(data)
 
             if (responseStatus === 200) {
                 setCategories(data);
@@ -55,7 +56,7 @@ export const CategoryList = () => {
     }, []);
 
     if (categories.length > 0) {
-        for (let i=0; 9 < categories.length; i++) {
+        for (let i=0; i < categories.length; i++) {
             const category = categories[i];
             categoryRows.push(
                 <tr key={category.categoryId}>
