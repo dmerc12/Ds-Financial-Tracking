@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import { useFetch } from '../../hooks/useFetch';
 import { toast } from 'react-toastify';
@@ -68,7 +69,7 @@ export const DeleteCategoryModal = ({ category, fetchCategories }) => {
       <>
          <FiTrash2 onClick={showModal} id={`deleteCategoryModal${category.categoryId}`} cursor='pointer' size={15}/>
 
-         <Modal visible={visible} onClose={closeModal}>
+         <Modal visible={modalState.visible} onClose={closeModal}>
             {modalState.loading ? (
                <div className='loading-indicator'>
                   <FaSpinner className='spinner' />
