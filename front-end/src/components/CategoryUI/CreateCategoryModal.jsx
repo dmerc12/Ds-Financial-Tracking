@@ -5,6 +5,7 @@ import { FaSpinner, FaSync } from 'react-icons/fa';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Modal } from '../Modal';
 
+// eslint-disable-next-line react/prop-types
 export const CreateCategoryModal = ({ fetchCategories }) => {
    const [categoryForm, setCategoryForm] = useState({categoryName: ''});
    const [modalState, setModalState] = useState({
@@ -71,7 +72,7 @@ export const CreateCategoryModal = ({ fetchCategories }) => {
             <button onClick={showModal} className='action-btn' id='createCategoryModal'>Create Category</button>
          </div>
 
-         <Modal visible={visible} onClose={closeModal}>
+         <Modal visible={modalState.visible} onClose={closeModal}>
             {modalState.loading ? (
                <div className='loading-indicator'>
                   <FaSpinner className='spinner' />

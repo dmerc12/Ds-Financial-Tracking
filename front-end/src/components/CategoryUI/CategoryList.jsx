@@ -57,6 +57,7 @@ export const CategoryList = () => {
 
     useEffect(() => {
         fetchCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     if (categories.length > 0) {
@@ -72,16 +73,16 @@ export const CategoryList = () => {
                 </tr>
             )
         }
-    };
+    }
 
     return (
         <>
-            <CreateCategoryModal category={category} fetchCategories={fetchCategories} />
+            <CreateCategoryModal fetchCategories={fetchCategories} />
             {listState.loading ? (
                 <div className='loading-indicator'>
                 <FaSpinner className='spinner' />
             </div>
-        ) : failedToFetch ? (
+        ) : listState.failedToFetch ? (
             <div className='failed-to-fetch'>
                     <AiOutlineExclamationCircle className='warning-icon'/>
                     <p>Cannot connect to the back end server.</p>
