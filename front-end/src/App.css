@@ -192,9 +192,9 @@
   
   .form-field {
     display: flex;
-    flex-direction: row;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 15px;
     padding: 5px;
   }
   
@@ -208,6 +208,7 @@
   }
   
   .form-input {
+    display: inline;
     width: 200px;
     padding: 5px;
     display: inline-block;
@@ -216,6 +217,7 @@
     border-radius: 10px;
     font-weight: 600;
     color: white;
+    margin-bottom: 15px;
   }
   
   .form-input:hover {
