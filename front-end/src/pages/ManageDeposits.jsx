@@ -1,9 +1,9 @@
-import { CreateDepositModal } from "../components/DepositUI/CreateDepositModal"
+import { DepositList } from "../components/DepositUI/DepositList"
 
 export const ManageDeposits = () => {
     return (
         <>
-            <CreateDepositModal />
+            <DepositList />
         </>
     )
 }

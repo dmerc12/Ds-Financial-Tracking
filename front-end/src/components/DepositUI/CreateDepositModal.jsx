@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useFetch  } from "../../hooks/useFetch";
 import { toast } from "react-toastify";
@@ -7,12 +6,13 @@ import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { Modal } from "../Modal";
 import DatePicker from "react-datepicker";
 
-export const CreateDepositModal = () => {
+// eslint-disable-next-line react/prop-types
+export const CreateDepositModal = ({ fetchDeposits }) => {
     const [depositForm, setDepositForm] = useState({
-        categoryId: 0,
+        categoryId: Number(0),
         date: '',
         description: '',
-        amount: 0.00
+        amount: Number(0.00)
     });
     const [categories, setCategories] = useState([]);
     const [visible, setVisible] = useState(false);
@@ -38,10 +38,17 @@ export const CreateDepositModal = () => {
 
     const onChange = (event) => {
         const { name, value } = event.target;
-        setDepositForm((prevForm) => ({
-            ...prevForm,
-            [name]: value
-        }));
+        if (name === 'categoryId' | name === 'amount') {
+            setDepositForm((prevForm) => ({
+                ...prevForm,
+                [name]: Number(value)
+            }));
+        } else {
+            setDepositForm((prevForm) => ({
+                ...prevForm,
+                [name]: value
+            }));
+        }
     };
 
     const onDateChange = (date) => {
@@ -62,7 +69,7 @@ export const CreateDepositModal = () => {
                 setCategories(data);
                 setDepositForm((prevForm) => ({
                     ...prevForm,
-                    categoryId: data[0].categoriId
+                    categoryId: Number(data[0].categoryId)
                 }));
                 setLoading(false);
             } else if (responseStatus === 400) {
@@ -91,14 +98,14 @@ export const CreateDepositModal = () => {
 
             if (responseStatus === 201) {
                 setDepositForm({
-                    categoryId: 0,
+                    categoryId: Number(0),
                     date: '',
                     description: '',
-                    amount: 0.00
+                    amount: Number(0.00)
                 });
-                setVisible(true);
-                setLoading(true);
-                //fetchDeposits();
+                setVisible(false);
+                setLoading(false);
+                fetchDeposits();
                 toast.success("Deposit successfully created!", {toastId: 'customId'});
             } else if (responseStatus === 400) {
                 throw new Error(`${data.message}`);
@@ -118,6 +125,7 @@ export const CreateDepositModal = () => {
 
     useEffect(() => {
         fetchCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
