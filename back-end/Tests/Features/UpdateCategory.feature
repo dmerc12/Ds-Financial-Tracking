@@ -1,6 +1,6 @@
 Feature: A user needs to be able to update a category.
 
-  Scenario Outline: As a user, correctly attempt to update an existing category.
+  Scenario Outline: As a user, incorrectly attempt to update an existing category.
     Given I am on the home page
     When  I click on the manage categories button
     When  I click the update category modal on category <category_id>
