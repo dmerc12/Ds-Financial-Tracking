@@ -33,3 +33,13 @@ def step_impl(context, category_name):
 @when(u'I click the update category button')
 def step_impl(context):
     context.category_poms.click_update_category_button()
+
+
+@when(u'I click the delete category modal on category {category_id}')
+def step_impl(context, category_id):
+    context.category_poms.click_delete_category_modal(category_id)
+
+
+@when(u'I click the delete category button')
+def step_impl(context):
+    context.category_poms.click_delete_category_button()
