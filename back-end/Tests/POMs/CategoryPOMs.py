@@ -9,6 +9,10 @@ class CategoryPOMs:
         self.driver = driver
 
     def click_manage_categories_nav_button(self):
+        element: WebElement = self.driver.find_element(By.ID, "manageCategoriesNavButton")
+        return element.click()
+
+    def click_manage_categories_button(self):
         element: WebElement = self.driver.find_element(By.ID, "manageCategoriesButton")
         return element.click()
 
