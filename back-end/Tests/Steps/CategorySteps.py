@@ -1,5 +1,10 @@
 from behave import when
 
+@when(u'I click the manage categories button in the navigation bar')
+def step_impl(context):
+    context.category_poms.click_manage_categories_nav_button()
+
+
 @when(u'I click the manage categories button')
 def step_impl(context):
     context.category_poms.click_manage_categories_button()
