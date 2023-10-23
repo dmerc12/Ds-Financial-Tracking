@@ -1,6 +1,6 @@
 import { CreateDepositModal } from "./CreateDepositModal";
-import { UpdateDepositModal } from "./UpdateDepositModal";
-import { DeleteDepositModal } from "./DeleteDepositModal";
+// import { UpdateDepositModal } from "./UpdateDepositModal";
+// import { DeleteDepositModal } from "./DeleteDepositModal";
 import { useFetch } from "../../hooks/useFetch";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,8 @@ export const DepositList = () => {
     const [deposits, setDeposits] = useState([]);
     const [loading, setLoading] = useState(false);
     const [failedToFetch, setFailedToFetch] = useState(false);
+
+    const depositPropertiesOrder = ['depositId', 'categoryId', 'date', 'description', 'amount'];
 
     const { fetchData } = useFetch();
 
@@ -59,15 +61,20 @@ export const DepositList = () => {
             const deposit = deposits[i];
             depositRows.push(
                 <tr key={deposit.depositId}>
-                    <td className="table-data">{deposit.depositId}</td>
+                    {depositPropertiesOrder.map(property => (
+                        <td className="table-data" key={property}>{deposit[property]}</td>
+                    ))}
+
+
+                    {/* <td className="table-data">{deposit.depositId}</td>
                     <td className="table-data">{deposit.categoryId}</td>
                     <td className="table-data">{deposit.date}</td>
                     <td className="table-data">{deposit.description}</td>
                     <td className="table-data">{deposit.amount}</td>
                     <td className="table-data">
-                        <UpdateDepositModal />
-                        <DeleteDepositModal />
-                    </td>
+                        {/* <UpdateDepositModal />
+                        <DeleteDepositModal /> *
+                    </td>*/}
                 </tr>
             )
         }
