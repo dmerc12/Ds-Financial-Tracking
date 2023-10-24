@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useFetch  } from "../../hooks/useFetch";
 import { toast } from "react-toastify";
@@ -6,10 +7,9 @@ import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { Modal } from "../Modal";
 import DatePicker from "react-datepicker";
 
-// eslint-disable-next-line react/prop-types
 export const CreateDepositModal = ({ categories, fetchDeposits }) => {
     const [depositForm, setDepositForm] = useState({
-        categoryId: Number(categories[0]),
+        categoryId: Number(categories[0].categoryId),
         date: '',
         description: '',
         amount: Number(0.00)
