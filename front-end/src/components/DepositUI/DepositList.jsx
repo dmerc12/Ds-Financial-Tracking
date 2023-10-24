@@ -30,7 +30,6 @@ export const DepositList = () => {
     const fetchCategories = async () => {
         setLoading(true);
         setFailedToFetchCategories(false);
-        setFailedToFetchSubmission(false);
         try {
             const { responseStatus, data } = await fetchData('/api/get/all/categories', 'GET');
 
