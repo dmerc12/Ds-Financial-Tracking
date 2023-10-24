@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useFetch  } from "../../hooks/useFetch";
 import { toast } from "react-toastify";
 import { FaSpinner, FaSync } from "react-icons/fa";
@@ -87,11 +87,6 @@ export const CreateDepositModal = ({ categories, fetchDeposits }) => {
              }
         }
     };
-
-    useEffect(() => {
-        fetchCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     return (
         <>
