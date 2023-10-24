@@ -86,7 +86,7 @@ export const DepositList = () => {
     if (deposits.length > 0) {
         for (let i=0; i < deposits.length; i++) {
             const deposit = deposits[i];
-            depositRows.push(
+            depositRows.unshift(
                 <tr key={deposit.depositId}>
                     <td className="table-data">{deposit.depositId}</td>
                     <td className="table-data">{deposit.categoryId}</td>
