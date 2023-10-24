@@ -1,6 +1,6 @@
-import { CreateDepositModal } from "./CreateDepositModal";
-import { UpdateDepositModal } from "./UpdateDepositModal";
-import { DeleteDepositModal } from "./DeleteDepositModal";
+import { CreateExpenseModal } from "./CreateExpenseModal";
+import { UpdateExpenseModal } from "./UpdateExpenseModal";
+import { DeleteExpenseModal } from "./DeleteExpenseModal";
 import { useFetch } from "../../hooks/useFetch";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -8,12 +8,12 @@ import { FaSpinner, FaSync } from "react-icons/fa";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { toast } from "react-toastify";
 
-export const DepositList = () => {
-    const [deposits, setDeposits] = useState([]);
+export const ExpenseList = () => {
+    const [expenses, setExpenses] = useState([]);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
     const [failedToFetchCategories, setFailedToFetchCategories] = useState(false);
-    const [failedToFetchDeposits, setFailedToFetchDeposits] = useState(false);
+    const [failedToFetchExpenses, setFailedToFetchExpenses] = useState(false);
 
     const { fetchData } = useFetch();
 
@@ -22,10 +22,10 @@ export const DepositList = () => {
     const goBack = () => {
         navigate('/home');
         setFailedToFetchCategories(false);
-        setFailedToFetchDeposits(false);
+        setFailedToFetchExpenses(false);
     };
 
-    let depositRows = [];
+    let expenseRows = [];
 
     const fetchCategories = async () => {
         setLoading(true);
@@ -52,14 +52,14 @@ export const DepositList = () => {
         }
     };
 
-    const fetchDeposits = async () => {
+    const fetchExpenses = async () => {
         setLoading(true);
-        setFailedToFetchDeposits(false);
+        setFailedToFetchExpenses(false);
         try {
-            const { responseStatus, data } = await fetchData('/api/get/all/deposits', 'GET');
+            const { responseStatus, data } = await fetchData('/api/get/all/expenses', 'GET');
 
             if (responseStatus === 200) {
-                setDeposits(data);
+                setExpenses(data);
                 setLoading(false);
             } else if (responseStatus === 400) {
                 throw new Error(`${data.message}`);
@@ -69,7 +69,7 @@ export const DepositList = () => {
         } catch (error) {
             if (error.message === 'Failed to fetch') {
                 setLoading(false);
-                setFailedToFetchDeposits(true)
+                setFailedToFetchExpenses(true)
             } else {
                 setLoading(false);
                 toast.warn(error.message, {toastId: 'customId'});
@@ -78,24 +78,24 @@ export const DepositList = () => {
     }
 
     useEffect(() => {
-        fetchDeposits();
+        fetchExpenses();
         fetchCategories();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    if (deposits.length > 0) {
-        for (let i=0; i < deposits.length; i++) {
-            const deposit = deposits[i];
-            depositRows.push(
-                <tr key={deposit.depositId}>
-                    <td className="table-data">{deposit.depositId}</td>
-                    <td className="table-data">{deposit.categoryId}</td>
-                    <td className="table-data">{deposit.date}</td>
-                    <td className="table-data">{deposit.description}</td>
-                    <td className="table-data">{deposit.amount}</td>
+    if (expenses.length > 0) {
+        for (let i=0; i < expenses.length; i++) {
+            const expense = expenses[i];
+            expenseRows.push(
+                <tr key={expense.expenseId}>
+                    <td className="table-data">{expense.expenseId}</td>
+                    <td className="table-data">{expense.categoryId}</td>
+                    <td className="table-data">{expense.date}</td>
+                    <td className="table-data">{expense.description}</td>
+                    <td className="table-data">{expense.amount}</td>
                     <td className="table-data">
-                        <UpdateDepositModal deposit={deposit} categories={categories} fetchDeposits={fetchDeposits} />
-                        <DeleteDepositModal deposit={deposit} fetchDeposits={fetchDeposits} />
+                        <UpdateExpenseModal expense={expense} categories={categories} fetchExpenses={fetchExpenses} />
+                        <DeleteExpenseModal expense={expense} fetchExpenses={fetchExpenses} />
                     </td>
                 </tr>
             )
@@ -104,17 +104,17 @@ export const DepositList = () => {
 
     return (
         <>
-            <CreateDepositModal categories={categories} fetchDeposits={fetchDeposits} />
+            <CreateExpenseModal categories={categories} fetchExpenses={fetchExpenses} />
             {loading ? (
                 <div className="loading-indicator">
                     <FaSpinner className="spinner" />
                 </div>  
-            ) : failedToFetchDeposits ? (
+            ) : failedToFetchExpenses ? (
                 <div className='failed-to-fetch'>
                     <AiOutlineExclamationCircle className='warning-icon'/>
                     <p>Cannot connect to the back end server.</p>
                     <p>Please check your internet connection and try again.</p>
-                    <button className='retry-button' onClick={fetchDeposits}>
+                    <button className='retry-button' onClick={fetchExpenses}>
                         <FaSync className='retry-icon'/> Retry
                     </button>
                     <button className='back-button' onClick={goBack}>Go Back</button>
@@ -129,14 +129,14 @@ export const DepositList = () => {
                   </button>
                   <button className='back-button' onClick={goBack}>Go Back</button>
                </div>
-            ) : deposits.length === 0 ? (
-                <div className="empty-list">No deposits have been created yet. Click the Add Deposit button to create a new deposit.</div>
+            ) : expenses.length === 0 ? (
+                <div className="empty-list">No expenses have been created yet. Click the Add Expense button to create a new expense.</div>
             ) : (
                 <div className="list">
                     <table className="table">
                         <thead>
                             <tr>
-                                <th className="table-head">Deposit ID</th>
+                                <th className="table-head">Expense ID</th>
                                 <th className="table-head">Category ID</th>
                                 <th className="table-head">Date</th>
                                 <th className="table-head">Description</th>
@@ -144,7 +144,7 @@ export const DepositList = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {depositRows}
+                            {expenseRows}
                         </tbody>
                     </table>
                 </div>

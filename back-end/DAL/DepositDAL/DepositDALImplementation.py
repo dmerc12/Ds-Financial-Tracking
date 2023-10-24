@@ -48,7 +48,13 @@ class DepositDALImplementation(DepositDALInterface):
         deposit_records = cursor.fetchall()
         deposits = []
         for deposit in deposit_records:
-            deposit = Deposit(*deposit)
+            deposit = Deposit(
+                deposit_id=deposit[0],
+                category_id=deposit[4],
+                date=deposit[1],
+                description=deposit[2],
+                amount=deposit[3]
+            )
             deposits.append(deposit)
             logging.info("Finishing DAL method get all categories with result: " + str(deposit.convert_to_dictionary()))
         cursor.close()

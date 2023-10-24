@@ -6,13 +6,13 @@ import { FaSpinner, FaSync } from 'react-icons/fa';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Modal } from '../Modal';
 
-export const UpdateDepositModal = ({ deposit, categories, fetchDeposits }) => {
-    const [depositForm, setDepositForm] = useState({
-        depositId: deposit.depositId,
-        categoryId: deposit.categoryId,
-        date: deposit.date,
-        description: deposit.description,
-        amount: deposit.amount
+export const UpdateExpenseModal = ({ expense, categories, fetchExpenses }) => {
+    const [expenseForm, setExpenseForm] = useState({
+        expenseId: expense.expenseId,
+        categoryId: expense.categoryId,
+        date: expense.date,
+        description: expense.description,
+        amount: expense.amount
     });
     const [visible, setVisible] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -35,12 +35,12 @@ export const UpdateDepositModal = ({ deposit, categories, fetchDeposits }) => {
     const onChange = (event) => {
         const { name, value } = event.target;
         if (name === 'categoryId' | name === 'amount') {
-            setDepositForm((prevForm) => ({
+            setExpenseForm((prevForm) => ({
                 ...prevForm,
                 [name]: Number(value)
             }));
         } else {
-            setDepositForm((prevForm) => ({
+            setExpenseForm((prevForm) => ({
                 ...prevForm,
                 [name]: value
             }));
@@ -48,7 +48,7 @@ export const UpdateDepositModal = ({ deposit, categories, fetchDeposits }) => {
     };
 
     const onDateChange = (date) => {
-        setDepositForm((prevForm) => ({
+        setExpenseForm((prevForm) => ({
             ...prevForm,
             date: date
         }));
@@ -59,13 +59,13 @@ export const UpdateDepositModal = ({ deposit, categories, fetchDeposits }) => {
         setFailedToFetch(false);
         setLoading(true);
         try {
-            const { responseStatus, data } = await fetchData('/api/update/deposit', 'PUD', depositForm);
+            const { responseStatus, data } = await fetchData('/api/update/expense', 'PUD', expenseForm);
 
             if (responseStatus === 202) {
                 setLoading(false);
                 setVisible(false);
-                fetchDeposits();
-                toast.success("Deposit successfully updated!", {toastId: 'customId'});
+                fetchExpenses();
+                toast.success("Expense successfully updated!", {toastId: 'customId'});
             } else if (responseStatus === 400) {
                 throw new Error(`${data.message}`);
             } else {
@@ -84,7 +84,7 @@ export const UpdateDepositModal = ({ deposit, categories, fetchDeposits }) => {
 
     return (
         <>
-            <FiEdit onClick={showModal} cursor='pointer' size={15} id={`updateDepositModal${deposit.depositId}`} />
+            <FiEdit onClick={showModal} cursor='pointer' size={15} id={`updateExpenseModal${expense.expenseId}`} />
 
             <Modal visible={visible} onClose={closeModal}>
                 {loading ? (
@@ -105,7 +105,7 @@ export const UpdateDepositModal = ({ deposit, categories, fetchDeposits }) => {
                     <form className='form' onSubmit={onSubmit}>
                         <div className='form-field'>
                             <label className='form-label' htmlFor='categoryId'>Category: </label>
-                            <select className='form-input' name='categoryId' id='updateDepositCategoryInput' value={depositForm.categoryId} onChange={onChange}>
+                            <select className='form-input' name='categoryId' id='updateExpenseCategoryInput' value={expenseForm.categoryId} onChange={onChange}>
                                 {categories && categories.length > 0 && (
                                     categories.map(category => (
                                         <option key={category.categoryId} value={category.categoryId}>{category.categoryName}</option>
@@ -114,15 +114,15 @@ export const UpdateDepositModal = ({ deposit, categories, fetchDeposits }) => {
                             </select>
 
                             <label className="form-label" htmlFor="date">Date: </label>
-                            <DatePicker className="form-input" selected={depositForm.date} onChange={onDateChange} name="date" id="updateDepositDateInput" />
+                            <DatePicker className="form-input" selected={expenseForm.date} onChange={onDateChange} name="date" id="updateExpenseDateInput" />
 
                             <label className="form-label" htmlFor="description">Description: </label>
-                            <input className="form-input" type="text" name="description" id="updateDepositDescriptionInput" value={depositForm.description} onChange={onChange} />
+                            <input className="form-input" type="text" name="description" id="updateExpenseDescriptionInput" value={expenseForm.description} onChange={onChange} />
 
                             <label className="form-label" htmlFor="amount">Amount: </label>
-                            <input className="form-input" type="number" name="amount" id="updateDepositAmountInput" value={depositForm.amount} onChange={onChange} />
+                            <input className="form-input" type="number" name="amount" id="updateExpenseAmountInput" value={expenseForm.amount} onChange={onChange} />
 
-                            <button className='form-btn-1' type='submit' id='updateDepositButton'>Update Deposit</button>
+                            <button className='form-btn-1' type='submit' id='updateExpenseButton'>Update Expense</button>
                         </div>
                     </form>
                 )}
