@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import { useFetch } from '../../hooks/useFetch';
 import { toast } from 'react-toastify';
@@ -5,12 +6,13 @@ import { FiEdit } from 'react-icons/fi';
 import { FaSpinner, FaSync } from 'react-icons/fa';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Modal } from '../Modal';
+import DatePicker from 'react-datepicker';
 
 export const UpdateDepositModal = ({ deposit, categories, fetchDeposits }) => {
     const [depositForm, setDepositForm] = useState({
         depositId: deposit.depositId,
         categoryId: deposit.categoryId,
-        date: deposit.date,
+        date: new Date(Date.parse(deposit.date)),
         description: deposit.description,
         amount: deposit.amount
     });
@@ -59,7 +61,7 @@ export const UpdateDepositModal = ({ deposit, categories, fetchDeposits }) => {
         setFailedToFetch(false);
         setLoading(true);
         try {
-            const { responseStatus, data } = await fetchData('/api/update/deposit', 'PUD', depositForm);
+            const { responseStatus, data } = await fetchData('/api/update/deposit', 'PUT', depositForm);
 
             if (responseStatus === 202) {
                 setLoading(false);
@@ -114,7 +116,7 @@ export const UpdateDepositModal = ({ deposit, categories, fetchDeposits }) => {
                             </select>
 
                             <label className="form-label" htmlFor="date">Date: </label>
-                            <DatePicker className="form-input" selected={depositForm.date} onChange={onDateChange} name="date" id="updateDepositDateInput" />
+                            <DatePicker className="form-input" selected={depositForm.date} onSelect={onDateChange} name="date" id="updateDepositDateInput" />
 
                             <label className="form-label" htmlFor="description">Description: </label>
                             <input className="form-input" type="text" name="description" id="updateDepositDescriptionInput" value={depositForm.description} onChange={onChange} />
