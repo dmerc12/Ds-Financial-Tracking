@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useFetch  } from "../../hooks/useFetch";
 import { toast } from "react-toastify";
@@ -6,10 +7,9 @@ import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { Modal } from "../Modal";
 import DatePicker from "react-datepicker";
 
-// eslint-disable-next-line react/prop-types
 export const CreateExpenseModal = ({ categories, fetchExpenses }) => {
     const [expenseForm, setExpenseForm] = useState({
-        categoryId: Number(categories[0]),
+        categoryId: 0,
         date: '',
         description: '',
         amount: Number(0.00)
@@ -114,6 +114,7 @@ export const CreateExpenseModal = ({ categories, fetchExpenses }) => {
                         <div className='form-field'>
                             <label className='form-label' htmlFor='categoryId'>Category: </label>
                             <select className='form-input' name='categoryId' id='createExpenseCategoryInput' value={expenseForm.categoryId} onChange={onChange}>
+                                <option value={0}>Please choose a category below</option>
                                 {categories && categories.length > 0 && (
                                     categories.map(category => (
                                         <option key={category.categoryId} value={category.categoryId}>{category.categoryName}</option>
