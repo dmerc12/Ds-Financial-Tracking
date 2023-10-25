@@ -9,7 +9,7 @@ import DatePicker from "react-datepicker";
 
 export const CreateDepositModal = ({ categories, fetchDeposits }) => {
     const [depositForm, setDepositForm] = useState({
-        categoryId: Number(categories[0].categoryId),
+        categoryId: 0,
         date: '',
         description: '',
         amount: Number(0.00)
@@ -114,6 +114,7 @@ export const CreateDepositModal = ({ categories, fetchDeposits }) => {
                         <div className='form-field'>
                             <label className='form-label' htmlFor='categoryId'>Category: </label>
                             <select className='form-input' name='categoryId' id='createDepositCategoryInput' value={depositForm.categoryId} onChange={onChange}>
+                                <option value={0}>Please choose a category below</option>
                                 {categories && categories.length > 0 && (
                                     categories.map(category => (
                                         <option key={category.categoryId} value={category.categoryId}>{category.categoryName}</option>
