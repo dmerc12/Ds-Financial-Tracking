@@ -36,7 +36,7 @@
     border: none;
     background-color: black;
     border-radius: 5px;
-    width: auto;
+    width: 30em;
     max-width: 100%;
     height: auto;
   }
@@ -209,7 +209,7 @@
   
   .form-input {
     display: inline;
-    width: 200px;
+    width: 30em;
     padding: 5px;
     display: inline-block;
     border: 0;
