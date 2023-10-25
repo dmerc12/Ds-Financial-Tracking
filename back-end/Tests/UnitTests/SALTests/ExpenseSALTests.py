@@ -26,6 +26,14 @@ def test_sal_create_expense_category_id_not_integer():
     except CustomError as error:
         assert str(error) == "The category ID field must be an integer, please try again!"
 
+def test_sal_create_expense_category_not_set():
+    try:
+        test_expense = Expense(0, 0, str(datetime.now().date()), 'description', 10.00)
+        expense_sao.create_expense(test_expense)
+        assert False
+    except CustomError as error:
+        assert str(error) == "A category must be set, please try again!"
+
 def test_sal_create_expense_category_not_found():
     try:
         test_expense = Expense(0, -579356834926, str(datetime.now().date()), 'description', 10.00)

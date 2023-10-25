@@ -49,9 +49,14 @@ class ExpenseDALImplementation(ExpenseDALInterface):
         expense_records = cursor.fetchall()
         expenses = []
         for expense in expense_records:
-            expense = Expense(*expense)
+            expense = Expense(
+                expense_id=expense[0],
+                category_id=expense[4],
+                date=expense[1],
+                description=expense[2],
+                amount=expense[3]
+            )
             expenses.append(expense)
-            print(str(expense.convert_to_dictionary()))
             logging.info("Finishing DAL method get all expenses with result: " + str(expense.convert_to_dictionary()))
         cursor.close()
         connection.commit()

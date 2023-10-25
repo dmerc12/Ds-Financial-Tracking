@@ -18,8 +18,8 @@ def get_all_expenses():
         current_app.logger.info("Beginning API function get all expenses")
         expenses = expense_sao.get_all_expenses()
         expense_list = [expense.convert_to_dictionary() for expense in expenses]
-        current_app.logger.info("Finishing API function get all expenses with expenses: " +
-                                str(expense.convert_to_dictionary for expense in expense_list))
+        for expense in expense_list:
+            current_app.logger.info("Finishing API function get all expenses with expenses: " + str(expense))
         return jsonify(expense_list), 200
     except CustomError as error:
         current_app.logger.error("Error with API function get all expenses with error: " + str(error))

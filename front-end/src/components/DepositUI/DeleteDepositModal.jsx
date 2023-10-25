@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import { useFetch } from '../../hooks/useFetch';
 import { toast } from 'react-toastify';
@@ -30,7 +31,7 @@ export const DeleteDepositModal = ({ deposit, fetchDeposits}) => {
         setLoading(true);
         setFailedToFetch(false);
         try {
-            const { responseStatus, data } = await fetchData('api/delete/deposit', 'DELETE', {depositId: deposit.depositId});
+            const { responseStatus, data } = await fetchData('/api/delete/deposit', 'DELETE', {depositId: deposit.depositId});
 
             if (responseStatus === 202) {
                 setLoading(false);

@@ -19,8 +19,7 @@ def get_all_deposits():
         deposits = deposit_sao.get_all_deposits()
         deposit_list = [deposit.convert_to_dictionary() for deposit in deposits]
         for deposit in deposit_list:
-            current_app.logger.info("Finishing API function get all deposits with deposits: " +
-                                    str(deposit))
+            current_app.logger.info("Finishing API function get all deposits with deposits: " + str(deposit))
         return jsonify(deposit_list), 200
     except CustomError as error:
         current_app.logger.error("Error with API function get all deposits with error: " + str(error))

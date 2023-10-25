@@ -18,6 +18,9 @@ class ExpenseSALImplementation(ExpenseSALInterface):
         if type(expense.category_id) != int:
             logging.warning("Error in SAL method create expense, category ID not an integer")
             raise CustomError("The category ID field must be an integer, please try again!")
+        elif expense.category_id == 0:
+            logging.warning("Error in SAL method create expense, category ID not set")
+            raise CustomError("A category must be set, please try again!")
         elif type(expense.date) != str:
             logging.warning("Error in SAL method create expense, date not a string")
             raise CustomError("The date field must be a string, please try again!")
