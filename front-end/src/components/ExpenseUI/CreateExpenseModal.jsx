@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useFetch  } from "../../hooks/useFetch";
 import { toast } from "react-toastify";
@@ -6,8 +5,14 @@ import { FaSpinner, FaSync } from "react-icons/fa";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { Modal } from "../Modal";
 import DatePicker from "react-datepicker";
+import PropTypes from 'prop-types';
 
 export const CreateExpenseModal = ({ categories, fetchExpenses }) => {
+    CreateExpenseModal.propTypes = {
+        categories: PropTypes.arrayOf(PropTypes.object).isRequired,
+        fetchExpenses: PropTypes.func.isRequired
+    };
+
     const [expenseForm, setExpenseForm] = useState({
         categoryId: 0,
         date: '',
