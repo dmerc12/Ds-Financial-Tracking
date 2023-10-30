@@ -5,8 +5,14 @@ import { FaSpinner, FaSync } from 'react-icons/fa';
 import { FiTrash2 } from 'react-icons/fi';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Modal } from '../Modal';
+import PropTypes from 'prop-types';
 
 export const DeleteExpenseModal = ({ expense, fetchExpenses}) => {
+    DeleteExpenseModal.propTypes = {
+        expense: PropTypes.object.isRequired,
+        fetchExpenses: PropTypes.func.isRequired
+    };
+
     const [visible, setVisible] = useState(false);
     const [loading, setLoading] = useState(false);
     const [failedToFetch, setFailedToFetch] = useState(false);

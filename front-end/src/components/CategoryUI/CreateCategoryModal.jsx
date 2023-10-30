@@ -4,9 +4,13 @@ import { toast } from 'react-toastify';
 import { FaSpinner, FaSync } from 'react-icons/fa';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Modal } from '../Modal';
+import PropTypes from 'prop-types';
 
-// eslint-disable-next-line react/prop-types
 export const CreateCategoryModal = ({ fetchCategories }) => {
+   CreateCategoryModal.propTypes = {
+      fetchCategories: PropTypes.func.isRequired
+   };
+
    const [categoryForm, setCategoryForm] = useState({categoryName: ''});
    const [visible, setVisible] = useState(false);
    const [loading, setLoading] = useState(false);

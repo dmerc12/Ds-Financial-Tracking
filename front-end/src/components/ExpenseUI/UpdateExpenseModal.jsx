@@ -5,8 +5,15 @@ import { FiEdit } from 'react-icons/fi';
 import { FaSpinner, FaSync } from 'react-icons/fa';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Modal } from '../Modal';
+import PropTypes from 'prop-types';
 
 export const UpdateExpenseModal = ({ expense, categories, fetchExpenses }) => {
+    UpdateExpenseModal.propTypes = {
+        expense: PropTypes.object.isRequired,
+        categories: PropTypes.arrayOf(PropTypes.object).isRequired,
+        fetchExpenses: PropTypes.func.isRequired
+    };
+
     const [expenseForm, setExpenseForm] = useState({
         expenseId: expense.expenseId,
         categoryId: expense.categoryId,

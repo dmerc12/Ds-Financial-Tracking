@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import { useFetch } from '../../hooks/useFetch';
 import { toast } from 'react-toastify';
@@ -6,8 +5,14 @@ import { FiEdit } from 'react-icons/fi';
 import { FaSpinner, FaSync } from 'react-icons/fa';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Modal } from '../Modal';
+import PropTypes from 'prop-types';
 
 export const UpdateCategoryModal = ({ category, fetchCategories }) => {
+    UpdateCategoryModal.propTypes = {
+        category: PropTypes.object.isRequired,
+        fetchCategories: PropTypes.func.isRequired
+    };
+
     const [categoryForm, setCategoryForm] = useState({
         categoryId: category.categoryId,
         categoryName: category.categoryName
