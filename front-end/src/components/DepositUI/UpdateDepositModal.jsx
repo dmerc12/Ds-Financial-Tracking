@@ -7,8 +7,15 @@ import { FaSpinner, FaSync } from 'react-icons/fa';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Modal } from '../Modal';
 import DatePicker from 'react-datepicker';
+import PropTypes from 'prop-types';
 
 export const UpdateDepositModal = ({ deposit, categories, fetchDeposits }) => {
+    UpdateDepositModal.propTypes = {
+        deposit: PropTypes.object.isRequired,
+        categories: PropTypes.arrayOf(PropTypes.object).isRequired,
+        fetchDeposits: PropTypes.func.isRequired
+    };
+
     const [depositForm, setDepositForm] = useState({
         depositId: deposit.depositId,
         categoryId: deposit.categoryId,
