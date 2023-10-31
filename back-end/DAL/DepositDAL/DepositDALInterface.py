@@ -18,6 +18,14 @@ class DepositDALInterface(ABC):
         pass
 
     @abstractmethod
+    def get_deposits_by_category(self, category_id: int) -> List[Deposit]:
+        pass
+
+    @abstractmethod
+    def get_deposits_by_date(self, date: str) -> List[Deposit]:
+        pass
+
+    @abstractmethod
     def update_deposit(self, deposit: Deposit) -> Deposit:
         pass
 
