@@ -18,6 +18,14 @@ class ExpenseSALInterface(ABC):
         pass
 
     @abstractmethod
+    def get_expenses_by_category(self, category_id: int) -> List[Expense]:
+        pass
+
+    @abstractmethod
+    def get_expenses_by_date(self, date: str) -> List[Expense]:
+        pass
+
+    @abstractmethod
     def update_expense(self, expense: Expense) -> Expense:
         pass
 

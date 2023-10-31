@@ -67,6 +67,12 @@ class DepositSALImplementation(DepositSALInterface):
             logging.info("Finishing SAL method get all deposits")
             return deposits
 
+    def get_deposits_by_category(self, category_id: int) -> List[Deposit]:
+        pass
+
+    def get_deposits_by_date(self, date: str) -> List[Deposit]:
+        pass
+
     def update_deposit(self, deposit: Deposit) -> Deposit:
         logging.info("Beginning SAL method update deposit with data: " + str(deposit.convert_to_dictionary()))
         if type(deposit.category_id) != int:

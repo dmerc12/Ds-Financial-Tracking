@@ -61,6 +61,12 @@ class DepositDALImplementation(DepositDALInterface):
         connection.close()
         return deposits
 
+    def get_deposits_by_category(self, category_id: int) -> List[Deposit]:
+        pass
+
+    def get_deposits_by_date(self, date: str) -> List[Deposit]:
+        pass
+
     def update_deposit(self, deposit: Deposit) -> Deposit:
         logging.info("Beginning DAL method update deposit with data: " + str(deposit.convert_to_dictionary()))
         sql = "UPDATE financial_tracker.Deposit SET category_id=%s, date=%s, description=%s, amount=%s WHERE " \

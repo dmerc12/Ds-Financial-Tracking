@@ -21,6 +21,12 @@ def test_get_all_expenses_success():
     result = expense_dao.get_all_expenses()
     assert len(result) > 0
 
+def test_get_expenses_by_category_success():
+    pass
+
+def test_get_expenses_by_date_success():
+    pass
+
 def test_update_expense_success():
     result = expense_dao.update_expense(updated_expense)
     assert result.date != test_expense.date and result.description != test_expense.description and \

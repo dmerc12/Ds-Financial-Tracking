@@ -63,6 +63,12 @@ class ExpenseDALImplementation(ExpenseDALInterface):
         connection.close()
         return expenses
 
+    def get_expenses_by_category(self, category_id: int) -> List[Expense]:
+        pass
+
+    def get_expenses_by_date(self, date: str) -> List[Expense]:
+        pass
+
     def update_expense(self, expense: Expense) -> Expense:
         logging.info("Beginning DAL method update expense with data: " + str(expense.convert_to_dictionary()))
         sql = "UPDATE financial_tracker.Expense SET category_id=%s, date=%s, description=%s, amount=%s WHERE " \

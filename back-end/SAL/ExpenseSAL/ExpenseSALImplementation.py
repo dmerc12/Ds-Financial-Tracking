@@ -70,6 +70,12 @@ class ExpenseSALImplementation(ExpenseSALInterface):
             logging.info("Finishing SAL method get all expenses")
             return expenses
 
+    def get_expenses_by_category(self, category_id: int) -> List[Expense]:
+        pass
+
+    def get_expenses_by_date(self, date: str) -> List[Expense]:
+        pass
+
     def update_expense(self, expense: Expense) -> Expense:
         logging.info("Beginning SAL method update expense with data: " + str(expense.convert_to_dictionary()))
         if type(expense.category_id) != int:
