@@ -22,10 +22,12 @@ def test_get_all_deposits_success():
     assert len(result) > 0
 
 def test_get_deposits_by_category_success():
-    pass
+    result = deposit_dao.get_deposits_by_category(test_deposit.category_id)
+    assert len(result) > 0
 
 def test_get_deposits_by_date_success():
-    pass
+    result = deposit_dao.get_deposits_by_date(test_deposit.date)
+    assert len(result) > 0
 
 def test_update_deposit_success():
     result = deposit_dao.update_deposit(updated_deposit)
