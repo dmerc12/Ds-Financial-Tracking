@@ -22,10 +22,12 @@ def test_get_all_expenses_success():
     assert len(result) > 0
 
 def test_get_expenses_by_category_success():
-    pass
+    result = expense_dao.get_expenses_by_category(test_expense.category_id)
+    assert len(result) > 0
 
 def test_get_expenses_by_date_success():
-    pass
+    result = expense_dao.get_expenses_by_date(test_expense.date)
+    assert len(result) > 0
 
 def test_update_expense_success():
     result = expense_dao.update_expense(updated_expense)
