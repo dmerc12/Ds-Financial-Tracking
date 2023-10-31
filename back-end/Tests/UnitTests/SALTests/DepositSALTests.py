@@ -116,6 +116,30 @@ def test_sal_get_all_deposits_success():
     result = deposit_sao.get_all_deposits()
     assert len(result) > 0
 
+def test_sal_get_deposits_by_category_category_id_not_integer():
+    pass
+
+def test_sal_get_deposits_by_category_none_found():
+    pass
+
+def test_sal_get_deposits_by_category_category_not_found():
+    pass
+
+def test_sal_get_deposits_by_category_success():
+    pass
+
+def test_sal_get_deposits_by_date_date_not_string():
+    pass
+
+def test_sal_get_deposits_by_date_date_empty():
+    pass
+
+def test_sal_get_deposits_by_date_none_found():
+    pass
+
+def test_sal_get_deposits_by_date_success():
+    pass
+
 def test_sal_update_deposit_category_id_not_integer():
     try:
         test_deposit = Deposit(current_deposit_id, '', str(datetime.now().date()), 'test description', 5.00)
