@@ -125,28 +125,54 @@ def test_sal_get_all_expenses_success():
     assert len(result) > 0
 
 def test_sal_get_expenses_by_category_category_id_not_integer():
-    pass
+    try:
+        expense_sao.get_expenses_by_category("nope")
+        assert False
+    except CustomError as error:
+        assert str(error) == "The category ID field must be an integer, please try again!"
 
 def test_sal_get_expenses_by_category_none_found():
-    pass
+    try:
+        expense_sao.get_expenses_by_category(-2)
+        assert False
+    except CustomError as error:
+        assert str(error) == "No expenses found, please try again!"
 
 def test_sal_get_expenses_by_category_category_not_found():
-    pass
+    try:
+        expense_sao.get_expenses_by_category(-5734932032648)
+        assert False
+    except CustomError as error:
+        assert str(error) == "Category not found, please try again!"
 
 def test_sal_get_expenses_by_category_success():
-    pass
+    result = expense_sao.get_expenses_by_category(successful_expense.category_id)
+    assert len(result) > 0
 
 def test_sal_get_expenses_by_date_date_not_string():
-    pass
+    try:
+        expense_sao.get_expenses_by_date(12537843)
+        assert False
+    except CustomError as error:
+        assert str(error) == "The date field must be a string, please try again!"
 
 def test_sal_get_expenses_by_date_date_empty():
-    pass
+    try:
+        expense_sao.get_expenses_by_date("")
+        assert False
+    except CustomError as error:
+        assert str(error) == "The date field cannot be left empty, please try again!"
 
 def test_sal_get_expenses_by_date_none_found():
-    pass
+    try:
+        expense_sao.get_expenses_by_date("2023-10-23")
+        assert False
+    except CustomError as error:
+        assert str(error) == "No expenses found, please try again!"
 
 def test_sal_get_expenses_by_date_success():
-    pass
+    result = expense_sao.get_expenses_by_date(successful_expense.date)
+    assert len(result) > 0
 
 def test_sal_update_expense_category_id_not_integer():
     try:
