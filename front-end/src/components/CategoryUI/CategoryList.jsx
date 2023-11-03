@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import { CreateCategoryModal } from "./CreateCategoryModal";
 import { UpdateCategoryModal } from "./UpdateCategoryModal";
 import { DeleteCategoryModal } from "./DeleteCategoryModal";
@@ -6,9 +8,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaSpinner, FaSync } from "react-icons/fa"; 
 import { AiOutlineExclamationCircle } from "react-icons/ai";
-import { toast } from "react-toastify";
 
-export const CategoryList = () => {
+export const CategoryList = ({ toastRef }) => {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
     const [failedToFetch, setFailedToFetch] = useState(false);
@@ -44,7 +45,7 @@ export const CategoryList = () => {
                 setFailedToFetch(true)
                 } else {
                 setLoading(false);
-                toast.warn(error.message, {toastId: 'customId'});
+                toastRef.current.addToast({ mode: 'error', message: error.message});
                 }
         }
     };
@@ -61,8 +62,8 @@ export const CategoryList = () => {
                 <tr key={category.categoryId}>
                     <td className="table-data">{category.categoryName}</td>
                     <td className="table-data">
-                        <UpdateCategoryModal category={category} fetchCategories={fetchCategories} />
-                        <DeleteCategoryModal category={category} fetchCategories={fetchCategories} />
+                        <UpdateCategoryModal toastRef={toastRef} category={category} fetchCategories={fetchCategories} />
+                        <DeleteCategoryModal toastRef={toastRef} category={category} fetchCategories={fetchCategories} />
                     </td>
                 </tr>
             )
@@ -71,7 +72,7 @@ export const CategoryList = () => {
 
     return (
         <>
-            <CreateCategoryModal fetchCategories={fetchCategories} />
+            <CreateCategoryModal toastRef={toastRef} fetchCategories={fetchCategories} />
             {loading ? (
                 <div className='loading-indicator'>
                     <FaSpinner className='spinner' />
@@ -99,10 +100,14 @@ export const CategoryList = () => {
                         </thead>
                         <tbody>
                                 {categoryRows}
-                            </tbody>
-                        </table>
-                    </div>
-                )}
+                        </tbody>
+                    </table>
+                </div>
+            )}
         </>
     );
-}
+};
+
+CategoryList.propTypes = {
+    toastRef: PropTypes.object
+};
