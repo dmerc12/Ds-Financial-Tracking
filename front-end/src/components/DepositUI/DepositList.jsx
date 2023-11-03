@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import { CreateDepositModal } from "./CreateDepositModal";
 import { UpdateDepositModal } from "./UpdateDepositModal";
 import { DeleteDepositModal } from "./DeleteDepositModal";
@@ -6,9 +8,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaSpinner, FaSync } from "react-icons/fa";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
-import { toast } from "react-toastify";
 
-export const DepositList = () => {
+export const DepositList = ({ toastRef }) => {
     const [deposits, setDeposits] = useState([]);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -47,7 +48,7 @@ export const DepositList = () => {
                 setFailedToFetchCategories(true);
              } else {
                 setLoading(false);
-                toast.warn(error.message, {toastId: 'customId'});
+                toastRef.current.addToast({ mode: 'error', message: error.message});
              }
         }
     };
@@ -72,7 +73,7 @@ export const DepositList = () => {
                 setFailedToFetchDeposits(true)
             } else {
                 setLoading(false);
-                toast.warn(error.message, {toastId: 'customId'});
+                toastRef.current.addToast({ mode: 'error', message: error.message});
             }
         }
     }
@@ -94,8 +95,8 @@ export const DepositList = () => {
                     <td className="table-data">{deposit.description}</td>
                     <td className="table-data">{deposit.amount}</td>
                     <td className="table-data">
-                        <UpdateDepositModal deposit={deposit} categories={categories} fetchDeposits={fetchDeposits} />
-                        <DeleteDepositModal deposit={deposit} fetchDeposits={fetchDeposits} />
+                        <UpdateDepositModal toastRef={toastRef} deposit={deposit} categories={categories} fetchDeposits={fetchDeposits} />
+                        <DeleteDepositModal toastRef={toastRef} deposit={deposit} fetchDeposits={fetchDeposits} />
                     </td>
                 </tr>
             )
@@ -104,7 +105,7 @@ export const DepositList = () => {
 
     return (
         <>
-            <CreateDepositModal categories={categories} fetchDeposits={fetchDeposits} />
+            <CreateDepositModal toastRef={toastRef} categories={categories} fetchDeposits={fetchDeposits} />
             {loading ? (
                 <div className="loading-indicator">
                     <FaSpinner className="spinner" />
@@ -151,4 +152,8 @@ export const DepositList = () => {
             )}
         </>
     );
-}
+};
+
+DepositList.propTypes = {
+    toastRef: PropTypes.object
+};
