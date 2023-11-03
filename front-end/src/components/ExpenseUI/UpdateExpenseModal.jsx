@@ -5,6 +5,7 @@ import { FiEdit } from 'react-icons/fi';
 import { FaSpinner, FaSync } from 'react-icons/fa';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Modal } from '../Modal';
+import DatePicker from 'react-datepicker';
 import PropTypes from 'prop-types';
 
 export const UpdateExpenseModal = ({ expense, categories, fetchExpenses }) => {
