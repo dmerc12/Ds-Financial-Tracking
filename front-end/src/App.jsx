@@ -16,7 +16,7 @@ function App() {
 
   return (
     <>
-      <Navbar toastRef={toastRef}/>
+      <Navbar />
 
       <BrowserRouter>
         <Routes>
