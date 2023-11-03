@@ -1,31 +1,34 @@
 import './App.css';
-import 'react-toastify/dist/ReactToastify.css';
 import 'react-datepicker/dist/react-datepicker.css'
-import { ToastContainer } from 'react-toastify';
+
+import { ToastContainer } from './components/Toast/ToastContainer';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Home } from './pages/Home';
 import { ManageCategories } from './pages/ManageCategories';
 import { ManageDeposits } from './pages/ManageDeposits';
 import { ManageExpenses } from './pages/ManageExpenses';
+import { useRef } from 'react';
+
 
 function App() {
+  const toastRef = useRef();
 
   return (
     <>
-      <Navbar />
+      <Navbar toastRef={toastRef}/>
 
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/home' element={<Home />} />
-          <Route path='/manage/categories' element={<ManageCategories />} />
-          <Route path='/manage/deposits' element={<ManageDeposits />} />
-          <Route path='/manage/expenses' element={<ManageExpenses />} />
+          <Route path='/manage/categories' element={<ManageCategories toastRef={toastRef}/>} />
+          <Route path='/manage/deposits' element={<ManageDeposits toastRef={toastRef}/>} />
+          <Route path='/manage/expenses' element={<ManageExpenses toastRef={toastRef}/>} />
         </Routes>
       </BrowserRouter>
 
-      <ToastContainer position='top-center' newestOnTop autoClose={3000} hideProgressBar theme='colored' limit={1} closeOnClick />
+      <ToastContainer ref={toastRef} />
     </>
   )
 }
