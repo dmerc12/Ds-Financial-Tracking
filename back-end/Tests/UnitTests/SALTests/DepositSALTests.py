@@ -116,6 +116,56 @@ def test_sal_get_all_deposits_success():
     result = deposit_sao.get_all_deposits()
     assert len(result) > 0
 
+def test_sal_get_deposits_by_category_category_id_not_integer():
+    try:
+        deposit_sao.get_deposits_by_category("nope")
+        assert False
+    except CustomError as error:
+        assert str(error) == "The category ID field must be an integer, please try again!"
+
+def test_sal_get_deposits_by_category_none_found():
+    try:
+        deposit_sao.get_deposits_by_category(-2)
+        assert False
+    except CustomError as error:
+        assert str(error) == "No deposits found, please try again!"
+
+def test_sal_get_deposits_by_category_category_not_found():
+    try:
+        deposit_sao.get_deposits_by_category(-5849732023984)
+        assert False
+    except CustomError as error:
+        assert str(error) == "No deposits found, please try again!"
+
+def test_sal_get_deposits_by_category_success():
+    result = deposit_sao.get_deposits_by_category(successful_deposit.category_id)
+    assert len(result) > 0
+
+def test_sal_get_deposits_by_date_date_not_string():
+    try:
+        deposit_sao.get_deposits_by_date(13336820)
+        assert False
+    except CustomError as error:
+        assert str(error) == "The date field must be a string, please try again!"
+
+def test_sal_get_deposits_by_date_date_empty():
+    try:
+        deposit_sao.get_deposits_by_date("")
+        assert False
+    except CustomError as error:
+        assert str(error) == "The date field cannot be left empty, please try again!"
+
+def test_sal_get_deposits_by_date_none_found():
+    try:
+        deposit_sao.get_deposits_by_date("2023-12-5")
+        assert False
+    except CustomError as error:
+        assert str(error) == "No deposits found, please try again!"
+
+def test_sal_get_deposits_by_date_success():
+    result = deposit_sao.get_deposits_by_date(successful_deposit.date)
+    assert len(result) > 0
+
 def test_sal_update_deposit_category_id_not_integer():
     try:
         test_deposit = Deposit(current_deposit_id, '', str(datetime.now().date()), 'test description', 5.00)

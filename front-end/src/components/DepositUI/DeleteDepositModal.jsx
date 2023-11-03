@@ -6,8 +6,14 @@ import { FaSpinner, FaSync } from 'react-icons/fa';
 import { FiTrash2 } from 'react-icons/fi';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Modal } from '../Modal';
+import PropTypes from 'prop-types';
 
 export const DeleteDepositModal = ({ deposit, fetchDeposits}) => {
+    DeleteDepositModal.propTypes = {
+        deposit: PropTypes.object.isRequired,
+        fetchDeposits: PropTypes.func.isRequired,
+    };
+
     const [visible, setVisible] = useState(false);
     const [loading, setLoading] = useState(false);
     const [failedToFetch, setFailedToFetch] = useState(false);

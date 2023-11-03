@@ -21,6 +21,14 @@ def test_get_all_deposits_success():
     result = deposit_dao.get_all_deposits()
     assert len(result) > 0
 
+def test_get_deposits_by_category_success():
+    result = deposit_dao.get_deposits_by_category(test_deposit.category_id)
+    assert len(result) > 0
+
+def test_get_deposits_by_date_success():
+    result = deposit_dao.get_deposits_by_date(test_deposit.date)
+    assert len(result) > 0
+
 def test_update_deposit_success():
     result = deposit_dao.update_deposit(updated_deposit)
     assert result.date != test_deposit.date and result.description != test_deposit.description and \
