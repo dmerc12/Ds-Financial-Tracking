@@ -1,21 +1,14 @@
-/* eslint-disable react/prop-types */
+import DatePicker from 'react-datepicker';
+import PropTypes from 'prop-types';
+
 import { useState } from 'react';
 import { useFetch } from '../../hooks/useFetch';
-import { toast } from 'react-toastify';
 import { FiEdit } from 'react-icons/fi';
 import { FaSpinner, FaSync } from 'react-icons/fa';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Modal } from '../Modal';
-import DatePicker from 'react-datepicker';
-import PropTypes from 'prop-types';
 
-export const UpdateDepositModal = ({ deposit, categories, fetchDeposits }) => {
-    UpdateDepositModal.propTypes = {
-        deposit: PropTypes.object.isRequired,
-        categories: PropTypes.arrayOf(PropTypes.object).isRequired,
-        fetchDeposits: PropTypes.func.isRequired
-    };
-
+export const UpdateDepositModal = ({ toastRef, deposit, categories, fetchDeposits }) => {
     const [depositForm, setDepositForm] = useState({
         depositId: deposit.depositId,
         categoryId: deposit.categoryId,
@@ -74,7 +67,7 @@ export const UpdateDepositModal = ({ deposit, categories, fetchDeposits }) => {
                 setLoading(false);
                 setVisible(false);
                 fetchDeposits();
-                toast.success("Deposit successfully updated!", {toastId: 'customId'});
+                toastRef.current.addToast({ mode: 'success', message: 'Deposit successfully updated!'});
             } else if (responseStatus === 400) {
                 throw new Error(`${data.message}`);
             } else {
@@ -86,7 +79,7 @@ export const UpdateDepositModal = ({ deposit, categories, fetchDeposits }) => {
                 setLoading(false);
             } else {
                 setLoading(false);
-                toast.warn(error.message, {toastId: 'customId'});
+                toastRef.current.addToast({ mode: 'error', message: error.message});
             }
         }
     };
@@ -138,4 +131,11 @@ export const UpdateDepositModal = ({ deposit, categories, fetchDeposits }) => {
             </Modal>
         </>
     );
-}
+};
+
+UpdateDepositModal.propTypes = {
+    toastRef: PropTypes.object.isRequired,
+    deposit: PropTypes.object.isRequired,
+    categories: PropTypes.arrayOf(PropTypes.object).isRequired,
+    fetchDeposits: PropTypes.func.isRequired
+};

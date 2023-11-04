@@ -1,18 +1,13 @@
-import { useState } from "react";
-import { useFetch  } from "../../hooks/useFetch";
-import { toast } from "react-toastify";
-import { FaSpinner, FaSync } from "react-icons/fa";
-import { AiOutlineExclamationCircle } from "react-icons/ai";
-import { Modal } from "../Modal";
 import DatePicker from "react-datepicker";
 import PropTypes from 'prop-types';
 
-export const CreateExpenseModal = ({ categories, fetchExpenses }) => {
-    CreateExpenseModal.propTypes = {
-        categories: PropTypes.arrayOf(PropTypes.object).isRequired,
-        fetchExpenses: PropTypes.func.isRequired
-    };
+import { useState } from "react";
+import { useFetch  } from "../../hooks/useFetch";
+import { FaSpinner, FaSync } from "react-icons/fa";
+import { AiOutlineExclamationCircle } from "react-icons/ai";
+import { Modal } from "../Modal";
 
+export const CreateExpenseModal = ({ toastRef, categories, fetchExpenses }) => {
     const [expenseForm, setExpenseForm] = useState({
         categoryId: 0,
         date: '',
@@ -76,7 +71,7 @@ export const CreateExpenseModal = ({ categories, fetchExpenses }) => {
                 setVisible(false);
                 setLoading(false);
                 fetchExpenses();
-                toast.success("Expense successfully created!", {toastId: 'customId'});
+                toastRef.current.addToast({ mode: 'success', message: 'Expense successfully created!'});
             } else if (responseStatus === 400) {
                 throw new Error(`${data.message}`);
             } else {
@@ -88,7 +83,7 @@ export const CreateExpenseModal = ({ categories, fetchExpenses }) => {
                 setFailedToFetch(true);
              } else {
                 setLoading(false);
-                toast.warn(error.message, {toastId: 'customId'});
+                toastRef.current.addToast({ mode: 'error', message: error.message});
              }
         }
     };
@@ -143,4 +138,10 @@ export const CreateExpenseModal = ({ categories, fetchExpenses }) => {
             </Modal>
         </>
     )
-}
+};
+
+CreateExpenseModal.propTypes = {
+    toastRef: PropTypes.object.isRequired,
+    categories: PropTypes.arrayOf(PropTypes.object).isRequired,
+    fetchExpenses: PropTypes.func.isRequired
+};

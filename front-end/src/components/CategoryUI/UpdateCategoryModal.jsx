@@ -1,18 +1,13 @@
+import PropTypes from 'prop-types';
+
 import { useState } from 'react';
 import { useFetch } from '../../hooks/useFetch';
-import { toast } from 'react-toastify';
 import { FiEdit } from 'react-icons/fi';
 import { FaSpinner, FaSync } from 'react-icons/fa';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Modal } from '../Modal';
-import PropTypes from 'prop-types';
 
-export const UpdateCategoryModal = ({ category, fetchCategories }) => {
-    UpdateCategoryModal.propTypes = {
-        category: PropTypes.object.isRequired,
-        fetchCategories: PropTypes.func.isRequired
-    };
-
+export const UpdateCategoryModal = ({ toastRef, category, fetchCategories }) => {
     const [categoryForm, setCategoryForm] = useState({
         categoryId: category.categoryId,
         categoryName: category.categoryName
@@ -54,7 +49,8 @@ export const UpdateCategoryModal = ({ category, fetchCategories }) => {
                 setLoading(false);
                 setVisible(false);
                 fetchCategories();
-                toast.success("Category successfully updated!", {toastId: 'customId'});
+                toastRef.current.addToast({ mode: 'success', message: 'Category successfully updated!'});
+
             } else if (responseStatus === 400) {
                 throw new Error(`${data.message}`);
             } else {
@@ -66,7 +62,7 @@ export const UpdateCategoryModal = ({ category, fetchCategories }) => {
                 setLoading(false);
             } else {
                 setLoading(false);
-                toast.warn(error.message, {toastId: 'customId'});
+                toastRef.current.addToast({ mode: 'error', message: error.message});
             }
         }
    };
@@ -108,4 +104,10 @@ export const UpdateCategoryModal = ({ category, fetchCategories }) => {
             </Modal>
         </>
     );
-}
+};
+
+UpdateCategoryModal.propTypes = {
+    toastRef: PropTypes.object.isRequired,
+    category: PropTypes.object.isRequired,
+    fetchCategories: PropTypes.func.isRequired
+};

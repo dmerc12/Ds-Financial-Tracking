@@ -1,19 +1,14 @@
+import DatePicker from 'react-datepicker';
+import PropTypes from 'prop-types';
+
 import { useState } from 'react';
 import { useFetch } from '../../hooks/useFetch';
-import { toast } from 'react-toastify';
 import { FiEdit } from 'react-icons/fi';
 import { FaSpinner, FaSync } from 'react-icons/fa';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Modal } from '../Modal';
-import PropTypes from 'prop-types';
 
-export const UpdateExpenseModal = ({ expense, categories, fetchExpenses }) => {
-    UpdateExpenseModal.propTypes = {
-        expense: PropTypes.object.isRequired,
-        categories: PropTypes.arrayOf(PropTypes.object).isRequired,
-        fetchExpenses: PropTypes.func.isRequired
-    };
-
+export const UpdateExpenseModal = ({ toastRef, expense, categories, fetchExpenses }) => {
     const [expenseForm, setExpenseForm] = useState({
         expenseId: expense.expenseId,
         categoryId: expense.categoryId,
@@ -72,7 +67,7 @@ export const UpdateExpenseModal = ({ expense, categories, fetchExpenses }) => {
                 setLoading(false);
                 setVisible(false);
                 fetchExpenses();
-                toast.success("Expense successfully updated!", {toastId: 'customId'});
+                toastRef.current.addToast({ mode: 'success', message: 'Expense successfully updated!'});
             } else if (responseStatus === 400) {
                 throw new Error(`${data.message}`);
             } else {
@@ -84,7 +79,7 @@ export const UpdateExpenseModal = ({ expense, categories, fetchExpenses }) => {
                 setLoading(false);
             } else {
                 setLoading(false);
-                toast.warn(error.message, {toastId: 'customId'});
+                toastRef.current.addToast({ mode: 'error', message: error.message});
             }
         }
     };
@@ -136,4 +131,11 @@ export const UpdateExpenseModal = ({ expense, categories, fetchExpenses }) => {
             </Modal>
         </>
     );
-}
+};
+
+UpdateExpenseModal.propTypes = {
+    toastRef: PropTypes.object.isRequired,
+    expense: PropTypes.object.isRequired,
+    categories: PropTypes.arrayOf(PropTypes.object).isRequired,
+    fetchExpenses: PropTypes.func.isRequired
+};

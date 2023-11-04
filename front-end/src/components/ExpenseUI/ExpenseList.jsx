@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import { CreateExpenseModal } from "./CreateExpenseModal";
 import { UpdateExpenseModal } from "./UpdateExpenseModal";
 import { DeleteExpenseModal } from "./DeleteExpenseModal";
@@ -6,9 +8,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaSpinner, FaSync } from "react-icons/fa";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
-import { toast } from "react-toastify";
 
-export const ExpenseList = () => {
+export const ExpenseList = ({ toastRef }) => {
     const [expenses, setExpenses] = useState([]);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -47,7 +48,7 @@ export const ExpenseList = () => {
                 setFailedToFetchCategories(true);
              } else {
                 setLoading(false);
-                toast.warn(error.message, {toastId: 'customId'});
+                toastRef.current.addToast({ mode: 'error', message: error.message});
              }
         }
     };
@@ -72,7 +73,7 @@ export const ExpenseList = () => {
                 setFailedToFetchExpenses(true)
             } else {
                 setLoading(false);
-                toast.warn(error.message, {toastId: 'customId'});
+                toastRef.current.addToast({ mode: 'error', message: error.message});
             }
         }
     }
@@ -94,8 +95,8 @@ export const ExpenseList = () => {
                     <td className="table-data">{expense.description}</td>
                     <td className="table-data">{expense.amount}</td>
                     <td className="table-data">
-                        <UpdateExpenseModal expense={expense} categories={categories} fetchExpenses={fetchExpenses} />
-                        <DeleteExpenseModal expense={expense} fetchExpenses={fetchExpenses} />
+                        <UpdateExpenseModal toastRef={toastRef} expense={expense} categories={categories} fetchExpenses={fetchExpenses} />
+                        <DeleteExpenseModal toastRef={toastRef} expense={expense} fetchExpenses={fetchExpenses} />
                     </td>
                 </tr>
             )
@@ -104,7 +105,7 @@ export const ExpenseList = () => {
 
     return (
         <>
-            <CreateExpenseModal categories={categories} fetchExpenses={fetchExpenses} />
+            <CreateExpenseModal toastRef={toastRef} categories={categories} fetchExpenses={fetchExpenses} />
             {loading ? (
                 <div className="loading-indicator">
                     <FaSpinner className="spinner" />
@@ -151,4 +152,8 @@ export const ExpenseList = () => {
             )}
         </>
     );
-}
+};
+
+ExpenseList.propTypes = {
+    toastRef: PropTypes.object
+};
