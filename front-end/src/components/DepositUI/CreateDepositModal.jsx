@@ -1,19 +1,13 @@
-/* eslint-disable react/prop-types */
-import { useState } from "react";
-import { useFetch  } from "../../hooks/useFetch";
-import { toast } from "react-toastify";
-import { FaSpinner, FaSync } from "react-icons/fa";
-import { AiOutlineExclamationCircle } from "react-icons/ai";
-import { Modal } from "../Modal";
 import DatePicker from "react-datepicker";
 import PropTypes from 'prop-types';
 
-export const CreateDepositModal = ({ categories, fetchDeposits }) => {
-    CreateDepositModal.propTypes = {
-        categories: PropTypes.arrayOf(PropTypes.object).isRequired,
-        fetchDeposits: PropTypes.func.isRequired
-    };
+import { useState } from "react";
+import { useFetch  } from "../../hooks/useFetch";
+import { FaSpinner, FaSync } from "react-icons/fa";
+import { AiOutlineExclamationCircle } from "react-icons/ai";
+import { Modal } from "../Modal";
 
+export const CreateDepositModal = ({ toastRef, categories, fetchDeposits }) => {
     const [depositForm, setDepositForm] = useState({
         categoryId: 0,
         date: '',
@@ -77,7 +71,7 @@ export const CreateDepositModal = ({ categories, fetchDeposits }) => {
                 setVisible(false);
                 setLoading(false);
                 fetchDeposits();
-                toast.success("Deposit successfully created!", {toastId: 'customId'});
+                toastRef.current.addToast({ mode: 'success', message: 'Deposit successfully created!'});
             } else if (responseStatus === 400) {
                 throw new Error(`${data.message}`);
             } else {
@@ -87,10 +81,10 @@ export const CreateDepositModal = ({ categories, fetchDeposits }) => {
             if (error.message === 'Failed to fetch') {
                 setLoading(false);
                 setFailedToFetch(true);
-             } else {
+            } else {
                 setLoading(false);
-                toast.warn(error.message, {toastId: 'customId'});
-             }
+                toastRef.current.addToast({ mode: 'error', message: error.message});
+            }
         }
     };
 
@@ -144,4 +138,10 @@ export const CreateDepositModal = ({ categories, fetchDeposits }) => {
             </Modal>
         </>
     )
-}
+};
+
+CreateDepositModal.propTypes = {
+    toastRef: PropTypes.object.isRequired,
+    categories: PropTypes.arrayOf(PropTypes.object).isRequired,
+    fetchDeposits: PropTypes.func.isRequired
+};
