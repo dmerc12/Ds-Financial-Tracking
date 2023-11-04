@@ -1,16 +1,12 @@
+import PropTypes from 'prop-types';
+
 import { useState } from 'react';
 import { useFetch } from '../../hooks/useFetch';
-import { toast } from 'react-toastify';
 import { FaSpinner, FaSync } from 'react-icons/fa';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Modal } from '../Modal';
-import PropTypes from 'prop-types';
 
-export const CreateCategoryModal = ({ fetchCategories }) => {
-   CreateCategoryModal.propTypes = {
-      fetchCategories: PropTypes.func.isRequired
-   };
-
+export const CreateCategoryModal = ({ toastRef, fetchCategories }) => {
    const [categoryForm, setCategoryForm] = useState({categoryName: ''});
    const [visible, setVisible] = useState(false);
    const [loading, setLoading] = useState(false);
@@ -50,7 +46,7 @@ export const CreateCategoryModal = ({ fetchCategories }) => {
             setVisible(false);
             setLoading(false);
             fetchCategories();
-            toast.success("Category successfully created!", {toastId: 'customId'});
+            toastRef.current.addToast({ mode: 'success', message: 'Category successfully created!'});
          } else if (responseStatus === 400) {
             throw new Error(`${data.message}`);
          } else {
@@ -62,7 +58,7 @@ export const CreateCategoryModal = ({ fetchCategories }) => {
             setFailedToFetch(true);
          } else {
             setLoading(false);
-            toast.warn(error.message, {toastId: 'customId'});
+            toastRef.current.addToast({ mode: 'error', message: error.message});
          }
       }
    };
@@ -101,4 +97,9 @@ export const CreateCategoryModal = ({ fetchCategories }) => {
          </Modal>
       </>
    );
-}
+};
+
+CreateCategoryModal.propTypes = {
+   toastRef: PropTypes.object.isRequired,
+   fetchCategories: PropTypes.func.isRequired
+};
