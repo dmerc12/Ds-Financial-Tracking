@@ -1,19 +1,13 @@
-/* eslint-disable react/prop-types */
-import { useState } from 'react';
-import { useFetch } from '../../hooks/useFetch';
-import { toast } from 'react-toastify';
-import { FaSpinner, FaSync } from 'react-icons/fa';
-import { FiTrash2 } from 'react-icons/fi';
-import { AiOutlineExclamationCircle } from 'react-icons/ai';
-import { Modal } from '../Modal';
 import PropTypes from 'prop-types';
 
-export const DeleteCategoryModal = ({ category, fetchCategories }) => {
-   DeleteCategoryModal.propTypes = {
-      category: PropTypes.object.isRequired,
-      fetchCategories: PropTypes.func.isRequired
-   };
+import { useState } from 'react';
+import { useFetch } from '../../hooks/useFetch';
+import { FiTrash2 } from 'react-icons/fi';
+import { FaSpinner, FaSync } from 'react-icons/fa';
+import { AiOutlineExclamationCircle } from 'react-icons/ai';
+import { Modal } from '../Modal';
 
+export const DeleteCategoryModal = ({ toastRef, category, fetchCategories }) => {
    const [visible, setVisible] = useState(false);
    const [loading, setLoading] = useState(false);
    const [failedToFetch, setFailedToFetch] = useState(false);
@@ -43,7 +37,7 @@ export const DeleteCategoryModal = ({ category, fetchCategories }) => {
             setLoading(false);
             setVisible(false);
             fetchCategories();
-            toast.success("Category successfully deleted!", {toastId: 'customId'});
+            toastRef.current.addToast({ mode: 'success', message: 'Category successfully deleted!'});
          } else if (responseStatus === 400) {
             throw new Error(`${data.message}`);
          } else {
@@ -55,7 +49,7 @@ export const DeleteCategoryModal = ({ category, fetchCategories }) => {
             setLoading(false);
          } else {
             setLoading(false);
-            toast.warn(error.message, {toastId: 'customId'});
+            toastRef.current.addToast({ mode: 'error', message: error.message});
          }
       }
    };
@@ -96,4 +90,10 @@ export const DeleteCategoryModal = ({ category, fetchCategories }) => {
          </Modal>
       </>
    );
-}
+};
+
+DeleteCategoryModal.propTypes = {
+   toastRef: PropTypes.object.isRequired,
+   category: PropTypes.object.isRequired,
+   fetchCategories: PropTypes.func.isRequired
+};
