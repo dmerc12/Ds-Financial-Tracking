@@ -1,18 +1,13 @@
-import { useState } from 'react';
-import { useFetch } from '../../hooks/useFetch';
-import { toast } from 'react-toastify';
-import { FaSpinner, FaSync } from 'react-icons/fa';
-import { FiTrash2 } from 'react-icons/fi';
-import { AiOutlineExclamationCircle } from 'react-icons/ai';
-import { Modal } from '../Modal';
 import PropTypes from 'prop-types';
 
-export const DeleteExpenseModal = ({ expense, fetchExpenses}) => {
-    DeleteExpenseModal.propTypes = {
-        expense: PropTypes.object.isRequired,
-        fetchExpenses: PropTypes.func.isRequired
-    };
+import { useState } from 'react';
+import { useFetch } from '../../hooks/useFetch';
+import { FiTrash2 } from 'react-icons/fi';
+import { FaSpinner, FaSync } from 'react-icons/fa';
+import { AiOutlineExclamationCircle } from 'react-icons/ai';
+import { Modal } from '../Modal';
 
+export const DeleteExpenseModal = ({ toastRef, expense, fetchExpenses}) => {
     const [visible, setVisible] = useState(false);
     const [loading, setLoading] = useState(false);
     const [failedToFetch, setFailedToFetch] = useState(false);
@@ -42,7 +37,7 @@ export const DeleteExpenseModal = ({ expense, fetchExpenses}) => {
                 setLoading(false);
                 setVisible(false);
                 fetchExpenses();
-                toast.success("Expense successfully deleted!", {toastId: 'customId'});
+                toastRef.current.addToast({ mode: 'success', message: 'Expense successfully deleted!'});
             } else if (responseStatus === 400) {
                 throw new Error(`${data.message}`);
             } else {
@@ -54,7 +49,7 @@ export const DeleteExpenseModal = ({ expense, fetchExpenses}) => {
                 setLoading(false);
             } else {
                 setLoading(false);
-                toast.warn(error.message, {toastId: 'customId'});
+                toastRef.current.addToast({ mode: 'error', message: error.message});
             }
         }
     };
@@ -95,4 +90,10 @@ export const DeleteExpenseModal = ({ expense, fetchExpenses}) => {
             </Modal>
         </>
     );
-}
+};
+
+DeleteExpenseModal.propTypes = {
+    toastRef: PropTypes.object.isRequired,
+    expense: PropTypes.object.isRequired,
+    fetchExpenses: PropTypes.func.isRequired
+};
