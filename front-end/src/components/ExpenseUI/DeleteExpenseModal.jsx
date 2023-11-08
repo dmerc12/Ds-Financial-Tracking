@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import { useState } from 'react';
-import { useFetch } from '../../hooks/useFetch';
+import { useFetch } from '../../hooks';
 import { FiTrash2 } from 'react-icons/fi';
 import { FaSpinner, FaSync } from 'react-icons/fa';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';

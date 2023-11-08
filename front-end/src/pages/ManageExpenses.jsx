@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { ExpenseList } from '../components/ExpenseUI/ExpenseList';
+import { ExpenseList } from '../components';
 
 export const ManageExpenses = ({ toastRef }) => {
     return (

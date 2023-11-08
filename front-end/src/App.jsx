@@ -1,15 +1,10 @@
 import './App.css';
 import 'react-datepicker/dist/react-datepicker.css'
 
-import { ToastContainer } from './components/Toast/ToastContainer';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Navbar } from './components/Navbar';
-import { Home } from './pages/Home';
-import { ManageCategories } from './pages/ManageCategories';
-import { ManageDeposits } from './pages/ManageDeposits';
-import { ManageExpenses } from './pages/ManageExpenses';
 import { useRef } from 'react';
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ToastContainer, Navbar } from './components';
+import { Home, ManageCategories, ManageDeposits, ManageExpenses } from './pages';
 
 function App() {
   const toastRef = useRef();

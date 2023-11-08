@@ -1,4 +1,4 @@
-import { useNavigate } from "../hooks/useNavigate"
+import { useNavigate } from '../hooks';
 
 export const Navbar = () => {
     const navigate = useNavigate();

@@ -2,9 +2,8 @@ import styles from './styles.module.css';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
-import { uuid } from '../../../lib/Helpers';
-import { useToast } from '../../../hooks/useToast';
-import { useToastAutoClose } from '../../../hooks/useToastAutoClose';
+import { uuid } from '../../../lib';
+import { useToast, useToastAutoClose } from '../../../hooks';
 import { forwardRef, useImperativeHandle, useState } from 'react';
 import { Toast } from './Toast';
 

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { DepositList } from "../components/DepositUI/DepositList"
+import { DepositList } from '../components';
 
 export const ManageDeposits = ({ toastRef }) => {
     return (
