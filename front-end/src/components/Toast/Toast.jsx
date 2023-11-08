@@ -14,7 +14,7 @@ export const Toast = ({ mode, onClose, message }) => {
 };
 
 Toast.propTypes = {
-    mode: PropTypes.string,
-    onClose: PropTypes.func,
-    message: PropTypes.string
+    mode: PropTypes.string.isRequired,
+    onClose: PropTypes.func.isRequired,
+    message: PropTypes.string.isRequired
 };

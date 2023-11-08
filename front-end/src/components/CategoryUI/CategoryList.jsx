@@ -109,5 +109,5 @@ export const CategoryList = ({ toastRef }) => {
 };
 
 CategoryList.propTypes = {
-    toastRef: PropTypes.object
+    toastRef: PropTypes.object.isRequired
 };

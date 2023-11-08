@@ -155,5 +155,5 @@ export const ExpenseList = ({ toastRef }) => {
 };
 
 ExpenseList.propTypes = {
-    toastRef: PropTypes.object
+    toastRef: PropTypes.object.isRequired
 };

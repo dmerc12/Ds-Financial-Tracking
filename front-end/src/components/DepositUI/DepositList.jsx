@@ -155,5 +155,5 @@ export const DepositList = ({ toastRef }) => {
 };
 
 DepositList.propTypes = {
-    toastRef: PropTypes.object
+    toastRef: PropTypes.object.isRequired
 };

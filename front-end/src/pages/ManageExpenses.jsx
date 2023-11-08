@@ -12,5 +12,5 @@ export const ManageExpenses = ({ toastRef }) => {
 };
 
 ManageExpenses.propTypes = {
-    toastRef: PropTypes.object
+    toastRef: PropTypes.object.isRequired
 };

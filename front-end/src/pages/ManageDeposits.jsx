@@ -12,5 +12,5 @@ export const ManageDeposits = ({ toastRef }) => {
 };
 
 ManageDeposits.propTypes = {
-    toastRef: PropTypes.object
+    toastRef: PropTypes.object.isRequired
 };

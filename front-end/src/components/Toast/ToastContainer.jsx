@@ -39,6 +39,6 @@ export const ToastContainer = forwardRef(function ToastContainer
 );
 
 ToastContainer.propTypes = {
-    autoClose: PropTypes.bool,
-    autoCloseTime: PropTypes.number
+    autoClose: PropTypes.bool.isRequired,
+    autoCloseTime: PropTypes.number.isRequired
 };

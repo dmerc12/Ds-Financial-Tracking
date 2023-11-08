@@ -12,5 +12,5 @@ export const ManageCategories = ({ toastRef }) => {
 };
 
 ManageCategories.propTypes = {
-    toastRef: PropTypes.object
+    toastRef: PropTypes.object.isRequired
 };
