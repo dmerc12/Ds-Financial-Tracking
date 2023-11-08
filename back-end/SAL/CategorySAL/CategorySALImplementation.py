@@ -29,7 +29,6 @@ class CategorySALImplementation(CategorySALInterface):
             logging.info("Finishing SAL method create category with result: " + str(category.convert_to_dictionary()))
             return category
 
-
     def get_category(self, category_id: int) -> Category:
         logging.info("Beginning SAL method get category with category ID: " + str(category_id))
         if type(category_id) != int:

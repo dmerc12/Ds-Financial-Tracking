@@ -1,4 +1,3 @@
-import DatePicker from 'react-datepicker';
 import PropTypes from 'prop-types';
 
 import { useState } from 'react';
@@ -123,7 +122,7 @@ export const CreateDepositModal = ({ toastRef, categories, fetchDeposits }) => {
                             </select>
 
                             <label className="form-label" htmlFor="date">Date: </label>
-                            <DatePicker className="form-input" selected={depositForm.date} onChange={onDateChange} name="date" id="createDepositDateInput" />
+                            <input className="form-input" type='date' value={depositForm.date} onChange={onDateChange} name="date" id="createDepositDateInput" />
 
                             <label className="form-label" htmlFor="description">Description: </label>
                             <input className="form-input" type="text" name="description" id="createDepositDescriptionInput" value={depositForm.description} onChange={onChange} />

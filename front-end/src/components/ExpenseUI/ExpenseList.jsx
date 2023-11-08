@@ -4,7 +4,7 @@ import { CreateExpenseModal, UpdateExpenseModal, DeleteExpenseModal } from '../E
 import { useFetch } from '../../hooks';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaSpinner, FaSync } from'"react-icons/fa';
+import { FaSpinner, FaSync } from'react-icons/fa';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 
 export const ExpenseList = ({ toastRef }) => {
