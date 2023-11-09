@@ -1,13 +1,11 @@
 import PropTypes from 'prop-types';
 
-import { CreateCategoryModal } from "./CreateCategoryModal";
-import { UpdateCategoryModal } from "./UpdateCategoryModal";
-import { DeleteCategoryModal } from "./DeleteCategoryModal";
-import { useFetch } from "../../hooks/useFetch";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { FaSpinner, FaSync } from "react-icons/fa"; 
-import { AiOutlineExclamationCircle } from "react-icons/ai";
+import { CreateCategoryModal, UpdateCategoryModal, DeleteCategoryModal } from '../CategoryUI';
+import { useFetch } from '../../hooks';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FaSpinner, FaSync } from 'react-icons/fa'; 
+import { AiOutlineExclamationCircle } from 'react-icons/ai';
 
 export const CategoryList = ({ toastRef }) => {
     const [categories, setCategories] = useState([]);
@@ -109,5 +107,5 @@ export const CategoryList = ({ toastRef }) => {
 };
 
 CategoryList.propTypes = {
-    toastRef: PropTypes.object
+    toastRef: PropTypes.object.isRequired
 };

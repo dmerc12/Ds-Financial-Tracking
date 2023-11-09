@@ -1,13 +1,11 @@
 import PropTypes from 'prop-types';
 
-import { CreateDepositModal } from "./CreateDepositModal";
-import { UpdateDepositModal } from "./UpdateDepositModal";
-import { DeleteDepositModal } from "./DeleteDepositModal";
-import { useFetch } from "../../hooks/useFetch";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { FaSpinner, FaSync } from "react-icons/fa";
-import { AiOutlineExclamationCircle } from "react-icons/ai";
+import { CreateDepositModal, UpdateDepositModal, DeleteDepositModal } from '../DepositUI';
+import { useFetch } from '../../hooks';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FaSpinner, FaSync } from 'react-icons/fa';
+import { AiOutlineExclamationCircle } from 'react-icons/ai';
 
 export const DepositList = ({ toastRef }) => {
     const [deposits, setDeposits] = useState([]);
@@ -155,5 +153,5 @@ export const DepositList = ({ toastRef }) => {
 };
 
 DepositList.propTypes = {
-    toastRef: PropTypes.object
+    toastRef: PropTypes.object.isRequired
 };

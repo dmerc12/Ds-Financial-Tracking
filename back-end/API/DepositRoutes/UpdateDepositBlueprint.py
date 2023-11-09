@@ -19,7 +19,7 @@ def update_deposit():
         updated_info = request.json
         current_app.logger.info("Beginning API function update deposit with data: " + str(updated_info))
         updated_deposit = Deposit(deposit_id=updated_info["depositId"], category_id=updated_info["categoryId"],
-                                  date=updated_info["date"], description=updated_info["description"],
+                                  deposit_date=updated_info["date"], description=updated_info["description"],
                                   amount=updated_info["amount"])
         result = deposit_sao.update_deposit(updated_deposit)
         current_app.logger.info("Finishing API function update deposit with result: " +

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { CategoryList } from "../components/CategoryUI/CategoryList"
+import { CategoryList } from '../components';
 
 export const ManageCategories = ({ toastRef }) => {
     return (
@@ -12,5 +12,5 @@ export const ManageCategories = ({ toastRef }) => {
 };
 
 ManageCategories.propTypes = {
-    toastRef: PropTypes.object
+    toastRef: PropTypes.object.isRequired
 };

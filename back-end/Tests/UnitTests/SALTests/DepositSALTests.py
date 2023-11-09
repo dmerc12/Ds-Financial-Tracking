@@ -1,5 +1,5 @@
 import unittest.mock as mock
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 
 from DAL.CategoryDAL.CategoryDALImplementation import CategoryDALImplementation
 from DAL.DepositDAL.DepositDALImplementation import DepositDALImplementation
@@ -13,14 +13,14 @@ category_sao = CategorySALImplementation(category_dao)
 deposit_dao = DepositDALImplementation()
 deposit_sao = DepositSALImplementation(deposit_dao, category_sao)
 
-successful_deposit = Deposit(0, -1, str(datetime.now().date()), 'test description', 5.00)
+successful_deposit = Deposit(0, -1, datetime.now().date(), 'test description', 5.00)
 current_deposit_id = 1
-updated_deposit = Deposit(current_deposit_id, -1, str(datetime.now().date() - timedelta(days=7, weeks=13)),
+updated_deposit = Deposit(current_deposit_id, -1, datetime.now().date() - timedelta(days=7),
                           'updated description', 10.00)
 
 def test_sal_create_deposit_category_id_not_integer():
     try:
-        test_deposit = Deposit(0, '', str(datetime.now().date()), 'description', 10.00)
+        test_deposit = Deposit(0, '', datetime.now().date(), 'description', 10.00)
         deposit_sao.create_deposit(test_deposit)
         assert False
     except CustomError as error:
@@ -28,7 +28,7 @@ def test_sal_create_deposit_category_id_not_integer():
 
 def test_sal_create_deposit_category_not_set():
     try:
-        test_deposit = Deposit(0, 0, str(datetime.now().date()), 'description', 10.00)
+        test_deposit = Deposit(0, 0, datetime.now().date(), 'description', 10.00)
         deposit_sao.create_deposit(test_deposit)
         assert False
     except CustomError as error:
@@ -36,23 +36,23 @@ def test_sal_create_deposit_category_not_set():
 
 def test_sal_create_deposit_category_not_found():
     try:
-        test_deposit = Deposit(0, -579356834926, str(datetime.now().date()), 'description', 10.00)
+        test_deposit = Deposit(0, -579356834926, datetime.now().date(), 'description', 10.00)
         deposit_sao.create_deposit(test_deposit)
         assert False
     except CustomError as error:
         assert str(error) == "Category not found, please try again!"
 
-def test_sal_create_deposit_date_not_string():
+def test_sal_create_deposit_date_not_date():
     try:
-        test_deposit = Deposit(0, -1, datetime.now().date(), 'description', 10.00)
+        test_deposit = Deposit(0, -1, str(datetime.now().date()), 'description', 10.00)
         deposit_sao.create_deposit(test_deposit)
         assert False
     except CustomError as error:
-        assert str(error) == "The date field must be a string, please try again!"
+        assert str(error) == "The date field must be a date, please try again!"
 
-def test_sal_create_deposit_date_empty():
+def test_sal_create_deposit_date_default():
     try:
-        test_deposit = Deposit(0, -1, '', 'description', 10.00)
+        test_deposit = Deposit(0, -1, date(1900, 1, 1), 'description', 10.00)
         deposit_sao.create_deposit(test_deposit)
         assert False
     except CustomError as error:
@@ -60,7 +60,7 @@ def test_sal_create_deposit_date_empty():
 
 def test_sal_create_deposit_description_not_string():
     try:
-        test_deposit = Deposit(0, -1, str(datetime.now().date()), 5, 10.00)
+        test_deposit = Deposit(0, -1, datetime.now().date(), 5, 10.00)
         deposit_sao.create_deposit(test_deposit)
         assert False
     except CustomError as error:
@@ -68,7 +68,7 @@ def test_sal_create_deposit_description_not_string():
 
 def test_sal_create_deposit_description_empty():
     try:
-        test_deposit = Deposit(0, -1, str(datetime.now().date()), '', 10.00)
+        test_deposit = Deposit(0, -1, datetime.now().date(), '', 10.00)
         deposit_sao.create_deposit(test_deposit)
         assert False
     except CustomError as error:
@@ -76,7 +76,7 @@ def test_sal_create_deposit_description_empty():
 
 def test_sal_create_deposit_amount_negative_or_0():
     try:
-        test_deposit = Deposit(0, -1, str(datetime.now().date()), 'description', -10.00)
+        test_deposit = Deposit(0, -1, datetime.now().date(), 'description', -10.00)
         deposit_sao.create_deposit(test_deposit)
         assert False
     except CustomError as error:
@@ -141,23 +141,23 @@ def test_sal_get_deposits_by_category_success():
     result = deposit_sao.get_deposits_by_category(successful_deposit.category_id)
     assert len(result) > 0
 
-def test_sal_get_deposits_by_date_date_not_string():
+def test_sal_get_deposits_by_date_date_not_date():
     try:
         deposit_sao.get_deposits_by_date(13336820)
         assert False
     except CustomError as error:
         assert str(error) == "The date field must be a string, please try again!"
 
-def test_sal_get_deposits_by_date_date_empty():
+def test_sal_get_deposits_by_date_date_default():
     try:
-        deposit_sao.get_deposits_by_date("")
+        deposit_sao.get_deposits_by_date(date(1900, 1, 1))
         assert False
     except CustomError as error:
         assert str(error) == "The date field cannot be left empty, please try again!"
 
 def test_sal_get_deposits_by_date_none_found():
     try:
-        deposit_sao.get_deposits_by_date("2023-12-5")
+        deposit_sao.get_deposits_by_date(datetime.now().date())
         assert False
     except CustomError as error:
         assert str(error) == "No deposits found, please try again!"
@@ -168,7 +168,7 @@ def test_sal_get_deposits_by_date_success():
 
 def test_sal_update_deposit_category_id_not_integer():
     try:
-        test_deposit = Deposit(current_deposit_id, '', str(datetime.now().date()), 'test description', 5.00)
+        test_deposit = Deposit(current_deposit_id, '', datetime.now().date(), 'test description', 5.00)
         deposit_sao.update_deposit(test_deposit)
         assert False
     except CustomError as error:
@@ -176,23 +176,23 @@ def test_sal_update_deposit_category_id_not_integer():
 
 def test_sal_update_deposit_category_not_found():
     try:
-        test_deposit = Deposit(current_deposit_id, -1578576467, str(datetime.now().date()), 'test description', 5.00)
+        test_deposit = Deposit(current_deposit_id, -1578576467, datetime.now().date(), 'test description', 5.00)
         deposit_sao.update_deposit(test_deposit)
         assert False
     except CustomError as error:
         assert str(error) == "Category not found, please try again!"
 
-def test_sal_update_deposit_date_not_string():
+def test_sal_update_deposit_date_not_date():
     try:
-        test_deposit = Deposit(current_deposit_id, -1, datetime.now().date(), 'test description', 5.00)
+        test_deposit = Deposit(current_deposit_id, -1, str(datetime.now().date()), 'test description', 5.00)
         deposit_sao.update_deposit(test_deposit)
         assert False
     except CustomError as error:
         assert str(error) == "The date field must be a string, please try again!"
 
-def test_sal_update_deposit_date_empty():
+def test_sal_update_deposit_date_default():
     try:
-        test_deposit = Deposit(current_deposit_id, -1, '', 'test description', 5.00)
+        test_deposit = Deposit(current_deposit_id, -1, date(1900, 1, 1), 'test description', 5.00)
         deposit_sao.update_deposit(test_deposit)
         assert False
     except CustomError as error:
@@ -200,7 +200,7 @@ def test_sal_update_deposit_date_empty():
 
 def test_sal_update_deposit_description_not_string():
     try:
-        test_deposit = Deposit(current_deposit_id, -1, str(datetime.now().date()), 6, 5.00)
+        test_deposit = Deposit(current_deposit_id, -1, datetime.now().date(), 6, 5.00)
         deposit_sao.update_deposit(test_deposit)
         assert False
     except CustomError as error:
@@ -208,7 +208,7 @@ def test_sal_update_deposit_description_not_string():
 
 def test_sal_update_deposit_description_empty():
     try:
-        test_deposit = Deposit(current_deposit_id, -1, str(datetime.now().date()), '', 5.00)
+        test_deposit = Deposit(current_deposit_id, -1, datetime.now().date(), '', 5.00)
         deposit_sao.update_deposit(test_deposit)
         assert False
     except CustomError as error:
@@ -216,7 +216,7 @@ def test_sal_update_deposit_description_empty():
 
 def test_sal_update_deposit_amount_not_float():
     try:
-        test_deposit = Deposit(current_deposit_id, -1, str(datetime.now().date()), 'test description', '5.00')
+        test_deposit = Deposit(current_deposit_id, -1, datetime.now().date(), 'test description', '5.00')
         deposit_sao.update_deposit(test_deposit)
         assert False
     except CustomError as error:
@@ -224,7 +224,7 @@ def test_sal_update_deposit_amount_not_float():
 
 def test_sal_update_deposit_amount_negative_or_0():
     try:
-        test_deposit = Deposit(current_deposit_id, -1, str(datetime.now().date()), 'test description', -5.00)
+        test_deposit = Deposit(current_deposit_id, -1, datetime.now().date(), 'test description', -5.00)
         deposit_sao.update_deposit(test_deposit)
         assert False
     except CustomError as error:

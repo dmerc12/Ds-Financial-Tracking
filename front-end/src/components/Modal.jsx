@@ -1,4 +1,5 @@
-/* eslint-disable react/prop-types */
+import PropTypes from 'prop-types';
+
 export const Modal = ({ visible, onClose, children }) => {
     if (!visible) return null;
 
@@ -19,4 +20,10 @@ export const Modal = ({ visible, onClose, children }) => {
             </div>
         </>
     )
-}
+};
+
+Modal.propTypes = {
+    visible: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    children: PropTypes.element.isRequired
+};

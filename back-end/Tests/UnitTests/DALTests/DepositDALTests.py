@@ -4,10 +4,10 @@ from DAL.DepositDAL.DepositDALImplementation import DepositDALImplementation
 from Entities.Deposit import Deposit
 
 deposit_dao = DepositDALImplementation()
-test_deposit = Deposit(0, -1, str(datetime.now()), 'test description', 25.00)
+test_deposit = Deposit(0, -1, datetime.now(), 'test description', 25.00)
 current_deposit_id = 1
 updated_deposit = Deposit(current_deposit_id, test_deposit.category_id,
-                          str(datetime.now() - timedelta(hours=2, minutes=38, seconds=47)), 'updated', 50.00)
+                          datetime.now().date() - timedelta(days=38), 'updated', 50.00)
 
 def test_create_deposit_success():
     result = deposit_dao.create_deposit(test_deposit)

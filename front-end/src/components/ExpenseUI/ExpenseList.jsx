@@ -1,13 +1,11 @@
 import PropTypes from 'prop-types';
 
-import { CreateExpenseModal } from "./CreateExpenseModal";
-import { UpdateExpenseModal } from "./UpdateExpenseModal";
-import { DeleteExpenseModal } from "./DeleteExpenseModal";
-import { useFetch } from "../../hooks/useFetch";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { FaSpinner, FaSync } from "react-icons/fa";
-import { AiOutlineExclamationCircle } from "react-icons/ai";
+import { CreateExpenseModal, UpdateExpenseModal, DeleteExpenseModal } from '../ExpenseUI';
+import { useFetch } from '../../hooks';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FaSpinner, FaSync } from'react-icons/fa';
+import { AiOutlineExclamationCircle } from 'react-icons/ai';
 
 export const ExpenseList = ({ toastRef }) => {
     const [expenses, setExpenses] = useState([]);
@@ -155,5 +153,5 @@ export const ExpenseList = ({ toastRef }) => {
 };
 
 ExpenseList.propTypes = {
-    toastRef: PropTypes.object
+    toastRef: PropTypes.object.isRequired
 };
