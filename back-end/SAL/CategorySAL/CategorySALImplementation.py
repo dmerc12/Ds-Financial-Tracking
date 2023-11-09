@@ -21,7 +21,7 @@ class CategorySALImplementation(CategorySALInterface):
         if category.category_name == '':
             logging.warning("Error in SAL method create category, category name empty")
             raise CustomError("The category name field cannot be left empty, please try again!")
-        elif type(category.category_name) != str:
+        elif type(category.category_name) is not str:
             logging.warning("Error in SAL method create category, category name not a string")
             raise CustomError("The category name field must be a string, please try again!")
         else:
@@ -31,7 +31,7 @@ class CategorySALImplementation(CategorySALInterface):
 
     def get_category(self, category_id: int) -> Category:
         logging.info("Beginning SAL method get category with category ID: " + str(category_id))
-        if type(category_id) != int:
+        if type(category_id) is not int:
             logging.warning("Error in SAL method get category, category ID not an integer")
             raise CustomError("The category ID field must be an integer, please try again!")
         else:
@@ -58,7 +58,7 @@ class CategorySALImplementation(CategorySALInterface):
         if category.category_name == '':
             logging.warning("Error in SAL method update category, category name empty")
             raise CustomError("The category name field cannot be left empty, please try again!")
-        elif type(category.category_name) != str:
+        elif type(category.category_name) is not str:
             logging.warning("Error in SAL method update category, category name not a string")
             raise CustomError("The category name field must be a string, please try again!")
         else:
@@ -75,7 +75,7 @@ class CategorySALImplementation(CategorySALInterface):
 
     def delete_category(self, category_id: int) -> bool:
         logging.info("Beginning SAL method delete category with category ID: " + str(category_id))
-        if type(category_id) != int:
+        if type(category_id) is not int:
             logging.warning("Error in SAL method delete category, category ID not an integer")
             raise CustomError("The category ID field must be an integer, please try again!")
         else:

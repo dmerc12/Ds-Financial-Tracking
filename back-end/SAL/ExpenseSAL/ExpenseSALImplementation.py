@@ -16,25 +16,25 @@ class ExpenseSALImplementation(ExpenseSALInterface):
 
     def create_expense(self, expense: Expense) -> Expense:
         logging.info("Beginning SAL method create expense with data: " + str(expense.convert_to_dictionary()))
-        if type(expense.category_id) != int:
+        if type(expense.category_id) is not int:
             logging.warning("Error in SAL method create expense, category ID not an integer")
             raise CustomError("The category ID field must be an integer, please try again!")
         elif expense.category_id == 0:
             logging.warning("Error in SAL method create expense, category ID not set")
             raise CustomError("A category must be set, please try again!")
-        elif type(expense.date) != str:
+        elif type(expense.date) is not str:
             logging.warning("Error in SAL method create expense, date not a string")
             raise CustomError("The date field must be a string, please try again!")
         elif expense.date == "":
             logging.warning("Error in SAL method create expense, date empty")
             raise CustomError("The date field cannot be left empty, please try again!")
-        elif type(expense.description) != str:
+        elif type(expense.description) is not str:
             logging.warning("Error in SAL method create expense, description not a string")
             raise CustomError("The description field must be a string, please try again!")
         elif expense.description == "":
             logging.warning("Error in SAL method create expense, description empty")
             raise CustomError("The description field cannot be left empty, please try again!")
-        elif type(expense.amount) != float:
+        elif type(expense.amount) is not float:
             logging.warning("Error in SAL method create expense, amount not a float")
             raise CustomError("The amount field must be a float, please try again!")
         elif expense.amount <= 0.00:
@@ -48,7 +48,7 @@ class ExpenseSALImplementation(ExpenseSALInterface):
 
     def get_expense(self, expense_id: int) -> Expense:
         logging.info("Beginning SAL method get expense with expense ID: " + str(expense_id))
-        if type(expense_id) != int:
+        if type(expense_id) is not int:
             logging.warning("Error in SAL method get expense, expense ID not an integer")
             raise CustomError("The expense ID field must be an integer, please try again!")
         else:
@@ -73,7 +73,7 @@ class ExpenseSALImplementation(ExpenseSALInterface):
 
     def get_expenses_by_category(self, category_id: int) -> List[Expense]:
         logging.info("Beginning SAL method get expenses by category with category ID: " + str(category_id))
-        if type(category_id) != int:
+        if type(category_id) is not int:
             logging.warning("Error in SAL method get expenses by category, category ID not an integer")
             raise CustomError("The category ID field must be an integer, please try again!")
         else:
@@ -88,7 +88,7 @@ class ExpenseSALImplementation(ExpenseSALInterface):
 
     def get_expenses_by_date(self, date: str) -> List[Expense]:
         logging.info("Beginning SAL method get expenses by date with date: " + date)
-        if type(date) != str:
+        if type(date) is not str:
             logging.warning("Error in SAL method get expenses by date, date not a string")
             raise CustomError("The date field must be a string, please try again!")
         elif date == "":
@@ -105,22 +105,22 @@ class ExpenseSALImplementation(ExpenseSALInterface):
 
     def update_expense(self, expense: Expense) -> Expense:
         logging.info("Beginning SAL method update expense with data: " + str(expense.convert_to_dictionary()))
-        if type(expense.category_id) != int:
+        if type(expense.category_id) is not int:
             logging.warning("Error in SAL method update expense, category ID not an integer")
             raise CustomError("The category ID field must be an integer, please try again!")
-        elif type(expense.date) != str:
+        elif type(expense.date) is not str:
             logging.warning("Error in SAL method update expense, date not a string")
             raise CustomError("The date field must be a string, please try again!")
         elif expense.date == "":
             logging.warning("Error in SAL method update expense, date empty")
             raise CustomError("The date field cannot be left empty, please try again!")
-        elif type(expense.description) != str:
+        elif type(expense.description) is not str:
             logging.warning("Error in SAL method update expense, description not a string")
             raise CustomError("The description field must be a string, please try again!")
         elif expense.description == "":
             logging.warning("Error in SAL method update expense, description empty")
             raise CustomError("The description field cannot be left empty, please try again!")
-        elif type(expense.amount) != float:
+        elif type(expense.amount) is not float:
             logging.warning("Error in SAL method update expense, amount not a float")
             raise CustomError("The amount field must be a float, please try again!")
         elif expense.amount <= 0.00:
@@ -135,7 +135,7 @@ class ExpenseSALImplementation(ExpenseSALInterface):
 
     def delete_expense(self, expense_id: int) -> bool:
         logging.info("Beginning SAL method delete expense with expense ID: " + str(expense_id))
-        if type(expense_id) != int:
+        if type(expense_id) is not int:
             logging.warning("Error in SAL method delete expense, expense ID not an integer")
             raise CustomError("The expense ID field must be an integer, please try again!")
         else:

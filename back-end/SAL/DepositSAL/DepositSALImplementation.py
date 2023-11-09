@@ -16,19 +16,19 @@ class DepositSALImplementation(DepositSALInterface):
 
     def create_deposit(self, deposit: Deposit) -> Deposit:
         logging.info("Beginning SAL method create deposit with data: " + str(deposit.convert_to_dictionary()))
-        if type(deposit.category_id) != int:
+        if type(deposit.category_id) is not int:
             logging.warning("Error in SAL method create deposit, category ID not an integer")
             raise CustomError("The category ID field must be an integer, please try again!")
         elif deposit.category_id == 0:
             logging.warning("Error in SAL method create deposit, category ID not set")
             raise CustomError("A category must be set, please try again!")
-        elif type(deposit.date) != str:
+        elif type(deposit.date) is not str:
             logging.warning("Error in SAL method create deposit, date not a string")
             raise CustomError("The date field must be a string, please try again!")
         elif deposit.date == "":
             logging.warning("Error in SAL method create deposit, date empty")
             raise CustomError("The date field cannot be left empty, please try again!")
-        elif type(deposit.description) != str:
+        elif type(deposit.description) is not str:
             logging.warning("Error in SAL method create deposit, description not a string")
             raise CustomError("The description field must be a string, please try again!")
         elif deposit.description == "":
@@ -45,7 +45,7 @@ class DepositSALImplementation(DepositSALInterface):
 
     def get_deposit(self, deposit_id: int) -> Deposit:
         logging.info("Beginning SAL method get deposit with deposit ID: " + str(deposit_id))
-        if type(deposit_id) != int:
+        if type(deposit_id) is not int:
             logging.warning("Error in SAL method get deposit, deposit ID not an integer")
             raise CustomError("The deposit ID field must be an integer, please try again!")
         else:
@@ -70,7 +70,7 @@ class DepositSALImplementation(DepositSALInterface):
 
     def get_deposits_by_category(self, category_id: int) -> List[Deposit]:
         logging.info("Beginning SAL method get deposits by category with category ID: " + str(category_id))
-        if type(category_id) != int:
+        if type(category_id) is not int:
             logging.warning("Error in SAL method get deposits by category, category ID not an integer")
             raise CustomError("The category ID field must be an integer, please try again!")
         else:
@@ -85,7 +85,7 @@ class DepositSALImplementation(DepositSALInterface):
 
     def get_deposits_by_date(self, date: str) -> List[Deposit]:
         logging.info("Beginning SAL method get deposits by date with date: " + date)
-        if type(date) != str:
+        if type(date) is not str:
             logging.warning("Error in SAL method get deposits by date, date not a string")
             raise CustomError("The date field must be a string, please try again!")
         elif date == "":
@@ -102,22 +102,22 @@ class DepositSALImplementation(DepositSALInterface):
 
     def update_deposit(self, deposit: Deposit) -> Deposit:
         logging.info("Beginning SAL method update deposit with data: " + str(deposit.convert_to_dictionary()))
-        if type(deposit.category_id) != int:
+        if type(deposit.category_id) is not int:
             logging.warning("Error in SAL method update deposit, category ID not an integer")
             raise CustomError("The category ID field must be an integer, please try again!")
-        elif type(deposit.date) != str:
+        elif type(deposit.date) is not str:
             logging.warning("Error in SAL method update deposit, date not a string")
             raise CustomError("The date field must be a string, please try again!")
         elif deposit.date == "":
             logging.warning("Error in SAL method update deposit, date empty")
             raise CustomError("The date field cannot be left empty, please try again!")
-        elif type(deposit.description) != str:
+        elif type(deposit.description) is not str:
             logging.warning("Error in SAL method update deposit, description not a string")
             raise CustomError("The description field must be a string, please try again!")
         elif deposit.description == "":
             logging.warning("Error in SAL method update deposit, description empty")
             raise CustomError("The description field cannot be left empty, please try again!")
-        elif type(deposit.amount) != float:
+        elif type(deposit.amount) is not float:
             logging.warning("Error in SAL method update deposit, amount not a float")
             raise CustomError("The amount field must be a float, please try again!")
         elif deposit.amount <= 0.00:
@@ -132,7 +132,7 @@ class DepositSALImplementation(DepositSALInterface):
 
     def delete_deposit(self, deposit_id: int) -> bool:
         logging.info("Beginning SAL method delete deposit with deposit ID: " + str(deposit_id))
-        if type(deposit_id) != int:
+        if type(deposit_id) is not int:
             logging.warning("Error in SAL method delete deposit, deposit ID not an integer")
             raise CustomError("The deposit ID field must be an integer, please try again!")
         else:
