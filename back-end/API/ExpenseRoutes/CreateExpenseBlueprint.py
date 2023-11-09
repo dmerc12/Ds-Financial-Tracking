@@ -18,7 +18,7 @@ def create_expense():
     try:
         expense_info = request.json
         current_app.logger.info("Beginning API function create expense with data: " + str(expense_info))
-        new_expense = Expense(expense_id=0, category_id=expense_info["categoryId"], date=expense_info["date"],
+        new_expense = Expense(expense_id=0, category_id=expense_info["categoryId"], expense_date=expense_info["date"],
                               description=expense_info["description"], amount=expense_info["amount"])
         result = expense_sao.create_expense(new_expense)
         current_app.logger.info("Finishing API function create expense with result: " +

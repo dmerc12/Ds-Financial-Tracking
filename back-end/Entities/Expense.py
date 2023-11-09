@@ -1,8 +1,11 @@
+from datetime import date
+
+
 class Expense:
-    def __init__(self, expense_id: int, category_id: int, date: str, description: str, amount: float):
+    def __init__(self, expense_id: int, category_id: int, expense_date: date, description: str, amount: float):
         self.expense_id = expense_id
         self.category_id = category_id
-        self.date = date
+        self.date = expense_date
         self.description = description
         self.amount = amount
 
@@ -10,7 +13,7 @@ class Expense:
         return {
             'expenseId': self.expense_id,
             'categoryId': self.category_id,
-            'date': self.date,
+            'date': self.date.strftime("%%%Y-%%m-%%d"),
             'description': self.description,
             'amount': self.amount
         }

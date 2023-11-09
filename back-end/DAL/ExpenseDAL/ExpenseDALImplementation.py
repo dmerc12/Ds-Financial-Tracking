@@ -1,4 +1,5 @@
 import logging
+from datetime import date
 from typing import List
 
 from DAL.ExpenseDAL.ExpenseDALInterface import ExpenseDALInterface
@@ -52,13 +53,13 @@ class ExpenseDALImplementation(ExpenseDALInterface):
             expense = Expense(
                 expense_id=expense[0],
                 category_id=expense[4],
-                date=expense[1],
+                expense_date=expense[1],
                 description=expense[2],
                 amount=expense[3]
             )
             expenses.append(expense)
             logging.info("Finishing DAL method get all expenses with result: " +
-                             str(expense.convert_to_dictionary()))
+                         str(expense.convert_to_dictionary()))
         cursor.close()
         connection.commit()
         connection.close()
@@ -69,37 +70,37 @@ class ExpenseDALImplementation(ExpenseDALInterface):
         sql = "SELECT * from financial_tracker.Expense WHERE category_id=?;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql, (category_id,))
         expense_records = cursor.fetchall()
         expenses = []
         for expense in expense_records:
             expense = Expense(
                 expense_id=expense[0],
                 category_id=expense[4],
-                date=expense[1],
+                expense_date=expense[1],
                 description=expense[2],
                 amount=expense[3]
             )
             expenses.append(expense)
             logging.info("Finishing DAL method get all expenses by category with result: " +
-                             str(expense.convert_to_dictionary()))
+                         str(expense.convert_to_dictionary()))
         cursor.close()
         connection.close()
         return expenses
 
-    def get_expenses_by_date(self, date: str) -> List[Expense]:
-        logging.info("Beginning DAL method get expenses by date with date: " + str(date))
+    def get_expenses_by_date(self, expense_date: date) -> List[Expense]:
+        logging.info("Beginning DAL method get expenses by date with date: " + str(expense_date))
         sql = "SELECT * from financial_tracker.Expense WHERE date=?;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql, (date,))
         expense_records = cursor.fetchall()
         expenses = []
         for expense in expense_records:
             expense = Expense(
                 expense_id=expense[0],
                 category_id=expense[4],
-                date=expense[1],
+                expense_date=expense[1],
                 description=expense[2],
                 amount=expense[3]
             )

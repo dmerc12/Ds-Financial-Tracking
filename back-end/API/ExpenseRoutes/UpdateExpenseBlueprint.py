@@ -19,7 +19,7 @@ def update_expense():
         updated_info = request.json
         current_app.logger.info("Beginning API function update expense with data: " + str(updated_info))
         updated_expense = Expense(expense_id=updated_info["expenseId"], category_id=updated_info["categoryId"],
-                                  date=updated_info["date"], description=updated_info["description"],
+                                  expense_date=updated_info["date"], description=updated_info["description"],
                                   amount=updated_info["amount"])
         result = expense_sao.update_expense(updated_expense)
         current_app.logger.info("Finishing API function update expense with result: " +
