@@ -54,7 +54,7 @@ class DepositDALImplementation(DepositDALInterface):
             deposit = Deposit(
                 deposit_id=deposit[0],
                 category_id=deposit[4],
-                date=deposit[1],
+                deposit_date=deposit[1],
                 description=deposit[2],
                 amount=deposit[3]
             )
@@ -70,14 +70,14 @@ class DepositDALImplementation(DepositDALInterface):
         sql = "SELECT * from financial_tracker.Deposit WHERE category_id=?;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql, (category_id,))
         deposit_records = cursor.fetchall()
         deposits = []
         for deposit in deposit_records:
             deposit = Deposit(
                 deposit_id=deposit[0],
                 category_id=deposit[4],
-                date=deposit[1],
+                deposit_date=deposit[1],
                 description=deposit[2],
                 amount=deposit[3]
             )
@@ -93,14 +93,14 @@ class DepositDALImplementation(DepositDALInterface):
         sql = "SELECT * from financial_tracker.Deposit WHERE date=?;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql, (date,))
         deposit_records = cursor.fetchall()
         deposits = []
         for deposit in deposit_records:
             deposit = Deposit(
                 deposit_id=deposit[0],
                 category_id=deposit[4],
-                date=deposit[1],
+                deposit_date=deposit[1],
                 description=deposit[2],
                 amount=deposit[3]
             )

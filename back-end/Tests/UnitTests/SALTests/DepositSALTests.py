@@ -188,7 +188,7 @@ def test_sal_update_deposit_date_not_date():
         deposit_sao.update_deposit(test_deposit)
         assert False
     except CustomError as error:
-        assert str(error) == "The date field must be a string, please try again!"
+        assert str(error) == "The date field must be a date, please try again!"
 
 def test_sal_update_deposit_date_default():
     try:
