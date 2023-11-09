@@ -1,4 +1,5 @@
 import logging
+from datetime import date
 from typing import List
 
 from DAL.DepositDAL.DepositDALImplementation import DepositDALImplementation
@@ -22,10 +23,10 @@ class DepositSALImplementation(DepositSALInterface):
         elif deposit.category_id == 0:
             logging.warning("Error in SAL method create deposit, category ID not set")
             raise CustomError("A category must be set, please try again!")
-        elif type(deposit.date) is not str:
+        elif not isinstance(deposit.date, date):
             logging.warning("Error in SAL method create deposit, date not a string")
-            raise CustomError("The date field must be a string, please try again!")
-        elif deposit.date == "":
+            raise CustomError("The date field must be a date, please try again!")
+        elif deposit.date == date(1900, 1, 1):
             logging.warning("Error in SAL method create deposit, date empty")
             raise CustomError("The date field cannot be left empty, please try again!")
         elif type(deposit.description) is not str:
@@ -50,8 +51,8 @@ class DepositSALImplementation(DepositSALInterface):
             raise CustomError("The deposit ID field must be an integer, please try again!")
         else:
             deposit = self.deposit_dao.get_deposit(deposit_id)
-            if deposit.deposit_id == 0 and deposit.category_id == 0 and deposit.date == "" and \
-               deposit.description == "" and deposit.amount == 0.00:
+            if deposit.deposit_id == 0 and deposit.category_id == 0 and deposit.date == \
+                    date(1900, 1, 1) and deposit.description == "" and deposit.amount == 0.00:
                 logging.warning("Error in SAL method get deposit, deposit not found")
                 raise CustomError("Deposit not found, please try again!")
             else:
@@ -83,16 +84,16 @@ class DepositSALImplementation(DepositSALInterface):
                 logging.info("Finishing SAL method get deposits by category")
                 return deposits
 
-    def get_deposits_by_date(self, date: str) -> List[Deposit]:
-        logging.info("Beginning SAL method get deposits by date with date: " + date)
-        if type(date) is not str:
+    def get_deposits_by_date(self, deposit_date: date) -> List[Deposit]:
+        logging.info("Beginning SAL method get deposits by date with date: " + str(deposit_date))
+        if type(deposit_date) is not str:
             logging.warning("Error in SAL method get deposits by date, date not a string")
             raise CustomError("The date field must be a string, please try again!")
-        elif date == "":
+        elif deposit_date == "":
             logging.warning("Error in SAL method get deposits by date, date empty")
             raise CustomError("The date field cannot be left empty, please try again!")
         else:
-            deposits = self.deposit_dao.get_deposits_by_date(date)
+            deposits = self.deposit_dao.get_deposits_by_date(deposit_date)
             if len(deposits) == 0:
                 logging.warning("Error in SAL method get deposits by date, none found")
                 raise CustomError("No deposits found, please try again!")
@@ -105,9 +106,9 @@ class DepositSALImplementation(DepositSALInterface):
         if type(deposit.category_id) is not int:
             logging.warning("Error in SAL method update deposit, category ID not an integer")
             raise CustomError("The category ID field must be an integer, please try again!")
-        elif type(deposit.date) is not str:
+        elif not isinstance(deposit.date, date):
             logging.warning("Error in SAL method update deposit, date not a string")
-            raise CustomError("The date field must be a string, please try again!")
+            raise CustomError("The date field must be a date, please try again!")
         elif deposit.date == "":
             logging.warning("Error in SAL method update deposit, date empty")
             raise CustomError("The date field cannot be left empty, please try again!")

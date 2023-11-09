@@ -1,4 +1,5 @@
 import logging
+from datetime import date
 from typing import List
 
 
@@ -33,7 +34,7 @@ class DepositDALImplementation(DepositDALInterface):
         cursor.close()
         connection.close()
         if deposit_info is None:
-            deposit = Deposit(0, 0, '', '', 0.00)
+            deposit = Deposit(0, 0, date(1900, 1, 1), '', 0.00)
             logging.info("Finishing DAL method get deposit, deposit not found")
             return deposit
         else:
@@ -59,7 +60,7 @@ class DepositDALImplementation(DepositDALInterface):
             )
             deposits.append(deposit)
             logging.info("Finishing DAL method get all deposits with result: " +
-                             str(deposit.convert_to_dictionary()))
+                         str(deposit.convert_to_dictionary()))
         cursor.close()
         connection.close()
         return deposits
@@ -82,13 +83,13 @@ class DepositDALImplementation(DepositDALInterface):
             )
             deposits.append(deposit)
             logging.info("Finishing DAL method get all deposits by category with result: " +
-                             str(deposit.convert_to_dictionary()))
+                         str(deposit.convert_to_dictionary()))
         cursor.close()
         connection.close()
         return deposits
 
-    def get_deposits_by_date(self, date: str) -> List[Deposit]:
-        logging.info("Beginning DAL method get deposits by date with date: " + str(date))
+    def get_deposits_by_date(self, deposit_date: date) -> List[Deposit]:
+        logging.info("Beginning DAL method get deposits by date with date: " + str(deposit_date))
         sql = "SELECT * from financial_tracker.Deposit WHERE date=?;"
         connection = Connection.db_connection()
         cursor = connection.cursor()

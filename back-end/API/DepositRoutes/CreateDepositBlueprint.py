@@ -18,7 +18,7 @@ def create_deposit():
     try:
         deposit_info = request.json
         current_app.logger.info("Beginning API function create deposit with data: " + str(deposit_info))
-        new_deposit = Deposit(deposit_id=0, category_id=deposit_info["categoryId"], date=deposit_info["date"],
+        new_deposit = Deposit(deposit_id=0, category_id=deposit_info["categoryId"], deposit_date=deposit_info["date"],
                               description=deposit_info["description"], amount=float(deposit_info["amount"]))
         result = deposit_sao.create_deposit(new_deposit)
         current_app.logger.info("Finishing API function create deposit with result: " +
