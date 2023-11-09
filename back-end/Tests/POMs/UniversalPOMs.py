@@ -13,5 +13,5 @@ class UniversalPOMs:
         return element.click()
 
     def toast_notification_text(self):
-        element: WebElement = self.driver.find_element(By.CLASS_NAME, "Toastify")
+        element: WebElement = self.driver.find_element(By.CLASS_NAME, "toast")
         return element.text
