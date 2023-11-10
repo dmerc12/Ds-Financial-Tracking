@@ -88,12 +88,12 @@ class DepositDALImplementation(DepositDALInterface):
         connection.close()
         return deposits
 
-    def get_deposits_by_date(self, deposit_date: date) -> List[Deposit]:
-        logging.info("Beginning DAL method get deposits by date with date: " + str(deposit_date))
+    def get_deposits_by_date(self, deposits_date: date) -> List[Deposit]:
+        logging.info("Beginning DAL method get deposits by date with date: " + str(deposits_date))
         sql = "SELECT * from financial_tracker.Deposit WHERE date=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql, (date,))
+        cursor.execute(sql, (deposits_date,))
         deposit_records = cursor.fetchall()
         deposits = []
         for deposit in deposit_records:
