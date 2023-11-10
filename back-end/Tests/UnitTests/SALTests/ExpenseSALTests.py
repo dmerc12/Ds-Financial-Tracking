@@ -1,5 +1,5 @@
 import unittest.mock as mock
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 
 from DAL.CategoryDAL.CategoryDALImplementation import CategoryDALImplementation
 from DAL.ExpenseDAL.ExpenseDALImplementation import ExpenseDALImplementation
@@ -13,14 +13,14 @@ category_sao = CategorySALImplementation(category_dao)
 expense_dao = ExpenseDALImplementation()
 expense_sao = ExpenseSALImplementation(expense_dao, category_sao)
 
-successful_expense = Expense(0, -1, str(datetime.now().date()), 'test description', 5.00)
+successful_expense = Expense(0, -1, datetime.now().date(), 'test description', 5.00)
 current_expense_id = 1
-updated_expense = Expense(current_expense_id, -1, str(datetime.now().date() - timedelta(days=7, weeks=13)),
+updated_expense = Expense(current_expense_id, -1, datetime.now().date() - timedelta(days=7),
                           'updated description', 10.00)
 
 def test_sal_create_expense_category_id_not_integer():
     try:
-        test_expense = Expense(0, '', str(datetime.now().date()), 'description', 10.00)
+        test_expense = Expense(0, '', datetime.now().date(), 'description', 10.00)
         expense_sao.create_expense(test_expense)
         assert False
     except CustomError as error:
@@ -28,7 +28,7 @@ def test_sal_create_expense_category_id_not_integer():
 
 def test_sal_create_expense_category_not_set():
     try:
-        test_expense = Expense(0, 0, str(datetime.now().date()), 'description', 10.00)
+        test_expense = Expense(0, 0, datetime.now().date(), 'description', 10.00)
         expense_sao.create_expense(test_expense)
         assert False
     except CustomError as error:
@@ -36,23 +36,23 @@ def test_sal_create_expense_category_not_set():
 
 def test_sal_create_expense_category_not_found():
     try:
-        test_expense = Expense(0, -579356834926, str(datetime.now().date()), 'description', 10.00)
+        test_expense = Expense(0, -579356834926, datetime.now().date(), 'description', 10.00)
         expense_sao.create_expense(test_expense)
         assert False
     except CustomError as error:
         assert str(error) == "Category not found, please try again!"
 
-def test_sal_create_expense_date_not_string():
+def test_sal_create_expense_date_not_date():
     try:
-        test_expense = Expense(0, -1, datetime.now().date(), 'description', 10.00)
+        test_expense = Expense(0, -1, str(datetime.now().date()), 'description', 10.00)
         expense_sao.create_expense(test_expense)
         assert False
     except CustomError as error:
-        assert str(error) == "The date field must be a string, please try again!"
+        assert str(error) == "The date field must be a date, please try again!"
 
 def test_sal_create_expense_date_empty():
     try:
-        test_expense = Expense(0, -1, '', 'description', 10.00)
+        test_expense = Expense(0, -1, date(1900, 1, 1), 'description', 10.00)
         expense_sao.create_expense(test_expense)
         assert False
     except CustomError as error:
@@ -60,7 +60,7 @@ def test_sal_create_expense_date_empty():
 
 def test_sal_create_expense_description_not_string():
     try:
-        test_expense = Expense(0, -1, str(datetime.now().date()), 5, 10.00)
+        test_expense = Expense(0, -1, datetime.now().date(), 5, 10.00)
         expense_sao.create_expense(test_expense)
         assert False
     except CustomError as error:
@@ -68,7 +68,7 @@ def test_sal_create_expense_description_not_string():
 
 def test_sal_create_expense_description_empty():
     try:
-        test_expense = Expense(0, -1, str(datetime.now().date()), '', 10.00)
+        test_expense = Expense(0, -1, datetime.now().date(), '', 10.00)
         expense_sao.create_expense(test_expense)
         assert False
     except CustomError as error:
@@ -76,7 +76,7 @@ def test_sal_create_expense_description_empty():
 
 def test_sal_create_expense_amount_not_float():
     try:
-        test_expense = Expense(0, -1, str(datetime.now().date()), 'description', '10.00')
+        test_expense = Expense(0, -1, datetime.now().date(), 'description', '10.00')
         expense_sao.create_expense(test_expense)
         assert False
     except CustomError as error:
@@ -84,7 +84,7 @@ def test_sal_create_expense_amount_not_float():
 
 def test_sal_create_expense_amount_negative_or_0():
     try:
-        test_expense = Expense(0, -1, str(datetime.now().date()), 'description', -10.00)
+        test_expense = Expense(0, -1, datetime.now().date(), 'description', -10.00)
         expense_sao.create_expense(test_expense)
         assert False
     except CustomError as error:
@@ -149,23 +149,23 @@ def test_sal_get_expenses_by_category_success():
     result = expense_sao.get_expenses_by_category(successful_expense.category_id)
     assert len(result) > 0
 
-def test_sal_get_expenses_by_date_date_not_string():
+def test_sal_get_expenses_by_date_date_not_date():
     try:
         expense_sao.get_expenses_by_date(12537843)
         assert False
     except CustomError as error:
-        assert str(error) == "The date field must be a string, please try again!"
+        assert str(error) == "The date field must be a date, please try again!"
 
 def test_sal_get_expenses_by_date_date_empty():
     try:
-        expense_sao.get_expenses_by_date("")
+        expense_sao.get_expenses_by_date(date(1900, 1, 1))
         assert False
     except CustomError as error:
         assert str(error) == "The date field cannot be left empty, please try again!"
 
 def test_sal_get_expenses_by_date_none_found():
     try:
-        expense_sao.get_expenses_by_date("2023-10-23")
+        expense_sao.get_expenses_by_date(date(1972, 3, 1))
         assert False
     except CustomError as error:
         assert str(error) == "No expenses found, please try again!"
@@ -176,7 +176,7 @@ def test_sal_get_expenses_by_date_success():
 
 def test_sal_update_expense_category_id_not_integer():
     try:
-        test_expense = Expense(current_expense_id, '', str(datetime.now().date()), 'test description', 5.00)
+        test_expense = Expense(current_expense_id, '', datetime.now().date(), 'test description', 5.00)
         expense_sao.update_expense(test_expense)
         assert False
     except CustomError as error:
@@ -184,23 +184,23 @@ def test_sal_update_expense_category_id_not_integer():
 
 def test_sal_update_expense_category_not_found():
     try:
-        test_expense = Expense(current_expense_id, -1578576467, str(datetime.now().date()), 'test description', 5.00)
+        test_expense = Expense(current_expense_id, -1578576467, datetime.now().date(), 'test description', 5.00)
         expense_sao.update_expense(test_expense)
         assert False
     except CustomError as error:
         assert str(error) == "Category not found, please try again!"
 
-def test_sal_update_expense_date_not_string():
+def test_sal_update_expense_date_not_date():
     try:
-        test_expense = Expense(current_expense_id, -1, datetime.now().date(), 'test description', 5.00)
+        test_expense = Expense(current_expense_id, -1, str(datetime.now().date()), 'test description', 5.00)
         expense_sao.update_expense(test_expense)
         assert False
     except CustomError as error:
-        assert str(error) == "The date field must be a string, please try again!"
+        assert str(error) == "The date field must be a date, please try again!"
 
 def test_sal_update_expense_date_empty():
     try:
-        test_expense = Expense(current_expense_id, -1, '', 'test description', 5.00)
+        test_expense = Expense(current_expense_id, -1, date(1900, 1, 1), 'test description', 5.00)
         expense_sao.update_expense(test_expense)
         assert False
     except CustomError as error:
@@ -208,7 +208,7 @@ def test_sal_update_expense_date_empty():
 
 def test_sal_update_expense_description_not_string():
     try:
-        test_expense = Expense(current_expense_id, -1, str(datetime.now().date()), 6, 5.00)
+        test_expense = Expense(current_expense_id, -1, datetime.now().date(), 6, 5.00)
         expense_sao.update_expense(test_expense)
         assert False
     except CustomError as error:
@@ -216,7 +216,7 @@ def test_sal_update_expense_description_not_string():
 
 def test_sal_update_expense_description_empty():
     try:
-        test_expense = Expense(current_expense_id, -1, str(datetime.now().date()), '', 5.00)
+        test_expense = Expense(current_expense_id, -1, datetime.now().date(), '', 5.00)
         expense_sao.update_expense(test_expense)
         assert False
     except CustomError as error:
@@ -224,7 +224,7 @@ def test_sal_update_expense_description_empty():
 
 def test_sal_update_expense_amount_not_float():
     try:
-        test_expense = Expense(current_expense_id, -1, str(datetime.now().date()), 'test description', '5.00')
+        test_expense = Expense(current_expense_id, -1, datetime.now().date(), 'test description', '5.00')
         expense_sao.update_expense(test_expense)
         assert False
     except CustomError as error:
@@ -232,7 +232,7 @@ def test_sal_update_expense_amount_not_float():
 
 def test_sal_update_expense_amount_negative_or_0():
     try:
-        test_expense = Expense(current_expense_id, -1, str(datetime.now().date()), 'test description', -5.00)
+        test_expense = Expense(current_expense_id, -1, datetime.now().date(), 'test description', -5.00)
         expense_sao.update_expense(test_expense)
         assert False
     except CustomError as error:

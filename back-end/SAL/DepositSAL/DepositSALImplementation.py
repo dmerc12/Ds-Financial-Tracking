@@ -24,7 +24,7 @@ class DepositSALImplementation(DepositSALInterface):
             logging.warning("Error in SAL method create deposit, category ID not set")
             raise CustomError("A category must be set, please try again!")
         elif not isinstance(deposit.date, date):
-            logging.warning("Error in SAL method create deposit, date not a string")
+            logging.warning("Error in SAL method create deposit, date not a date")
             raise CustomError("The date field must be a date, please try again!")
         elif deposit.date == date(1900, 1, 1):
             logging.warning("Error in SAL method create deposit, date empty")
@@ -86,10 +86,10 @@ class DepositSALImplementation(DepositSALInterface):
 
     def get_deposits_by_date(self, deposit_date: date) -> List[Deposit]:
         logging.info("Beginning SAL method get deposits by date with date: " + str(deposit_date))
-        if type(deposit_date) is not str:
-            logging.warning("Error in SAL method get deposits by date, date not a string")
-            raise CustomError("The date field must be a string, please try again!")
-        elif deposit_date == "":
+        if not isinstance(deposit_date, date):
+            logging.warning("Error in SAL method get deposits by date, date not a date")
+            raise CustomError("The date field must be a date, please try again!")
+        elif deposit_date == date(1900, 1, 1):
             logging.warning("Error in SAL method get deposits by date, date empty")
             raise CustomError("The date field cannot be left empty, please try again!")
         else:
@@ -107,9 +107,9 @@ class DepositSALImplementation(DepositSALInterface):
             logging.warning("Error in SAL method update deposit, category ID not an integer")
             raise CustomError("The category ID field must be an integer, please try again!")
         elif not isinstance(deposit.date, date):
-            logging.warning("Error in SAL method update deposit, date not a string")
+            logging.warning("Error in SAL method update deposit, date not a date")
             raise CustomError("The date field must be a date, please try again!")
-        elif deposit.date == "":
+        elif deposit.date == date(1900, 1, 1):
             logging.warning("Error in SAL method update deposit, date empty")
             raise CustomError("The date field cannot be left empty, please try again!")
         elif type(deposit.description) is not str:

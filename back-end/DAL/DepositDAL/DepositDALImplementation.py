@@ -54,7 +54,7 @@ class DepositDALImplementation(DepositDALInterface):
             deposit = Deposit(
                 deposit_id=deposit[0],
                 category_id=deposit[4],
-                date=deposit[1],
+                deposit_date=deposit[1],
                 description=deposit[2],
                 amount=deposit[3]
             )
@@ -67,17 +67,17 @@ class DepositDALImplementation(DepositDALInterface):
 
     def get_deposits_by_category(self, category_id: int) -> List[Deposit]:
         logging.info("Beginning DAL method get deposits by category with category ID: " + str(category_id))
-        sql = "SELECT * from financial_tracker.Deposit WHERE category_id=?;"
+        sql = "SELECT * from financial_tracker.Deposit WHERE category_id=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql, (category_id,))
         deposit_records = cursor.fetchall()
         deposits = []
         for deposit in deposit_records:
             deposit = Deposit(
                 deposit_id=deposit[0],
                 category_id=deposit[4],
-                date=deposit[1],
+                deposit_date=deposit[1],
                 description=deposit[2],
                 amount=deposit[3]
             )
@@ -88,19 +88,19 @@ class DepositDALImplementation(DepositDALInterface):
         connection.close()
         return deposits
 
-    def get_deposits_by_date(self, deposit_date: date) -> List[Deposit]:
-        logging.info("Beginning DAL method get deposits by date with date: " + str(deposit_date))
-        sql = "SELECT * from financial_tracker.Deposit WHERE date=?;"
+    def get_deposits_by_date(self, deposits_date: date) -> List[Deposit]:
+        logging.info("Beginning DAL method get deposits by date with date: " + str(deposits_date))
+        sql = "SELECT * from financial_tracker.Deposit WHERE date=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql, (deposits_date,))
         deposit_records = cursor.fetchall()
         deposits = []
         for deposit in deposit_records:
             deposit = Deposit(
                 deposit_id=deposit[0],
                 category_id=deposit[4],
-                date=deposit[1],
+                deposit_date=deposit[1],
                 description=deposit[2],
                 amount=deposit[3]
             )

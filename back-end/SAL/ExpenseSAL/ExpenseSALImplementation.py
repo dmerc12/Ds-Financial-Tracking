@@ -1,4 +1,5 @@
 import logging
+from datetime import date
 from typing import List
 
 from DAL.ExpenseDAL.ExpenseDALImplementation import ExpenseDALImplementation
@@ -22,10 +23,10 @@ class ExpenseSALImplementation(ExpenseSALInterface):
         elif expense.category_id == 0:
             logging.warning("Error in SAL method create expense, category ID not set")
             raise CustomError("A category must be set, please try again!")
-        elif type(expense.date) is not str:
-            logging.warning("Error in SAL method create expense, date not a string")
-            raise CustomError("The date field must be a string, please try again!")
-        elif expense.date == "":
+        elif not isinstance(expense.date, date):
+            logging.warning("Error in SAL method create expense, date not a date")
+            raise CustomError("The date field must be a date, please try again!")
+        elif expense.date == date(1900, 1, 1):
             logging.warning("Error in SAL method create expense, date empty")
             raise CustomError("The date field cannot be left empty, please try again!")
         elif type(expense.description) is not str:
@@ -53,8 +54,8 @@ class ExpenseSALImplementation(ExpenseSALInterface):
             raise CustomError("The expense ID field must be an integer, please try again!")
         else:
             expense = self.expense_dao.get_expense(expense_id)
-            if expense.expense_id == 0 and expense.category_id == 0 and expense.date == '' and \
-               expense.description == '' and expense.amount == 0.00:
+            if (expense.expense_id == 0 and expense.category_id == 0 and expense.date ==
+                    date(1900, 1, 1) and expense.description == '' and expense.amount == 0.00):
                 logging.warning("Error in SAL method get expense, expense not found")
                 raise CustomError("Expense not found, please try again!")
             else:
@@ -86,16 +87,16 @@ class ExpenseSALImplementation(ExpenseSALInterface):
                 logging.info("Finishing SAL method get expenses by category")
                 return expenses
 
-    def get_expenses_by_date(self, date: str) -> List[Expense]:
-        logging.info("Beginning SAL method get expenses by date with date: " + date)
-        if type(date) is not str:
-            logging.warning("Error in SAL method get expenses by date, date not a string")
-            raise CustomError("The date field must be a string, please try again!")
-        elif date == "":
+    def get_expenses_by_date(self, expense_date: date) -> List[Expense]:
+        logging.info("Beginning SAL method get expenses by date with date: " + str(expense_date))
+        if not isinstance(expense_date, date):
+            logging.warning("Error in SAL method create expense, date not a date")
+            raise CustomError("The date field must be a date, please try again!")
+        elif expense_date == date(1900, 1, 1):
             logging.warning("Error in SAL method get expenses by date, date empty")
             raise CustomError("The date field cannot be left empty, please try again!")
         else:
-            expenses = self.expense_dao.get_expenses_by_date(date)
+            expenses = self.expense_dao.get_expenses_by_date(expense_date)
             if len(expenses) == 0:
                 logging.warning("Error in SAL method get expenses by date, none found")
                 raise CustomError("No expenses found, please try again!")
@@ -108,10 +109,10 @@ class ExpenseSALImplementation(ExpenseSALInterface):
         if type(expense.category_id) is not int:
             logging.warning("Error in SAL method update expense, category ID not an integer")
             raise CustomError("The category ID field must be an integer, please try again!")
-        elif type(expense.date) is not str:
-            logging.warning("Error in SAL method update expense, date not a string")
-            raise CustomError("The date field must be a string, please try again!")
-        elif expense.date == "":
+        elif not isinstance(expense.date, date):
+            logging.warning("Error in SAL method update expense, date not a date")
+            raise CustomError("The date field must be a date, please try again!")
+        elif expense.date == date(1900, 1, 1):
             logging.warning("Error in SAL method update expense, date empty")
             raise CustomError("The date field cannot be left empty, please try again!")
         elif type(expense.description) is not str:
