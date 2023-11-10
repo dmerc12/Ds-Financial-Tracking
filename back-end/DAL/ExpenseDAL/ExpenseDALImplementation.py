@@ -67,7 +67,7 @@ class ExpenseDALImplementation(ExpenseDALInterface):
 
     def get_expenses_by_category(self, category_id: int) -> List[Expense]:
         logging.info("Beginning DAL method get expenses by category with category ID: " + str(category_id))
-        sql = "SELECT * from financial_tracker.Expense WHERE category_id=?;"
+        sql = "SELECT * from financial_tracker.Expense WHERE category_id=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
         cursor.execute(sql, (category_id,))
@@ -90,7 +90,7 @@ class ExpenseDALImplementation(ExpenseDALInterface):
 
     def get_expenses_by_date(self, expense_date: date) -> List[Expense]:
         logging.info("Beginning DAL method get expenses by date with date: " + str(expense_date))
-        sql = "SELECT * from financial_tracker.Expense WHERE date=?;"
+        sql = "SELECT * from financial_tracker.Expense WHERE date=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
         cursor.execute(sql, (date,))
