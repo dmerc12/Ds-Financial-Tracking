@@ -1,10 +1,9 @@
 from flask import Blueprint, request, current_app, jsonify
-
 from DAL.CategoryDAL.CategoryDALImplementation import CategoryDALImplementation
 from DAL.ExpenseDAL.ExpenseDALImplementation import ExpenseDALImplementation
-from Entities.CustomError import CustomError
 from SAL.CategorySAL.CategorySALImplementation import CategorySALImplementation
 from SAL.ExpenseSAL.ExpenseSALImplementation import ExpenseSALImplementation
+from Entities.CustomError import CustomError
 
 get_expenses_by_category_route = Blueprint('get_expenses_by_category_route', __name__)
 
@@ -30,4 +29,3 @@ def get_expenses_by_category():
             "message": str(error)
         }
         return jsonify(response), 400
-
