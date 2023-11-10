@@ -17,9 +17,9 @@ deposit_sao = DepositSALImplementation(deposit_dao, category_sao)
 @get_deposits_by_date_route.route("/api/get/deposits/date", methods=["PATCH"])
 def get_deposits_by_date():
     try:
-        deposits_date = datetime.strptime(request.json["date"], "%Y-%m-%d").date()
-        current_app.logger.info("Beginning API function get deposits by date with category ID: " + str(deposits_date))
-        deposits = deposit_sao.get_deposits_by_date(deposits_date)
+        date = datetime.strptime(request.json["date"], "%Y-%m-%d").date()
+        current_app.logger.info("Beginning API function get deposits by date with date: " + str(date))
+        deposits = deposit_sao.get_deposits_by_date(date)
         deposit_list = [deposit.convert_to_dictionary() for deposit in deposits]
         for deposit in deposit_list:
             current_app.logger.info("Finishing API function get deposits by date with deposits: " +
