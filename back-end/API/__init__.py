@@ -18,6 +18,7 @@ from API.DepositRoutes.DeleteDepositBlueprint import delete_deposit_route
 from API.ExpenseRoutes.CreateExpenseBlueprint import create_expense_route
 from API.ExpenseRoutes.GetAllExpensesBlueprint import get_all_expenses_route
 from API.ExpenseRoutes.GetExpensesByCategoryBlueprint import get_expenses_by_category_route
+from API.ExpenseRoutes.GetExpensesByDateBlueprint import get_expenses_by_date_route
 from API.ExpenseRoutes.UpdateExpenseBlueprint import update_expense_route
 from API.ExpenseRoutes.DeleteExpenseBlueprint import delete_expense_route
 
@@ -54,6 +55,7 @@ def create_back_end_api(config):
     app.register_blueprint(create_expense_route)
     app.register_blueprint(get_all_expenses_route)
     app.register_blueprint(get_expenses_by_category_route)
+    app.register_blueprint(get_expenses_by_date_route)
     app.register_blueprint(update_expense_route)
     app.register_blueprint(delete_expense_route)
 

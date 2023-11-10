@@ -93,7 +93,7 @@ class ExpenseDALImplementation(ExpenseDALInterface):
         sql = "SELECT * from financial_tracker.Expense WHERE date=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql, (date,))
+        cursor.execute(sql, (expense_date,))
         expense_records = cursor.fetchall()
         expenses = []
         for expense in expense_records:
