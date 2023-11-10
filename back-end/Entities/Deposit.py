@@ -13,7 +13,7 @@ class Deposit:
         return {
             'depositId': self.deposit_id,
             'categoryId': self.category_id,
-            'date': self.date.strftime("%Y-%m-%d"),
+            'date': str(self.date.strftime("%Y-%m-%d")),
             'description': self.description,
             'amount': self.amount
         }

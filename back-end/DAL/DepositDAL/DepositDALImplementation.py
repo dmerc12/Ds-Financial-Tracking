@@ -67,7 +67,7 @@ class DepositDALImplementation(DepositDALInterface):
 
     def get_deposits_by_category(self, category_id: int) -> List[Deposit]:
         logging.info("Beginning DAL method get deposits by category with category ID: " + str(category_id))
-        sql = "SELECT * from financial_tracker.Deposit WHERE category_id=?;"
+        sql = "SELECT * from financial_tracker.Deposit WHERE category_id=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
         cursor.execute(sql, (category_id,))
@@ -90,7 +90,7 @@ class DepositDALImplementation(DepositDALInterface):
 
     def get_deposits_by_date(self, deposit_date: date) -> List[Deposit]:
         logging.info("Beginning DAL method get deposits by date with date: " + str(deposit_date))
-        sql = "SELECT * from financial_tracker.Deposit WHERE date=?;"
+        sql = "SELECT * from financial_tracker.Deposit WHERE date=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
         cursor.execute(sql, (date,))
