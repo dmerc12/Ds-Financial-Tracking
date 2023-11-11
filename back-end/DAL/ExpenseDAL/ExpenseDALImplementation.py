@@ -11,11 +11,11 @@ class ExpenseDALImplementation(ExpenseDALInterface):
 
     def create_expense(self, expense: Expense) -> Expense:
         logging.info("Beginning DAL method create expense with data: " + str(expense.convert_to_dictionary()))
-        sql = "INSERT INTO financial_tracker.Expense (category_id, date, description, amount) VALUES " \
-              "(%s, %s, %s, %s) RETURNING expense_id;"
+        sql = "INSERT INTO financial_tracker.Expense (user_id, category_id, date, description, amount) VALUES " \
+              "(%s, %s, %s, %s, %s) RETURNING expense_id;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql, (expense.category_id, expense.date, expense.description, expense.amount))
+        cursor.execute(sql, (expense.user_id, expense.category_id, expense.date, expense.description, expense.amount))
         expense.expense_id = cursor.fetchone()[0]
         cursor.close()
         connection.commit()
@@ -33,7 +33,7 @@ class ExpenseDALImplementation(ExpenseDALInterface):
         cursor.close()
         connection.close()
         if expense_info is None:
-            expense = Expense(0, 0, '', '', 0.00)
+            expense = Expense(0, 0, 0, date(1900, 0, 0), '', 0.00)
             logging.info("Finishing DAL method get expense, expense not found")
             return expense
         else:
@@ -41,21 +41,22 @@ class ExpenseDALImplementation(ExpenseDALInterface):
             logging.info("Finishing DAL method get expense with expense: " + str(expense.convert_to_dictionary()))
             return expense
 
-    def get_all_expenses(self) -> List[Expense]:
-        logging.info("Beginning DAL method get all expenses;")
-        sql = "SELECT * FROM financial_tracker.Expense"
+    def get_all_expenses(self, user_id: int) -> List[Expense]:
+        logging.info("Beginning DAL method get all expenses with user ID: " + str(user_id))
+        sql = "SELECT * FROM financial_tracker.Expense where user_id=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql, (user_id,))
         expense_records = cursor.fetchall()
         expenses = []
         for expense in expense_records:
             expense = Expense(
                 expense_id=expense[0],
-                category_id=expense[4],
-                expense_date=expense[1],
-                description=expense[2],
-                amount=expense[3]
+                user_id=expense[1],
+                category_id=expense[2],
+                expense_date=expense[3],
+                description=expense[4],
+                amount=expense[5]
             )
             expenses.append(expense)
             logging.info("Finishing DAL method get all expenses with result: " +
@@ -76,10 +77,11 @@ class ExpenseDALImplementation(ExpenseDALInterface):
         for expense in expense_records:
             expense = Expense(
                 expense_id=expense[0],
-                category_id=expense[4],
-                expense_date=expense[1],
-                description=expense[2],
-                amount=expense[3]
+                user_id=expense[1],
+                category_id=expense[2],
+                expense_date=expense[3],
+                description=expense[4],
+                amount=expense[5]
             )
             expenses.append(expense)
             logging.info("Finishing DAL method get all expenses by category with result: " +
@@ -99,10 +101,11 @@ class ExpenseDALImplementation(ExpenseDALInterface):
         for expense in expense_records:
             expense = Expense(
                 expense_id=expense[0],
-                category_id=expense[4],
-                expense_date=expense[1],
-                description=expense[2],
-                amount=expense[3]
+                user_id=expense[1],
+                category_id=expense[2],
+                expense_date=expense[3],
+                description=expense[4],
+                amount=expense[5]
             )
             expenses.append(expense)
             logging.info(
