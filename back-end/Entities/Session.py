@@ -11,4 +11,3 @@ class Session:
             'userId': self.user_id,
             'expires': self.expires
         }
-    
