@@ -10,10 +10,10 @@ class CategoryDALImplementation(CategoryDALInterface):
 
     def create_category(self, category: Category) -> Category:
         logging.info("Beginning DAL method create category with data: " + str(category.convert_to_dictionary()))
-        sql = "INSERT INTO financial_tracker.Category (category_name) VALUES (%s) RETURNING category_id;"
+        sql = "INSERT INTO financial_tracker.Category (category_name, user_id) VALUES (%s, %s) RETURNING category_id;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql, (category.category_name,))
+        cursor.execute(sql, (category.category_name, category.user_id))
         category.category_id = cursor.fetchone()[0]
         cursor.close()
         connection.commit()
@@ -31,7 +31,7 @@ class CategoryDALImplementation(CategoryDALInterface):
         cursor.close()
         connection.close()
         if category_info is None:
-            category = Category(0, '')
+            category = Category(0, 0, '')
             logging.info("Finishing DAL method get category, category not found")
             return category
         else:
@@ -39,12 +39,12 @@ class CategoryDALImplementation(CategoryDALInterface):
             logging.info("Finishing DAL method get category with category: " + str(category.convert_to_dictionary()))
             return category
 
-    def get_all_categories(self) -> List[Category]:
-        logging.info("Beginning DAL method get all categories")
-        sql = "SELECT * FROM financial_tracker.Category;"
+    def get_all_categories(self, user_id: int) -> List[Category]:
+        logging.info("Beginning DAL method get all categories with user ID: " + str(user_id))
+        sql = "SELECT * FROM financial_tracker.Category WHERE user_id=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql, (user_id,))
         category_records = cursor.fetchall()
         categories = []
         for category in category_records:
