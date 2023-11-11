@@ -10,6 +10,7 @@ import { AiOutlineExclamationCircle } from 'react-icons/ai';
 export const ExpenseList = ({ toastRef }) => {
     const [expenses, setExpenses] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState(null);
     const [loading, setLoading] = useState(false);
     const [failedToFetchCategories, setFailedToFetchCategories] = useState(false);
     const [failedToFetchExpenses, setFailedToFetchExpenses] = useState(false);
@@ -25,6 +26,17 @@ export const ExpenseList = ({ toastRef }) => {
     };
 
     let expenseRows = [];
+
+    const handleCategoryChange = (event) => {
+        const categoryId = event.target.value === '' ? null: parseInt(event.target.value);
+        setSelectedCategory(categoryId);
+
+        if (categoryId !== null) {
+            fetchExpensesByCategory(categoryId);
+        } else {
+            fetchExpenses();
+        }
+    };
 
     const fetchCategories = async () => {
         setLoading(true);
@@ -74,7 +86,35 @@ export const ExpenseList = ({ toastRef }) => {
                 toastRef.current.addToast({ mode: 'error', message: error.message});
             }
         }
-    }
+    };
+
+    const fetchExpensesByCategory = async (categoryId) => {
+        setLoading(true);
+        setFailedToFetchExpenses(false);
+        try {
+            const { responseStatus, data } = await fetchData('/api/get/expenses/category', 'PATCH', {'categoryId': categoryId});
+
+            if (responseStatus === 200) {
+                setExpenses(data);
+                setLoading(false);
+            } else if (responseStatus === 400) {
+                throw new Error(`${data.message}`);
+            } else {
+                throw new Error("Cannot connect to the back end server, please try again!");
+            }
+        } catch (error) {
+            if (error.message === 'Failed to fetch') {
+                setLoading(false);
+                setFailedToFetchExpenses(true)
+            } else if (error.message === 'No expenses found, please try again!') {
+                setLoading(false);
+                setExpenses([]);
+            } else {
+                setLoading(false);
+                toastRef.current.addToast({ mode: 'error', message: error.message});
+            }
+        }
+    };
 
     useEffect(() => {
         fetchExpenses();
@@ -104,6 +144,15 @@ export const ExpenseList = ({ toastRef }) => {
     return (
         <>
             <CreateExpenseModal toastRef={toastRef} categories={categories} fetchExpenses={fetchExpenses} />
+            <div>
+                <label htmlFor='categoryFilter'>Filter by Category: </label>
+                <select id='categoryFilter' name='categoryFilter' value={selectedCategory || ''} onChange={handleCategoryChange}>
+                    {categories.map((category) => (
+                        <option key={category.categoryId} value={category.categoryId}>{category.categoryName}</option>
+                    ))}
+                </select>
+            </div>
+
             {loading ? (
                 <div className="loading-indicator">
                     <FaSpinner className="spinner" />
