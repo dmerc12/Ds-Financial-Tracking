@@ -4,9 +4,9 @@ from DAL.DepositDAL.DepositDALImplementation import DepositDALImplementation
 from Entities.Deposit import Deposit
 
 deposit_dao = DepositDALImplementation()
-test_deposit = Deposit(0, -1, datetime.now(), 'test description', 25.00)
+test_deposit = Deposit(0, -1, -1, datetime.now(), 'test description', 25.00)
 current_deposit_id = 1
-updated_deposit = Deposit(current_deposit_id, test_deposit.category_id,
+updated_deposit = Deposit(current_deposit_id, test_deposit.user_id, test_deposit.category_id,
                           datetime.now().date() - timedelta(days=38), 'updated', 50.00)
 
 def test_create_deposit_success():
@@ -18,7 +18,7 @@ def test_get_deposit_success():
     assert result is not None
 
 def test_get_all_deposits_success():
-    result = deposit_dao.get_all_deposits()
+    result = deposit_dao.get_all_deposits(test_deposit.user_id)
     assert len(result) > 0
 
 def test_get_deposits_by_category_success():
