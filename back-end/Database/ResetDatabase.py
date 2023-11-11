@@ -15,7 +15,7 @@ def truncate_table(table_name):
         connection.close()
 
 if __name__ == "__main__":
-    tables_to_reset = ["Expense", "Deposit", "Category"]
+    tables_to_reset = ["User", "Session", "Expense", "Deposit", "Category"]
 
     for table in tables_to_reset:
         truncate_table(table)
