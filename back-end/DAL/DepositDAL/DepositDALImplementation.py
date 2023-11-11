@@ -12,11 +12,11 @@ class DepositDALImplementation(DepositDALInterface):
 
     def create_deposit(self, deposit: Deposit) -> Deposit:
         logging.info("Beginning DAL method create deposit with data: " + str(deposit.convert_to_dictionary()))
-        sql = "INSERT INTO financial_tracker.Deposit (category_id, date, description, amount) VALUES " \
-              "(%s, %s, %s , %s) RETURNING deposit_id;"
+        sql = "INSERT INTO financial_tracker.Deposit (user_id, category_id, date, description, amount) VALUES " \
+              "(%s, %s, %s, %s , %s) RETURNING deposit_id;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql, (deposit.category_id, deposit.date, deposit.description, deposit.amount))
+        cursor.execute(sql, (deposit.user_id, deposit.category_id, deposit.date, deposit.description, deposit.amount))
         deposit.deposit_id = cursor.fetchone()[0]
         cursor.close()
         connection.commit()
@@ -34,7 +34,7 @@ class DepositDALImplementation(DepositDALInterface):
         cursor.close()
         connection.close()
         if deposit_info is None:
-            deposit = Deposit(0, 0, date(1900, 1, 1), '', 0.00)
+            deposit = Deposit(0, 0, 0, date(1900, 1, 1), '', 0.00)
             logging.info("Finishing DAL method get deposit, deposit not found")
             return deposit
         else:
@@ -42,21 +42,22 @@ class DepositDALImplementation(DepositDALInterface):
             logging.info("Finishing DAL method get deposit with deposit: " + str(deposit.convert_to_dictionary()))
             return deposit
 
-    def get_all_deposits(self) -> List[Deposit]:
-        logging.info("Beginning DAL method get all deposits")
-        sql = "SELECT * FROM financial_tracker.Deposit;"
+    def get_all_deposits(self, user_id: int) -> List[Deposit]:
+        logging.info("Beginning DAL method get all deposits with user ID: " + str(user_id))
+        sql = "SELECT * FROM financial_tracker.Deposit WHERE user_id=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql, (user_id,))
         deposit_records = cursor.fetchall()
         deposits = []
         for deposit in deposit_records:
             deposit = Deposit(
                 deposit_id=deposit[0],
-                category_id=deposit[4],
-                deposit_date=deposit[1],
-                description=deposit[2],
-                amount=deposit[3]
+                user_id=deposit[1],
+                category_id=deposit[2],
+                deposit_date=deposit[3],
+                description=deposit[4],
+                amount=deposit[5]
             )
             deposits.append(deposit)
             logging.info("Finishing DAL method get all deposits with result: " +
@@ -76,10 +77,11 @@ class DepositDALImplementation(DepositDALInterface):
         for deposit in deposit_records:
             deposit = Deposit(
                 deposit_id=deposit[0],
-                category_id=deposit[4],
-                deposit_date=deposit[1],
-                description=deposit[2],
-                amount=deposit[3]
+                user_id=deposit[1],
+                category_id=deposit[2],
+                deposit_date=deposit[3],
+                description=deposit[4],
+                amount=deposit[5]
             )
             deposits.append(deposit)
             logging.info("Finishing DAL method get all deposits by category with result: " +
@@ -99,10 +101,11 @@ class DepositDALImplementation(DepositDALInterface):
         for deposit in deposit_records:
             deposit = Deposit(
                 deposit_id=deposit[0],
-                category_id=deposit[4],
-                deposit_date=deposit[1],
-                description=deposit[2],
-                amount=deposit[3]
+                user_id=deposit[1],
+                category_id=deposit[2],
+                deposit_date=deposit[3],
+                description=deposit[4],
+                amount=deposit[5]
             )
             deposits.append(deposit)
             logging.info(

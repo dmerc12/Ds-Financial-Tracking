@@ -25,7 +25,7 @@ def drop_table(table_name):
 
 
 if __name__ == "__main__":
-    tables_to_drop = ["Expense", "Deposit", "Category"]
+    tables_to_drop = ["User", "Session", "Expense", "Deposit", "Category"]
 
     for table in tables_to_drop:
         drop_table(table)

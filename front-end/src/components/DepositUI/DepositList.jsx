@@ -10,6 +10,7 @@ import { AiOutlineExclamationCircle } from 'react-icons/ai';
 export const DepositList = ({ toastRef }) => {
     const [deposits, setDeposits] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState(null);
     const [loading, setLoading] = useState(false);
     const [failedToFetchCategories, setFailedToFetchCategories] = useState(false);
     const [failedToFetchDeposits, setFailedToFetchDeposits] = useState(false);
@@ -25,6 +26,17 @@ export const DepositList = ({ toastRef }) => {
     };
 
     let depositRows = [];
+
+    const handleCategoryChange = (event) => {
+        const categoryId = event.target.value === '' ? null: parseInt(event.target.value);
+        setSelectedCategory(categoryId);
+
+        if (categoryId !== null) {
+            fetchDepositsByCategory(categoryId);
+        } else {
+            fetchDeposits();
+        }
+    };
 
     const fetchCategories = async () => {
         setLoading(true);
@@ -74,7 +86,35 @@ export const DepositList = ({ toastRef }) => {
                 toastRef.current.addToast({ mode: 'error', message: error.message});
             }
         }
-    }
+    };
+
+    const fetchDepositsByCategory = async (categoryId) => {
+        setLoading(true);
+        setFailedToFetchDeposits(false);
+        try{
+            const { responseStatus, data } = await fetchData('/api/get/deposits/category', 'PATCH', {'categoryId': categoryId});
+
+            if (responseStatus === 200) {
+                setDeposits(data);
+                setLoading(false);
+            } else if (responseStatus === 400) {
+                throw new Error(`${data.message}`);
+            } else {
+                throw new Error("Cannot connect to the back end server, please try again!");
+            }
+        } catch (error) {
+            if (error.message === 'Failed to fetch') {
+                setLoading(false);
+                setFailedToFetchDeposits(true)
+            } else if (error.message === 'No deposits found, please try again!') {
+                setLoading(false);
+                setDeposits([]);
+            } else {
+                setLoading(false);
+                toastRef.current.addToast({ mode: 'error', message: error.message});
+            }
+        }
+    };
 
     useEffect(() => {
         fetchDeposits();
@@ -104,6 +144,15 @@ export const DepositList = ({ toastRef }) => {
     return (
         <>
             <CreateDepositModal toastRef={toastRef} categories={categories} fetchDeposits={fetchDeposits} />
+            <div>
+                <label htmlFor='categoryFilter'>Filter by Category: </label>
+                <select id='categoryFilter' name='categoryFilter' value={selectedCategory || ''} onChange={handleCategoryChange}>
+                    {categories.map((category) => (
+                        <option key={category.categoryId} value={category.categoryId}>{category.categoryName}</option>
+                    ))}
+                </select>
+            </div>
+
             {loading ? (
                 <div className="loading-indicator">
                     <FaSpinner className="spinner" />

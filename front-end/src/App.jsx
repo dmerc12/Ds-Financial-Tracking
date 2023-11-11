@@ -23,7 +23,7 @@ function App() {
         </Routes>
       </BrowserRouter>
 
-      <ToastContainer ref={toastRef} />
+      <ToastContainer ref={toastRef} autoClose autoCloseTime={3000}/>
     </>
   )
 }

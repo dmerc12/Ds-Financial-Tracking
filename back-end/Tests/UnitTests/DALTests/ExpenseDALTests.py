@@ -4,9 +4,9 @@ from DAL.ExpenseDAL.ExpenseDALImplementation import ExpenseDALImplementation
 from Entities.Expense import Expense
 
 expense_dao = ExpenseDALImplementation()
-test_expense = Expense(0, -1, datetime.now().date(), 'test description', 25.00)
+test_expense = Expense(0, -1, -1, datetime.now().date(), 'test description', 25.00)
 current_expense_id = 1
-updated_expense = Expense(current_expense_id, test_expense.category_id,
+updated_expense = Expense(current_expense_id, test_expense.user_id, test_expense.category_id,
                           datetime.now().date() - timedelta(days=5), 'updated', 50.00)
 
 def test_create_expense_success():
@@ -18,7 +18,7 @@ def test_get_expense_success():
     assert result is not None
 
 def test_get_all_expenses_success():
-    result = expense_dao.get_all_expenses()
+    result = expense_dao.get_all_expenses(test_expense.user_id)
     assert len(result) > 0
 
 def test_get_expenses_by_category_success():

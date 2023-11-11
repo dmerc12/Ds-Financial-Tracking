@@ -15,7 +15,7 @@ class CategoryDALInterface(ABC):
         pass
 
     @abstractmethod
-    def get_all_categories(self) -> List[Category]:
+    def get_all_categories(self, user_id: int) -> List[Category]:
         pass
 
     @abstractmethod

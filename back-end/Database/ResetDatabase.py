@@ -15,7 +15,7 @@ def truncate_table(table_name):
         connection.close()
 
 if __name__ == "__main__":
-    tables_to_reset = ["Expense", "Deposit", "Category"]
+    tables_to_reset = ["User", "Session", "Expense", "Deposit", "Category"]
 
     for table in tables_to_reset:
         truncate_table(table)
@@ -23,10 +23,13 @@ if __name__ == "__main__":
     main_connection = Connection.db_connection()
     main_cursor = main_connection.cursor()
 
-    main_cursor.execute("INSERT INTO financial_tracker.CATEGORY (category_id, category_name) VALUES "
-                        "(-1, 'test category');")
-    main_cursor.execute("INSERT INTO financial_tracker.CATEGORY (category_id, category_name) VALUES "
-                        "(-2, 'unused category');")
+    main_cursor.execute("INSERT INTO financial_tracker.User (user_id, first_name, last_name, email, passwrd) "
+                        "VALUES (-1, 'test', 'test', 'test@email.com', 'test');")
+
+    main_cursor.execute("INSERT INTO financial_tracker.CATEGORY (category_id, user_id, category_name) VALUES "
+                        "(-1, -1, 'test category');")
+    main_cursor.execute("INSERT INTO financial_tracker.CATEGORY (category_id, user_id, category_name) VALUES "
+                        "(-2, -1, 'unused category');")
     print("Test category created successfully!")
 
     main_connection.commit()
