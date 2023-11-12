@@ -36,7 +36,7 @@ if __name__ == "__main__":
         CREATE TABLE financial_tracker.Session (
             session_id SERIAL PRIMARY KEY,
             user_id INT NOT NULL,
-            expires TIMESTAMP NOT NULL,
+            expiration TIMESTAMP NOT NULL,
             CONSTRAINT user_session_fk FOREIGN KEY (user_id) REFERENCES 
             financial_tracker.User(user_id) ON DELETE CASCADE
         );
