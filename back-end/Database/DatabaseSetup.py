@@ -20,10 +20,10 @@ if __name__ == "__main__":
     user_table_sql = '''
         CREATE TABLE financial_tracker.User (
             user_id SERIAL PRIMARY KEY,
-            first_name VARCHAR(36),
-            last_name VARCHAR(36),
-            email VARCHAR(60),
-            passwrd VARCHAR(60)
+            first_name VARCHAR(36) NOT NULL,
+            last_name VARCHAR(36) NOT NULL,
+            email VARCHAR(60) UNIQUE NOT NULL,
+            passwrd VARCHAR(60) NOT NULL
         );
     '''
 
@@ -35,8 +35,8 @@ if __name__ == "__main__":
     session_table_sql = '''
         CREATE TABLE financial_tracker.Session (
             session_id SERIAL PRIMARY KEY,
-            user_id INT,
-            expires VARCHAR(26),
+            user_id INT NOT NULL,
+            expiration TIMESTAMP NOT NULL,
             CONSTRAINT user_session_fk FOREIGN KEY (user_id) REFERENCES 
             financial_tracker.User(user_id) ON DELETE CASCADE
         );
@@ -45,8 +45,8 @@ if __name__ == "__main__":
     category_table_sql = '''
         CREATE TABLE financial_tracker.Category (
             category_id SERIAL PRIMARY KEY,
-            user_id INT,
-            category_name TEXT,
+            user_id INT NOT NULL,
+            category_name TEXT UNIQUE NOT NULL,
             CONSTRAINT user_category_fk FOREIGN KEY (user_id) REFERENCES 
             financial_tracker.User(user_id) ON DELETE CASCADE
         );
@@ -63,11 +63,11 @@ if __name__ == "__main__":
     expense_table_sql = '''
         CREATE TABLE financial_tracker.Expense (
             expense_id SERIAL PRIMARY KEY,
-            user_id INTEGER,
-            category_id INTEGER,
-            date DATE,
-            description TEXT,
-            amount FLOAT,           
+            user_id INTEGER NOT NULL,
+            category_id INTEGER NOT NULL,
+            date DATE NOT NULL,
+            description TEXT NOT NULL,
+            amount FLOAT NOT NULL,           
             FOREIGN KEY (category_id) REFERENCES financial_tracker.Category(category_id),
             CONSTRAINT user_expense_fk FOREIGN KEY (user_id) REFERENCES 
             financial_tracker.User(user_id) ON DELETE CASCADE
@@ -77,11 +77,11 @@ if __name__ == "__main__":
     deposit_table_sql = '''
         CREATE TABLE financial_tracker.Deposit (
             deposit_id SERIAL PRIMARY KEY,
-            user_id INTEGER,
-            category_id INTEGER,
-            date DATE,
-            description TEXT,
-            amount FLOAT,
+            user_id INTEGER NOT NULL,
+            category_id INTEGER NOT NULL,
+            date DATE NOT NULL,
+            description TEXT NOT NULL,
+            amount FLOAT NOT NULL,
             FOREIGN KEY (category_id) REFERENCES financial_tracker.Category(category_id)
             CONSTRAINT user_deposit_fk FOREIGN KEY (user_id) REFERENCES 
             financial_tracker.User(user_id) ON DELETE CASCADE

@@ -13,7 +13,7 @@ class CategorySALImplementation(CategorySALInterface):
 
     def create_category(self, category: Category) -> Category:
         logging.info("Beginning SAL method create category with data: " + str(category.convert_to_dictionary()))
-        existing_categories = self.category_dao.get_all_categories()
+        existing_categories = self.category_dao.get_all_categories(category.user_id)
         for existing_category in existing_categories:
             if existing_category.category_name == category.category_name:
                 logging.warning("Error in SAL method create category, category already exists")
@@ -43,9 +43,9 @@ class CategorySALImplementation(CategorySALInterface):
                 logging.info("Finishing SAL method get category with result: " + str(category.convert_to_dictionary()))
                 return category
 
-    def get_all_categories(self) -> List[Category]:
-        logging.info("Beginning SAL method get all categories")
-        categories = self.category_dao.get_all_categories()
+    def get_all_categories(self, user_id: int) -> List[Category]:
+        logging.info("Beginning SAL method get all categories with user ID: " + str(user_id))
+        categories = self.category_dao.get_all_categories(user_id)
         if len(categories) == 0:
             logging.warning("Error in SAL method get all categories, none found")
             raise CustomError("No categories found, please try again!")
@@ -63,7 +63,7 @@ class CategorySALImplementation(CategorySALInterface):
             raise CustomError("The category name field must be a string, please try again!")
         else:
             self.get_category(category.category_id)
-            existing_categories = self.category_dao.get_all_categories()
+            existing_categories = self.category_dao.get_all_categories(category.user_id)
             for existing_category in existing_categories:
                 if category.category_name == existing_category.category_name:
                     logging.warning("Error in SAL method update category, category already exists")
