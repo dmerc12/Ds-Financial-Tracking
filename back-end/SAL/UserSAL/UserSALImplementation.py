@@ -1,8 +1,13 @@
+from DAL.UserDAL.UserDALImplementation import UserDALImplementation
 from Entities.User import User
 from SAL.UserSAL.UserSALInterface import UserSALInterface
 
 
 class UserSALImplementation(UserSALInterface):
+
+    def __init__(self, user_dao: UserDALImplementation):
+        self.user_dao = user_dao
+
     def create_user(self, user: User, password_confirmation: str) -> User:
         pass
 
