@@ -62,9 +62,9 @@ class ExpenseSALImplementation(ExpenseSALInterface):
                 logging.info("Finishing SAL method get expense with result: " + str(expense.convert_to_dictionary()))
                 return expense
 
-    def get_all_expenses(self) -> List[Expense]:
+    def get_all_expenses(self, user_id: int) -> List[Expense]:
         logging.info("Beginning SAL method get all expenses")
-        expenses = self.expense_dao.get_all_expenses()
+        expenses = self.expense_dao.get_all_expenses(user_id)
         if len(expenses) == 0:
             logging.warning("Error in SAL method get all expenses, none found")
             raise CustomError("No expenses found, please try again!")
