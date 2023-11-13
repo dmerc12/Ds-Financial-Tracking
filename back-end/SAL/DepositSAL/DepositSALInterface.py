@@ -14,7 +14,7 @@ class DepositSALInterface(ABC):
         pass
 
     @abstractmethod
-    def get_all_deposits(self) -> List[Deposit]:
+    def get_all_deposits(self, user_id: int) -> List[Deposit]:
         pass
 
     @abstractmethod

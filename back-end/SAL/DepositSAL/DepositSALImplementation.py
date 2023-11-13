@@ -59,9 +59,9 @@ class DepositSALImplementation(DepositSALInterface):
                 logging.info("Finishing SAL method get deposit with result: " + str(deposit.convert_to_dictionary()))
                 return deposit
 
-    def get_all_deposits(self) -> List[Deposit]:
+    def get_all_deposits(self, user_id: int) -> List[Deposit]:
         logging.info("Beginning SAL method get all deposits")
-        deposits = self.deposit_dao.get_all_deposits()
+        deposits = self.deposit_dao.get_all_deposits(user_id)
         if len(deposits) == 0:
             logging.warning("Error in SAL method get all categories, none found")
             raise CustomError("No deposits found, please try again!")
