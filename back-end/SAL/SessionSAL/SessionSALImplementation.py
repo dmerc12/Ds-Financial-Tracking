@@ -25,7 +25,3 @@ class SessionSALImplementation(SessionSALInterface):
     def delete_session(self, session_id: int) -> bool:
         logging.info("Beginning SAL method update session with session ID: " + str(session_id))
         pass
-
-    def delete_all_sessions(self, user_id: int) -> bool:
-        logging.info("Beginning SAL method delete session with user ID: " + str(user_id))
-        pass

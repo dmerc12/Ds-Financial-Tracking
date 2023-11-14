@@ -15,7 +15,3 @@ class SessionSALInterface(ABC):
     @abstractmethod
     def delete_session(self, session_id: int) -> bool:
         pass
-
-    @abstractmethod
-    def delete_all_sessions(self, user_id: int) -> bool:
-        pass
