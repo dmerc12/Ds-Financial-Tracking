@@ -7,6 +7,15 @@ class User:
         self.email = email
         self.password = password
 
+    def convert_to_dictionary_full(self):
+        return {
+            'userId': self.user_id,
+            'firstName': self.first_name,
+            'lastName': self.last_name,
+            'email': self.email,
+            'password': self.password
+        }
+
     def convert_to_dictionary(self):
         return {
             'userId': self.user_id,
