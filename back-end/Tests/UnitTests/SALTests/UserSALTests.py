@@ -329,7 +329,7 @@ def test_change_password_password_new_password_empty():
         user_sao.change_password(successful_user.user_id, "", "new")
         assert False
     except CustomError as error:
-        assert str(error) == "The password field cannot be left empty, please try again!"
+        assert str(error) == "The new password field cannot be left empty, please try again!"
 
 def test_change_password_password_new_password_too_long():
     try:
@@ -337,7 +337,7 @@ def test_change_password_password_new_password_too_long():
                                                           "error message", "new")
         assert False
     except CustomError as error:
-        assert str(error) == "The password field cannot exceed 60 characters, please try again!"
+        assert str(error) == "The new password field cannot exceed 60 characters, please try again!"
 
 def test_change_password_confirmation_password_not_string():
     try:
@@ -359,7 +359,7 @@ def test_change_password_password_confirmation_password_too_long():
                                                                  "desired error message")
         assert False
     except CustomError as error:
-        assert str(error) == "The confirmation password field cannot exceed 36 characters, please try again!"
+        assert str(error) == "The confirmation password field cannot exceed 60 characters, please try again!"
 
 def test_change_password_user_id_not_integer():
     try:
