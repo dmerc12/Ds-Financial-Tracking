@@ -1,3 +1,6 @@
+from datetime import datetime
+
+
 class Session:
 
     def __init__(self, session_id: int, user_id: int, expiration: datetime):
