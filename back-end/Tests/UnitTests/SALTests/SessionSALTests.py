@@ -34,7 +34,7 @@ def test_create_session_expire_date_time_not_date():
         session_sao.create_session(test_session)
         assert False
     except CustomError as error:
-        assert str(error) == "The expire date and time field must be a date, please try again!"
+        assert str(error) == "The expiration field must be a date, please try again!"
 
 def test_create_session_success():
     result = session_sao.create_session(successful_session)
