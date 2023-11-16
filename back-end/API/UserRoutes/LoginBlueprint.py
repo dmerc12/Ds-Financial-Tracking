@@ -1,4 +1,4 @@
-import datetime
+from datetime import timedelta, datetime
 
 from flask import Blueprint, current_app, jsonify, request
 
@@ -22,7 +22,7 @@ def login():
         login_form = request.json
         current_app.logger.info("Beginning API function login with login info: " + login_form)
         user = user_sao.login(email=login_form["email"], password=login_form["password"])
-        session_info = Session(0, user.user_id, datetime.datetime.now() + datetime.timedelta(minutes=15))
+        session_info = Session(0, user.user_id, datetime.now() + timedelta(minutes=15))
         new_session = session_sao.create_session(session_info)
         current_app.logger.info("Finishing API function login with session: " +
                                 str(new_session.convert_to_dictionary()))
