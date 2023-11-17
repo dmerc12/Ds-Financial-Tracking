@@ -26,6 +26,9 @@ if __name__ == "__main__":
     main_cursor.execute("INSERT INTO financial_tracker.User (user_id, first_name, last_name, email, passwrd) "
                         "VALUES (-1, 'test', 'test', 'test@email.com', 'test');")
 
+    main_cursor.execute("INSERT INTO financial_tracker.User (user_id, first_name, last_name, email, passwrd) "
+                        "VALUES (-2, 'test', 'test', 'deleteallsessions@email.com', 'test');")
+
     main_cursor.execute("INSERT INTO financial_tracker.CATEGORY (category_id, user_id, category_name) VALUES "
                         "(-1, -1, 'test category');")
     main_cursor.execute("INSERT INTO financial_tracker.CATEGORY (category_id, user_id, category_name) VALUES "

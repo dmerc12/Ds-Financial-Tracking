@@ -3,6 +3,14 @@ import os
 from flask import Flask
 from flask_cors import CORS
 
+from API.UserRoutes.ChangePasswordBlueprint import change_password_route
+from API.UserRoutes.CreateUserBlueprint import create_user_route
+from API.UserRoutes.DeleteUserBlueprint import delete_user_route
+from API.UserRoutes.GetUserBlueprint import get_user_route
+from API.UserRoutes.LoginBlueprint import login_route
+from API.UserRoutes.LogoutBlueprint import logout_route
+from API.UserRoutes.UpdateUserBlueprint import update_user_route
+
 from API.CategoryRoutes.CreateCategoryBlueprint import create_category_route
 from API.CategoryRoutes.GetAllCategoriesBlueprint import get_all_categories_route
 from API.CategoryRoutes.UpdateCategoryBlueprint import update_category_route
@@ -22,6 +30,7 @@ from API.ExpenseRoutes.GetExpensesByDateBlueprint import get_expenses_by_date_ro
 from API.ExpenseRoutes.UpdateExpenseBlueprint import update_expense_route
 from API.ExpenseRoutes.DeleteExpenseBlueprint import delete_expense_route
 
+
 def create_back_end_api(config):
     app: Flask = Flask(__name__)
     CORS(app)
@@ -39,6 +48,14 @@ def create_back_end_api(config):
     handler.setFormatter(formatter)
     app.logger.addHandler(handler)
     app.logger.setLevel(log_level)
+
+    app.register_blueprint(create_user_route)
+    app.register_blueprint(login_route)
+    app.register_blueprint(logout_route)
+    app.register_blueprint(get_user_route)
+    app.register_blueprint(change_password_route)
+    app.register_blueprint(update_user_route)
+    app.register_blueprint(delete_user_route)
 
     app.register_blueprint(create_category_route)
     app.register_blueprint(get_all_categories_route)

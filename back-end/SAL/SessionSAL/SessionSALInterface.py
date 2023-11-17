@@ -13,5 +13,13 @@ class SessionSALInterface(ABC):
         pass
 
     @abstractmethod
+    def update_session(self, session: Session) -> Session:
+        pass
+
+    @abstractmethod
     def delete_session(self, session_id: int) -> bool:
+        pass
+
+    @abstractmethod
+    def delete_all_sessions(self, user_id: int) -> bool:
         pass

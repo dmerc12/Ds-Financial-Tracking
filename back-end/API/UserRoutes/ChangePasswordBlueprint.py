@@ -24,7 +24,7 @@ def change_password():
         session = session_sao.get_session(change_password_form["sessionId"])
         result = user_sao.get_user_by_id(session.user_id)
         session.expiration = datetime.now() + timedelta(minutes=15)
-        session_dao.update_session(session)
+        session_sao.update_session(session)
         current_app.logger.info("Finishing API function change password with result: " + str(result))
         return jsonify(result), 200
     except CustomError as error:

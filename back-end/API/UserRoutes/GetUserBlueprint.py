@@ -23,7 +23,7 @@ def get_user():
         session = session_sao.get_session(session_id)
         user = user_sao.get_user_by_id(session.user_id)
         session.expiration = datetime.now() + timedelta(minutes=15)
-        session_dao.update_session(session)
+        session_sao.update_session(session)
         current_app.logger.info("Finishing API function get user with user: " + str(user.convert_to_dictionary()))
         return jsonify(user.convert_to_dictionary()), 200
     except CustomError as error:
