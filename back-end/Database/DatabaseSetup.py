@@ -32,6 +32,11 @@ if __name__ == "__main__":
         VALUES (-1, 'test', 'test', 'test@email.com', 'test');
     '''
 
+    test_user_2 = '''
+        INSERT INTO financial_tracker.User (user_id, first_name, last_name, email, passwrd) 
+        VALUES (-2, 'test', 'test', 'deleteallsessions@email.com', 'test');
+    '''
+
     session_table_sql = '''
         CREATE TABLE financial_tracker.Session (
             session_id SERIAL PRIMARY KEY,
@@ -91,6 +96,7 @@ if __name__ == "__main__":
     create_data(schema_sql, "Financial tracking schema")
     create_data(user_table_sql, "User table")
     create_data(test_user_1, "Test user 1")
+    create_data(test_user_2, "Test user 2")
     create_data(session_table_sql, "Session table")
     create_data(category_table_sql, "Category table")
     create_data(test_category_1, "Test category 1")

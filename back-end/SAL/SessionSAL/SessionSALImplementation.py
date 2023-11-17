@@ -24,6 +24,9 @@ class SessionSALImplementation(SessionSALInterface):
         elif type(session.expiration) is not date:
             logging.warning("Error in SAL method create session, expiration not a date")
             raise CustomError("The expiration field must be a date, please try again!")
+        elif session.expiration <= datetime.now().date():
+            logging.warning("Error in SAL method create session, expiration already past")
+            raise CustomError("The expiration field must be in the future, please try again!")
         else:
             self.user_sao.get_user_by_id(session.user_id)
             new_session = self.session_dao.create_session(session)
@@ -48,8 +51,30 @@ class SessionSALImplementation(SessionSALInterface):
                 logging.info("Finishing SAL method get session with session: " + str(session.convert_to_dictionary()))
                 return session
 
+    def update_session(self, session: Session) -> Session:
+        logging.info("Beginning SAL method update session with session: " + str(session.convert_to_dictionary()))
+        if type(session.session_id) is not int:
+            logging.warning("Error in SAL method update session, session ID not an integer")
+            raise CustomError("The session ID field must be an integer, please try again!")
+        elif type(session.user_id) is not int:
+            logging.warning("Error in SAL method update session, user ID not an integer")
+            raise CustomError("The user ID field must be an integer, please try again!")
+        elif type(session.expiration) is not date:
+            logging.warning("Error in SAL method update session, expiration not a date")
+            raise CustomError("The expiration field must be a date, please try again!")
+        elif session.expiration <= datetime.now().date():
+            logging.warning("Error in SAL method update session, expiration already past")
+            raise CustomError("The expiration field must be in the future, please try again!")
+        else:
+            self.user_sao.get_user_by_id(session.user_id)
+            self.get_session(session.session_id)
+            updated_session = self.session_dao.update_session(session)
+            logging.info("Finishing SAL method update session with updated session: " +
+                         str(updated_session.convert_to_dictionary()))
+            return updated_session
+
     def delete_session(self, session_id: int) -> bool:
-        logging.info("Beginning SAL method update session with session ID: " + str(session_id))
+        logging.info("Beginning SAL method delete session with session ID: " + str(session_id))
         if type(session_id) is not int:
             logging.warning("Error in SAL method delete session, session ID not an integer")
             raise CustomError("The session ID field must be an integer, please try again!")
@@ -57,4 +82,15 @@ class SessionSALImplementation(SessionSALInterface):
             self.get_session(session_id)
             result = self.session_dao.delete_session(session_id)
             logging.info("Finishing SAL method delete session with result: " + str(result))
+            return result
+
+    def delete_all_sessions(self, user_id: int) -> bool:
+        logging.info("Beginning SAL method delete all sessions with user ID: " + str(user_id))
+        if type(user_id) is not int:
+            logging.warning("Error in SAL method delete all sessions, user ID not an integer")
+            raise CustomError("The user ID field must be an integer, please try again!")
+        else:
+            self.user_sao.get_user_by_id(user_id)
+            result = self.delete_all_sessions(user_id)
+            logging.info("Finishing SAL method delete all sessions with result: " + str(result))
             return result

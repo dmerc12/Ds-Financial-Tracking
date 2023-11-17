@@ -23,3 +23,7 @@ def test_update_session_success():
 def test_delete_session_success():
     result = session_dao.delete_session(test_session.session_id)
     assert result
+
+def test_delete_all_sessions_success():
+    result = session_dao.delete_all_sessions(test_session.user_id)
+    assert result
