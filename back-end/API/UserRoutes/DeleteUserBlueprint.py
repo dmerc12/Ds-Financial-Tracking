@@ -19,7 +19,7 @@ def delete_user():
         delete_info = request.json
         current_app.logger.info("Beginning API function delete user with info: " + str(delete_info))
         session = session_sao.get_session(delete_info["sessionId"])
-        session_dao.delete_all_sessions(session.user_id)
+        session_sao.delete_all_sessions(session.user_id)
         # delete all deposits
         # delete all expenses
         # delete all categories

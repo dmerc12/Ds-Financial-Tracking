@@ -26,7 +26,7 @@ def update_user():
                     email=updated_info["email"], password="")
         updated_user = user_sao.update_user(user)
         session.expiration = datetime.now() + timedelta(minutes=15)
-        session_dao.update_session(session)
+        session_sao.update_session(session)
         current_app.logger.info("Finishing API function update user with user: " +
                                 str(updated_user.convert_to_dictionary()))
         return jsonify(updated_user), 200
