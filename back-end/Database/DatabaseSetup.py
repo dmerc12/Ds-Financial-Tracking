@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
     session_table_sql = '''
         CREATE TABLE financial_tracker.Session (
-            session_id SERIAL PRIMARY KEY,
+            session_id VARCHAR(60) PRIMARY KEY,
             user_id INT NOT NULL,
             expiration TIMESTAMP NOT NULL,
             CONSTRAINT user_session_fk FOREIGN KEY (user_id) REFERENCES 

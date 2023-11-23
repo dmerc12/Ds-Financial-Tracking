@@ -10,10 +10,11 @@ class SessionDALImplementation(SessionDALInterface):
 
     def create_session(self, session: Session) -> Session:
         logging.info("Beginning DAL method create session with session: " + session.convert_to_dictionary())
-        sql = "INSERT INTO financial_tracker.Session (user_id, expiration) VALUES (%s, %s) RETURNING session_id;"
+        sql = "INSERT INTO financial_tracker.Session (session_id, user_id, expiration) VALUES (%s, %s, %s) " \
+              "RETURNING session_id;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql, (session.user_id, session.expiration))
+        cursor.execute(sql, (session.session_id, session.user_id, session.expiration))
         connection.commit()
         session_id = cursor.fetchone()[0]
         cursor.close()
@@ -23,7 +24,7 @@ class SessionDALImplementation(SessionDALInterface):
         logging.info("Finishing DAL method create session")
         return session
 
-    def get_session(self, session_id: int) -> Session:
+    def get_session(self, session_id: str) -> Session:
         logging.info("Beginning DAL method get session with session ID: " + str(session_id))
         sql = "SELECT * FROM financial_tracker.Session WHERE session_id=%s;"
         connection = Connection.db_connection()
@@ -33,7 +34,7 @@ class SessionDALImplementation(SessionDALInterface):
         cursor.close()
         connection.close()
         if session_info is None:
-            session = Session(0, 0, datetime(0000, 00, 00, 00, 00, 00, 00))
+            session = Session("0", 0, datetime(0000, 00, 00))
             logging.info("Finishing DAL method get session, not found")
             return session
         else:
@@ -53,7 +54,7 @@ class SessionDALImplementation(SessionDALInterface):
         logging.info("Finishing DAL method update_session with result: " + str(session.convert_to_dictionary()))
         return session
 
-    def delete_session(self, session_id: int) -> bool:
+    def delete_session(self, session_id: str) -> bool:
         logging.info("Beginning DAL method delete session with session ID: " + str(session_id))
         sql = "DELETE FROM financial_tracker.Session WHERE session_id=%s;"
         connection = Connection.db_connection()

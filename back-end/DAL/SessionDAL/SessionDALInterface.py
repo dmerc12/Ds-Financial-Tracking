@@ -9,7 +9,7 @@ class SessionDALInterface(ABC):
         pass
 
     @abstractmethod
-    def get_session(self, session_id: int) -> Session:
+    def get_session(self, session_id: str) -> Session:
         pass
 
     @abstractmethod
@@ -17,7 +17,7 @@ class SessionDALInterface(ABC):
         pass
 
     @abstractmethod
-    def delete_session(self, session_id: int) -> bool:
+    def delete_session(self, session_id: str) -> bool:
         pass
 
     @abstractmethod
