@@ -4,9 +4,8 @@ from DAL.SessionDAL.SessionDALImplementation import SessionDALImplementation
 from Entities.Session import Session
 
 session_dao = SessionDALImplementation()
-updated_expiration = datetime.now() + timedelta(0, 0, 0, 0, 30)
-test_session = Session(0, -1, datetime.now())
-update_session = Session(test_session.session_id, test_session.user_id, updated_expiration)
+test_session = Session("0", -1, datetime.now() + timedelta(minutes=15))
+update_session = Session(test_session.session_id, test_session.user_id, datetime.now() + timedelta(minutes=30))
 
 def test_create_session_success():
     result = session_dao.create_session(test_session)
@@ -25,5 +24,5 @@ def test_delete_session_success():
     assert result
 
 def test_delete_all_sessions_success():
-    result = session_dao.delete_all_sessions(test_session.user_id)
+    result = session_dao.delete_all_sessions(-2)
     assert result

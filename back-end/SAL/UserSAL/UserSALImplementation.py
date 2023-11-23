@@ -1,5 +1,7 @@
 import logging
 
+import bcrypt
+
 from DAL.UserDAL.UserDALImplementation import UserDALImplementation
 from Entities.CustomError import CustomError
 from Entities.User import User
@@ -68,6 +70,7 @@ class UserSALImplementation(UserSALInterface):
                 logging.warning("Error in SAL method create user, user already exists")
                 raise CustomError("A user already exists with this email, please log in!")
             else:
+                user.password = bcrypt.hashpw(user.password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
                 new_user = self.user_dao.create_user(user)
                 logging.info("Finishing SAL method create user with user: " + new_user.convert_to_dictionary_full())
                 return new_user
@@ -113,8 +116,8 @@ class UserSALImplementation(UserSALInterface):
             raise CustomError("The password field cannot be left empty, please try again!")
         else:
             user = self.user_dao.get_user_by_email(email)
-            if (user.password != password) or (user.user_id == 0 and user.first_name == "" and user.last_name
-                                               and user.email == "" and user.password == ""):
+            if (user.user_id == 0 and user.first_name == "" and user.last_name and user.email == ""
+                    and user.password == "") or not bcrypt.checkpw(password.encode(), user.password.encode()):
                 logging.warning("Error in SAL method login, incorrect email or password")
                 raise CustomError("Either the email or password are incorrect, please try again!")
             else:
@@ -190,11 +193,14 @@ class UserSALImplementation(UserSALInterface):
             logging.warning("Error in SAL method change password, passwords don't match")
             raise CustomError("The passwords don't match, please try again!")
         else:
-            current_password = self.get_user_by_id(user_id).password
-            if current_password == new_password:
+            current_info = self.get_user_by_id(user_id)
+            new_password = bcrypt.hashpw(new_password.encode("utf-8"), bcrypt.gensalt())
+            current_password = current_info.password.encode("utf-8")
+            if bcrypt.checkpw(new_password, current_password):
                 logging.warning("Error in SAL method change password, nothing changed")
                 raise CustomError("Nothing has changed, please try again!")
             else:
+                new_password = str(new_password)
                 result = self.user_dao.change_password(user_id, new_password)
                 logging.info("Finishing SAL method change password")
                 assert result
