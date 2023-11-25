@@ -7,13 +7,13 @@ from Entities.CustomError import CustomError
 category_dao = CategoryDALImplementation()
 category_sao = CategorySALImplementation(category_dao)
 
-successful_category = Category(0, -1, 'another test category')
+successful_category = Category(0, -1, "d", 'another test category')
 current_category_id = 1
-updated_category = Category(current_category_id, successful_category.user_id, 'updated category name')
+updated_category = Category(current_category_id, successful_category.user_id, "e", 'updated category name')
 
 def test_sal_create_category_name_empty():
     try:
-        test_category = Category(0, -1, '')
+        test_category = Category(0, -1, "b", '')
         category_sao.create_category(test_category)
         assert False
     except CustomError as error:
@@ -21,7 +21,7 @@ def test_sal_create_category_name_empty():
 
 def test_sal_create_category_already_exists():
     try:
-        test_category = Category(0, -1, 'test category')
+        test_category = Category(0, -1, "b", 'test category')
         category_sao.create_category(test_category)
         assert False
     except CustomError as error:
@@ -29,11 +29,43 @@ def test_sal_create_category_already_exists():
 
 def test_sal_create_category_name_not_string():
     try:
-        test_category = Category(0, -1, 0)
+        test_category = Category(0, -1, "b", 0)
         category_sao.create_category(test_category)
         assert False
     except CustomError as error:
         assert str(error) == "The category name field must be a string, please try again!"
+
+def test_sal_create_category_group_not_string():
+    try:
+        test_category = Category(0, -1, 0, "test")
+        category_sao.create_category(test_category)
+        assert False
+    except CustomError as error:
+        assert str(error) == "The group field must be a string, please try again!"
+
+def test_sal_create_category_group_too_long():
+    try:
+        test_category = Category(0, -1, "bb", "test")
+        category_sao.create_category(test_category)
+        assert False
+    except CustomError as error:
+        assert str(error) == "The group field cannot be longer than a single character, please try again!"
+
+def test_sal_create_category_group_empty():
+    try:
+        test_category = Category(0, -1, "", "test")
+        category_sao.create_category(test_category)
+        assert False
+    except CustomError as error:
+        assert str(error) == "The group field cannot be left empty, please try again!"
+
+def test_sal_create_category_group_not_allowable():
+    try:
+        test_category = Category(0, -1, "a", "test")
+        category_sao.create_category(test_category)
+        assert False
+    except CustomError as error:
+        assert str(error) == "The group field can only be expense (e), deposit (d), or both (b); please try again!"
 
 def test_sal_create_category_success():
     result = category_sao.create_category(successful_category)
@@ -71,7 +103,7 @@ def test_sal_get_all_categories_success():
 
 def test_sal_update_category_already_exists():
     try:
-        changed_category = Category(current_category_id, 'test category')
+        changed_category = Category(current_category_id, successful_category.user_id, "d", 'test category')
         category_sao.update_category(changed_category)
         assert False
     except CustomError as error:
@@ -79,7 +111,7 @@ def test_sal_update_category_already_exists():
 
 def test_sal_update_category_name_empty():
     try:
-        changed_category = Category(current_category_id, -1, '')
+        changed_category = Category(current_category_id, -1, "b", '')
         category_sao.update_category(changed_category)
         assert False
     except CustomError as error:
@@ -87,11 +119,43 @@ def test_sal_update_category_name_empty():
 
 def test_sal_update_category_name_not_string():
     try:
-        changed_category = Category(current_category_id, -1, 0)
+        changed_category = Category(current_category_id, -1, "b", 0)
         category_sao.update_category(changed_category)
         assert False
     except CustomError as error:
         assert str(error) == "The category name field must be a string, please try again!"
+
+def test_sal_update_category_group_not_string():
+    try:
+        test_category = Category(0, -1, 1, "test")
+        category_sao.update_category(test_category)
+        assert False
+    except CustomError as error:
+        assert str(error) == "The group field must be a string, please try again!"
+
+def test_sal_update_category_group_too_long():
+    try:
+        test_category = Category(0, -1, "bb", "test")
+        category_sao.update_category(test_category)
+        assert False
+    except CustomError as error:
+        assert str(error) == "The group field cannot be longer than a single character, please try again!"
+
+def test_sal_update_category_group_empty():
+    try:
+        test_category = Category(0, -1, "", "test")
+        category_sao.update_category(test_category)
+        assert False
+    except CustomError as error:
+        assert str(error) == "The group field cannot be left empty, please try again!"
+
+def test_sal_update_category_group_not_allowable():
+    try:
+        test_category = Category(0, -1, "a", "test")
+        category_sao.update_category(test_category)
+        assert False
+    except CustomError as error:
+        assert str(error) == "The group field can only be expense (e), deposit (d), or both (b); please try again!"
 
 def test_sal_update_category_success():
     result = category_sao.update_category(updated_category)

@@ -2,9 +2,9 @@ from DAL.CategoryDAL.CategoryDALImplementation import CategoryDALImplementation
 from Entities.Category import Category
 
 category_dao = CategoryDALImplementation()
-test_category = Category(0, -1, "test")
+test_category = Category(0, -1, "d", "test")
 current_category_id = 1
-updated_category = Category(current_category_id, test_category.user_id, "updated")
+updated_category = Category(current_category_id, test_category.user_id, "e", "updated")
 
 def test_create_category_success():
     result = category_dao.create_category(test_category)

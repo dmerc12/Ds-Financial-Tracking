@@ -2,11 +2,11 @@ from datetime import timedelta, datetime
 
 from flask import Blueprint, jsonify, request, current_app
 from DAL.CategoryDAL.CategoryDALImplementation import CategoryDALImplementation
-from DAL.SessionDAL.SessionDALImplementation import SessionDALImplementation
 from SAL.CategorySAL.CategorySALImplementation import CategorySALImplementation
+from DAL.SessionDAL.SessionDALImplementation import SessionDALImplementation
 from SAL.SessionSAL.SessionSALImplementation import SessionSALImplementation
-from Entities.Category import Category
 from Entities.CustomError import CustomError
+from Entities.Category import Category
 
 update_category_route = Blueprint("update_category_route", __name__)
 
@@ -22,7 +22,7 @@ def update_category():
         current_app.logger.info("Beginning API function update category with data: " + request_info)
         session = session_sao.get_session(request_info["sessionId"])
         updated_category = Category(category_id=request_info["categoryId"], user_id=session.user_id,
-                                    category_name=request_info["categoryName"])
+                                    group=request_info["group"], category_name=request_info["categoryName"])
         result = category_sao.update_category(updated_category)
         session.expiration = datetime.now() + timedelta(minutes=15)
         session_sao.update_session(session)

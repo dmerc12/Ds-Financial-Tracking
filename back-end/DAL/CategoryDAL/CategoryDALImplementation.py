@@ -10,7 +10,8 @@ class CategoryDALImplementation(CategoryDALInterface):
 
     def create_category(self, category: Category) -> Category:
         logging.info("Beginning DAL method create category with data: " + str(category.convert_to_dictionary()))
-        sql = "INSERT INTO financial_tracker.Category (category_name, user_id) VALUES (%s, %s) RETURNING category_id;"
+        sql = "INSERT INTO financial_tracker.Category (category_name, group, user_id) VALUES (%s, %s, %s) " \
+              "RETURNING category_id;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
         cursor.execute(sql, (category.category_name, category.user_id))
@@ -31,7 +32,7 @@ class CategoryDALImplementation(CategoryDALInterface):
         cursor.close()
         connection.close()
         if category_info is None:
-            category = Category(0, 0, '')
+            category = Category(0, 0, '', '')
             logging.info("Finishing DAL method get category, category not found")
             return category
         else:
@@ -59,10 +60,10 @@ class CategoryDALImplementation(CategoryDALInterface):
 
     def update_category(self, category: Category) -> Category:
         logging.info("Beginning DAL method update category with data: " + str(category.convert_to_dictionary()))
-        sql = "UPDATE financial_tracker.Category SET category_name=%s WHERE category_id=%s;"
+        sql = "UPDATE financial_tracker.Category SET category_name=%s AND group=%s WHERE category_id=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql, (category.category_name, category.category_id))
+        cursor.execute(sql, (category.category_name, category.group, category.category_id))
         cursor.close()
         connection.commit()
         connection.close()

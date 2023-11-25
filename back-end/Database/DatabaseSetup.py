@@ -51,6 +51,7 @@ if __name__ == "__main__":
         CREATE TABLE financial_tracker.Category (
             category_id SERIAL PRIMARY KEY,
             user_id INT NOT NULL,
+            group CHAR(1) NOT NULL,
             category_name TEXT UNIQUE NOT NULL,
             CONSTRAINT user_category_fk FOREIGN KEY (user_id) REFERENCES 
             financial_tracker.User(user_id) ON DELETE CASCADE
@@ -58,11 +59,12 @@ if __name__ == "__main__":
     '''
 
     test_category_1 = '''
-        INSERT INTO financial_tracker.CATEGORY (category_id, category_name) VALUES (-1, 'test category');
+        INSERT INTO financial_tracker.CATEGORY (category_id, group, category_name) VALUES (-1, 'b', 'test category');
     '''
 
     test_category_2 = '''
-            INSERT INTO financial_tracker.CATEGORY (category_id, category_name) VALUES (-2, 'unused category');
+            INSERT INTO financial_tracker.CATEGORY (category_id, group, category_name) VALUES 
+            (-2, 'b', 'unused category');
         '''
 
     expense_table_sql = '''

@@ -5,8 +5,8 @@ from DAL.CategoryDAL.CategoryDALImplementation import CategoryDALImplementation
 from DAL.SessionDAL.SessionDALImplementation import SessionDALImplementation
 from SAL.CategorySAL.CategorySALImplementation import CategorySALImplementation
 from SAL.SessionSAL.SessionSALImplementation import SessionSALImplementation
-from Entities.Category import Category
 from Entities.CustomError import CustomError
+from Entities.Category import Category
 
 create_category_route = Blueprint('create_category_route', __name__)
 
@@ -21,7 +21,8 @@ def create_category():
         request_info = request.json
         current_app.logger.info("Beginning API function create category with name: " + request_info)
         session = session_sao.get_session(request_info)
-        new_category = Category(category_id=0, user_id=session.user_id, category_name=request_info["categoryName"])
+        new_category = Category(category_id=0, user_id=session.user_id, group=request_info["group"],
+                                category_name=request_info["categoryName"])
         result = category_sao.create_category(new_category)
         session.expiration = datetime.now() + timedelta(minutes=15)
         session_sao.update_session(session)

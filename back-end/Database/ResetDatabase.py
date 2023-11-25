@@ -29,10 +29,10 @@ if __name__ == "__main__":
     main_cursor.execute("INSERT INTO financial_tracker.User (user_id, first_name, last_name, email, passwrd) "
                         "VALUES (-2, 'test', 'test', 'deleteallsessions@email.com', 'test');")
 
-    main_cursor.execute("INSERT INTO financial_tracker.CATEGORY (category_id, user_id, category_name) VALUES "
-                        "(-1, -1, 'test category');")
-    main_cursor.execute("INSERT INTO financial_tracker.CATEGORY (category_id, user_id, category_name) VALUES "
-                        "(-2, -1, 'unused category');")
+    main_cursor.execute("INSERT INTO financial_tracker.CATEGORY (category_id, group, user_id, category_name) VALUES "
+                        "(-1, -1, 'b', 'test category');")
+    main_cursor.execute("INSERT INTO financial_tracker.CATEGORY (category_id, group, user_id, category_name) VALUES "
+                        "(-2, -1, 'b', 'unused category');")
     print("Test category created successfully!")
 
     main_connection.commit()
