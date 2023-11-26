@@ -19,7 +19,7 @@ session_sao = SessionSALImplementation(session_dao)
 def update_category():
     try:
         request_info = request.json
-        current_app.logger.info("Beginning API function update category with data: " + request_info)
+        current_app.logger.info("Beginning API function update category with data: " + str(request_info))
         session = session_sao.get_session(request_info["sessionId"])
         updated_category = Category(category_id=request_info["categoryId"], user_id=session.user_id,
                                     group=request_info["group"], category_name=request_info["categoryName"])
