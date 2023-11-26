@@ -3,8 +3,8 @@ from typing import List
 
 from DAL.CategoryDAL.CategoryDALImplementation import CategoryDALImplementation
 from SAL.CategorySAL.CategorySALInterface import CategorySALInterface
-from Entities.Category import Category
 from Entities.CustomError import CustomError
+from Entities.Category import Category
 
 class CategorySALImplementation(CategorySALInterface):
 
@@ -65,6 +65,9 @@ class CategorySALImplementation(CategorySALInterface):
             logging.info("Finishing SAL method get all categories")
             return categories
 
+    def get_categories_by_group(self, group: str) -> List[Category]:
+        pass
+
     def update_category(self, category: Category) -> Category:
         logging.info("Beginning SAL method update category with data: " + str(category.convert_to_dictionary()))
         if category.category_name == '':
@@ -107,3 +110,6 @@ class CategorySALImplementation(CategorySALInterface):
             result = self.category_dao.delete_category(category_id)
             logging.info("Finishing SAL method delete category")
             return result
+
+    def delete_all_categories(self, user_id: int) -> bool:
+        pass

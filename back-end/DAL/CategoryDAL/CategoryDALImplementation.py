@@ -58,6 +58,9 @@ class CategoryDALImplementation(CategoryDALInterface):
         connection.close()
         return categories
 
+    def get_categories_by_group(self, group: str) -> List[Category]:
+        pass
+
     def update_category(self, category: Category) -> Category:
         logging.info("Beginning DAL method update category with data: " + str(category.convert_to_dictionary()))
         sql = "UPDATE financial_tracker.Category SET category_name=%s AND group=%s WHERE category_id=%s;"
@@ -81,3 +84,6 @@ class CategoryDALImplementation(CategoryDALInterface):
         connection.close()
         logging.info("Finishing DAL method delete category")
         return True
+
+    def delete_all_categories(self, user_id: int) -> bool:
+        pass
