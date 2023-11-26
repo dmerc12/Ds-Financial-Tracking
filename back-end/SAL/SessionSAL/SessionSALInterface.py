@@ -13,7 +13,7 @@ class SessionSALInterface(ABC):
         pass
 
     @abstractmethod
-    def update_session(self, session: Session) -> Session:
+    def update_session(self, session: Session) -> bool:
         pass
 
     @abstractmethod

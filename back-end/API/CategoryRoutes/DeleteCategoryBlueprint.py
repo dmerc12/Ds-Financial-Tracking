@@ -2,10 +2,10 @@ from datetime import timedelta, datetime
 
 from flask import Blueprint, jsonify, request, current_app
 from DAL.CategoryDAL.CategoryDALImplementation import CategoryDALImplementation
-from DAL.SessionDAL.SessionDALImplementation import SessionDALImplementation
 from SAL.CategorySAL.CategorySALImplementation import CategorySALImplementation
-from Entities.CustomError import CustomError
+from DAL.SessionDAL.SessionDALImplementation import SessionDALImplementation
 from SAL.SessionSAL.SessionSALImplementation import SessionSALImplementation
+from Entities.CustomError import CustomError
 
 delete_category_route = Blueprint("delete_category_route", __name__)
 

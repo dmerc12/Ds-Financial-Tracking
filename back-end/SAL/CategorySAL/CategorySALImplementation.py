@@ -3,8 +3,8 @@ from typing import List
 
 from DAL.CategoryDAL.CategoryDALImplementation import CategoryDALImplementation
 from SAL.CategorySAL.CategorySALInterface import CategorySALInterface
-from Entities.Category import Category
 from Entities.CustomError import CustomError
+from Entities.Category import Category
 
 class CategorySALImplementation(CategorySALInterface):
 
@@ -24,6 +24,18 @@ class CategorySALImplementation(CategorySALInterface):
         elif type(category.category_name) is not str:
             logging.warning("Error in SAL method create category, category name not a string")
             raise CustomError("The category name field must be a string, please try again!")
+        elif type(category.group) is not str:
+            logging.warning("Error in SAL method create category, group not a string")
+            raise CustomError("The group field must be a string, please try again!")
+        elif len(category.group) > 1:
+            logging.warning("Error in SAL method create category, group not a single character")
+            raise CustomError("The group field cannot be longer than a single character, please try again!")
+        elif category.group == "":
+            logging.warning("Error in SAL method create category, group empty")
+            raise CustomError("The group field cannot be left empty, please try again!")
+        elif category.group != "e" or category.group != "d" or category.group != "b":
+            logging.warning("Error in SAL method create category, group not e, d, or b")
+            raise CustomError("The group field can only be expense (e), deposit (d), or both (b); please try again!")
         else:
             self.category_dao.create_category(category)
             logging.info("Finishing SAL method create category with result: " + str(category.convert_to_dictionary()))
@@ -53,6 +65,9 @@ class CategorySALImplementation(CategorySALInterface):
             logging.info("Finishing SAL method get all categories")
             return categories
 
+    def get_categories_by_group(self, group: str) -> List[Category]:
+        pass
+
     def update_category(self, category: Category) -> Category:
         logging.info("Beginning SAL method update category with data: " + str(category.convert_to_dictionary()))
         if category.category_name == '':
@@ -61,6 +76,18 @@ class CategorySALImplementation(CategorySALInterface):
         elif type(category.category_name) is not str:
             logging.warning("Error in SAL method update category, category name not a string")
             raise CustomError("The category name field must be a string, please try again!")
+        elif type(category.group) is not str:
+            logging.warning("Error in SAL method create category, group not a string")
+            raise CustomError("The group field must be a string, please try again!")
+        elif len(category.group) > 1:
+            logging.warning("Error in SAL method create category, group not a single character")
+            raise CustomError("The group field cannot be longer than a single character, please try again!")
+        elif category.group == "":
+            logging.warning("Error in SAL method create category, group empty")
+            raise CustomError("The group field cannot be left empty, please try again!")
+        elif category.group != "e" or category.group != "d" or category.group != "b":
+            logging.warning("Error in SAL method create category, group not e, d, or b")
+            raise CustomError("The group field can only be expense (e), deposit (d), or both (b); please try again!")
         else:
             self.get_category(category.category_id)
             existing_categories = self.category_dao.get_all_categories(category.user_id)
@@ -83,3 +110,6 @@ class CategorySALImplementation(CategorySALInterface):
             result = self.category_dao.delete_category(category_id)
             logging.info("Finishing SAL method delete category")
             return result
+
+    def delete_all_categories(self, user_id: int) -> bool:
+        pass

@@ -2,9 +2,9 @@ from DAL.CategoryDAL.CategoryDALImplementation import CategoryDALImplementation
 from Entities.Category import Category
 
 category_dao = CategoryDALImplementation()
-test_category = Category(0, -1, "test")
+test_category = Category(0, -1, "d", "test")
 current_category_id = 1
-updated_category = Category(current_category_id, test_category.user_id, "updated")
+updated_category = Category(current_category_id, test_category.user_id, "e", "updated")
 
 def test_create_category_success():
     result = category_dao.create_category(test_category)
@@ -18,6 +18,9 @@ def test_get_all_categories_success():
     result = category_dao.get_all_categories(test_category.user_id)
     assert len(result) > 1
 
+def test_get_categories_by_group_success():
+    pass
+
 def test_update_category_success():
     result = category_dao.update_category(updated_category)
     assert result.category_name != test_category.category_name
@@ -25,3 +28,6 @@ def test_update_category_success():
 def test_delete_category_success():
     result = category_dao.delete_category(current_category_id)
     assert result
+
+def test_delete_all_categories_success():
+    pass

@@ -2,8 +2,8 @@ from datetime import timedelta, datetime
 
 from flask import Blueprint, current_app, jsonify, request
 from DAL.CategoryDAL.CategoryDALImplementation import CategoryDALImplementation
-from DAL.SessionDAL.SessionDALImplementation import SessionDALImplementation
 from SAL.CategorySAL.CategorySALImplementation import CategorySALImplementation
+from DAL.SessionDAL.SessionDALImplementation import SessionDALImplementation
 from SAL.SessionSAL.SessionSALImplementation import SessionSALImplementation
 from Entities.CustomError import CustomError
 

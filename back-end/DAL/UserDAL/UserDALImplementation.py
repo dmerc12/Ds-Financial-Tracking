@@ -9,11 +9,10 @@ class UserDALImplementation(UserDALInterface):
 
     def create_user(self, user: User) -> User:
         logging.info("Beginning DAL method create user with user: " + str(user.convert_to_dictionary()))
-        sql = "INSERT INTO financial_tracker.User (first_name, last_name, email, passwrd) VALUES " \
-              "(%s, %s, %s, %s) RETURNING user_id;"
+        sql = "INSERT INTO financial_tracker.User (email, passwrd) VALUES (%s, %s) RETURNING user_id;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql, (user.first_name, user.last_name, user.email, user.password))
+        cursor.execute(sql, (user.email, user.password))
         connection.commit()
         user_id = cursor.fetchone()[0]
         cursor.close()
@@ -33,7 +32,7 @@ class UserDALImplementation(UserDALInterface):
         cursor.close()
         connection.close()
         if user_info is None:
-            user = User(0, '', '', '', '')
+            user = User(0, '', '')
             logging.info("Finishing DAL method get user by ID, user not found")
             return user
         else:
@@ -51,7 +50,7 @@ class UserDALImplementation(UserDALInterface):
         cursor.close()
         connection.close()
         if user_info is None:
-            user = User(0, '', '', '', '')
+            user = User(0, '', '')
             logging.info("Finishing DAL method get user by email, user not found")
             return user
         else:
@@ -69,7 +68,7 @@ class UserDALImplementation(UserDALInterface):
         cursor.close()
         connection.close()
         if user_info is None:
-            user = User(0, '', '', '', '')
+            user = User(0, '', '')
             logging.info("Finishing DAL method login, user not found")
             return user
         else:
@@ -77,25 +76,24 @@ class UserDALImplementation(UserDALInterface):
             logging.info("Finishing DAL method login with user: " + str(user.convert_to_dictionary()))
             return user
 
-    def update_user(self, user: User) -> User:
+    def change_email(self, user: User) -> bool:
         logging.info("Beginning DAL method update user with user: " + str(user.convert_to_dictionary()))
-        sql = "UPDATE financial_tracker.User SET first_name=%s, last_name=%s, email=%s WHERE user_id=%s;"
+        sql = "UPDATE financial_tracker.User SET email=%s WHERE user_id=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql, (user.first_name, user.last_name, user.email, user.user_id))
+        cursor.execute(sql, (user.email, user.user_id))
         cursor.close()
         connection.commit()
         connection.close()
-        logging.info("Finishing DAL method update user with result: " + str(user.convert_to_dictionary()))
-        return user
+        logging.info("Finishing DAL method change email")
+        return True
 
-    def change_password(self, user_id: int, password: str) -> bool:
-        logging.info("Beginning DAL method change password with user ID: " + str(user_id) + " and password: " +
-                     str(password))
+    def change_password(self, user: User) -> bool:
+        logging.info("Beginning DAL method change password with user: " + str(user.convert_to_dictionary()))
         sql = "UPDATE financial_tracker.User SET passwrd=%s WHERE user_id=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql, (password, user_id))
+        cursor.execute(sql, (user.password, user.user_id))
         cursor.close()
         connection.commit()
         connection.close()

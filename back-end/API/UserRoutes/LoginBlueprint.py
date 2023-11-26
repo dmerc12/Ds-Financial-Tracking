@@ -3,11 +3,11 @@ from datetime import timedelta, datetime
 from flask import Blueprint, current_app, jsonify, request
 
 from DAL.SessionDAL.SessionDALImplementation import SessionDALImplementation
+from SAL.SessionSAL.SessionSALImplementation import SessionSALImplementation
 from DAL.UserDAL.UserDALImplementation import UserDALImplementation
+from SAL.UserSAL.UserSALImplementation import UserSALImplementation
 from Entities.CustomError import CustomError
 from Entities.Session import Session
-from SAL.SessionSAL.SessionSALImplementation import SessionSALImplementation
-from SAL.UserSAL.UserSALImplementation import UserSALImplementation
 
 login_route = Blueprint("login_route", __name__)
 
@@ -19,10 +19,10 @@ session_sao = SessionSALImplementation(session_dao)
 @login_route.route("/api/login", methods=["POST"])
 def login():
     try:
-        login_form = request.json
-        current_app.logger.info("Beginning API function login with login info: " + login_form)
-        user = user_sao.login(email=login_form["email"], password=login_form["password"])
-        session_info = Session(0, user.user_id, datetime.now() + timedelta(minutes=15))
+        request_info = request.json
+        current_app.logger.info("Beginning API function login with login info: " + str(request_info))
+        user = user_sao.login(email=request_info["email"], password=request_info["password"])
+        session_info = Session("0", user.user_id, datetime.now() + timedelta(minutes=15))
         new_session = session_sao.create_session(session_info)
         current_app.logger.info("Finishing API function login with session: " +
                                 str(new_session.convert_to_dictionary()))

@@ -9,7 +9,7 @@ update_session = Session(test_session.session_id, test_session.user_id, datetime
 
 def test_create_session_success():
     result = session_dao.create_session(test_session)
-    assert result.session_id != 0
+    assert result
 
 def test_get_session_success():
     result = session_dao.get_session(test_session.session_id)
@@ -17,7 +17,7 @@ def test_get_session_success():
 
 def test_update_session_success():
     result = session_dao.update_session(update_session)
-    assert result.expiration != test_session.expiration
+    assert result
 
 def test_delete_session_success():
     result = session_dao.delete_session(test_session.session_id)
