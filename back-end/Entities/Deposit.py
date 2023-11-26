@@ -2,7 +2,8 @@ from datetime import date
 
 
 class Deposit:
-    def __init__(self, deposit_id: int, user_id: int, category_id: int, deposit_date: date, description: str, amount: float):
+    def __init__(self, deposit_id: int, user_id: int, category_id: int, deposit_date: date, description: str,
+                 amount: float):
         self.deposit_id = deposit_id
         self.user_id = user_id
         self.category_id = category_id
