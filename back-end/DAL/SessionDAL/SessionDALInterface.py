@@ -5,7 +5,7 @@ from Entities.Session import Session
 class SessionDALInterface(ABC):
 
     @abstractmethod
-    def create_session(self, session: Session) -> Session:
+    def create_session(self, session: Session) -> bool:
         pass
 
     @abstractmethod
@@ -13,7 +13,7 @@ class SessionDALInterface(ABC):
         pass
 
     @abstractmethod
-    def update_session(self, session: Session) -> Session:
+    def update_session(self, session: Session) -> bool:
         pass
 
     @abstractmethod

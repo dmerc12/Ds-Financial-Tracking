@@ -32,11 +32,10 @@ class SessionSALImplementation(SessionSALInterface):
         else:
             self.user_sao.get_user_by_id(session.user_id)
             session.session_id = self.id_generator.generate_id()
-            new_session = self.session_dao.create_session(session)
+            self.session_dao.create_session(session)
             session.session_id = session.session_id + self.id_generator.generate_salt()
-            logging.info("Finishing SAL method create session with session: " +
-                         str(new_session.convert_to_dictionary()))
-            return new_session
+            logging.info("Finishing SAL method create session with session: " + str(session.convert_to_dictionary()))
+            return session
 
     def get_session(self, session_id: str) -> Session:
         logging.info("Beginning SAL method get session with session ID: " + str(session_id))
@@ -56,7 +55,7 @@ class SessionSALImplementation(SessionSALInterface):
                 logging.info("Finishing SAL method get session with session: " + str(session.convert_to_dictionary()))
                 return session
 
-    def update_session(self, session: Session) -> Session:
+    def update_session(self, session: Session) -> bool:
         logging.info("Beginning SAL method update session with session: " + str(session.convert_to_dictionary()))
         if type(session.session_id) is not str:
             logging.warning("Error in SAL method update session, session ID not a string")
@@ -73,10 +72,9 @@ class SessionSALImplementation(SessionSALInterface):
         else:
             self.user_sao.get_user_by_id(session.user_id)
             self.get_session(session.session_id)
-            updated_session = self.session_dao.update_session(session)
-            logging.info("Finishing SAL method update session with updated session: " +
-                         str(updated_session.convert_to_dictionary()))
-            return updated_session
+            result = self.session_dao.update_session(session)
+            logging.info("Finishing SAL method update session with result: " + str(result))
+            return result
 
     def delete_session(self, session_id: str) -> bool:
         logging.info("Beginning SAL method delete session with session ID: " + str(session_id))

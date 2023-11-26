@@ -9,7 +9,8 @@ session_dao = SessionDALImplementation()
 session_sao = SessionSALImplementation(session_dao)
 
 successful_session = Session("0", -1, datetime.now() + timedelta(minutes=30))
-update_session = Session(successful_session.session_id, successful_session.user_id, datetime.now() + timedelta(minutes=30))
+update_session = Session(successful_session.session_id, successful_session.user_id,
+                         datetime.now() + timedelta(minutes=30))
 
 def test_create_session_user_id_not_integer():
     try:
@@ -29,7 +30,7 @@ def test_create_session_user_not_found():
 
 def test_create_session_expiration_date_time_not_date():
     try:
-        test_session = Session("0", -1, datetime.now() + timedelta(minutes=15))
+        test_session = Session("0", -1, str(datetime.now() + timedelta(minutes=15)))
         session_sao.create_session(test_session)
         assert False
     except CustomError as error:
@@ -45,7 +46,7 @@ def test_update_session_expiration_expired():
 
 def test_create_session_success():
     result = session_sao.create_session(successful_session)
-    assert result.session_id != 0
+    assert result.session_id != "0"
 
 def test_get_session_id_not_string():
     try:
@@ -131,8 +132,7 @@ def test_update_session_expiration_past():
 
 def test_update_session_success():
     result = session_sao.update_session(update_session)
-    assert result.session_id == successful_session.session_id and result.user_id == successful_session.user_id \
-           and result.expiration != successful_session.expiration
+    assert result
 
 def test_delete_session_id_not_string():
     try:
