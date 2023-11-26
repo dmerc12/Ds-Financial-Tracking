@@ -1,8 +1,8 @@
 from flask import Blueprint, current_app, jsonify, request
 
 from DAL.SessionDAL.SessionDALImplementation import SessionDALImplementation
-from Entities.CustomError import CustomError
 from SAL.SessionSAL.SessionSALImplementation import SessionSALImplementation
+from Entities.CustomError import CustomError
 
 logout_route = Blueprint("logout_route", __name__)
 
