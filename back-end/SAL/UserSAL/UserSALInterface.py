@@ -5,7 +5,7 @@ from Entities.User import User
 class UserSALInterface(ABC):
 
     @abstractmethod
-    def create_user(self, user: User, password_confirmation: str) -> User:
+    def create_user(self, user: User, confirmation_password: str) -> User:
         pass
 
     @abstractmethod
@@ -21,11 +21,11 @@ class UserSALInterface(ABC):
         pass
 
     @abstractmethod
-    def update_user(self, user: User) -> User:
+    def change_email(self, user: User) -> bool:
         pass
 
     @abstractmethod
-    def change_password(self, user_id: int, new_password: str, password_confirmation: str) -> bool:
+    def change_password(self, user: User, confirmation_password: str) -> bool:
         pass
 
     @abstractmethod
