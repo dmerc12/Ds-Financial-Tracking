@@ -1,19 +1,21 @@
 import logging
-from datetime import date
 from typing import List
+from datetime import date
 
+from SAL.CategorySAL.CategorySALImplementation import CategorySALImplementation
+from DAL.CategoryDAL.CategoryDALImplementation import CategoryDALImplementation
 from DAL.ExpenseDAL.ExpenseDALImplementation import ExpenseDALImplementation
 from SAL.ExpenseSAL.ExpenseSALInterface import ExpenseSALInterface
-from SAL.CategorySAL.CategorySALImplementation import CategorySALImplementation
-from Entities.Expense import Expense
 from Entities.CustomError import CustomError
+from Entities.Expense import Expense
 
 
 class ExpenseSALImplementation(ExpenseSALInterface):
+    category_dao = CategoryDALImplementation()
+    category_sao = CategorySALImplementation(category_dao)
 
-    def __init__(self, expense_dao: ExpenseDALImplementation, category_sao: CategorySALImplementation):
+    def __init__(self, expense_dao: ExpenseDALImplementation):
         self.expense_dao = expense_dao
-        self.category_sao = category_sao
 
     def create_expense(self, expense: Expense) -> Expense:
         logging.info("Beginning SAL method create expense with data: " + str(expense.convert_to_dictionary()))
@@ -104,6 +106,18 @@ class ExpenseSALImplementation(ExpenseSALInterface):
                 logging.info("Finishing SAL method get expenses by date")
                 return expenses
 
+    def get_expenses_total_by_category(self, category_id: int) -> float:
+        pass
+
+    def get_expenses_total_by_month(self) -> float:
+        pass
+
+    def get_expenses_total_by_year(self) -> float:
+        pass
+
+    def get_expenses_by_description_key_words(self) -> List[Expense]:
+        pass
+
     def update_expense(self, expense: Expense) -> Expense:
         logging.info("Beginning SAL method update expense with data: " + str(expense.convert_to_dictionary()))
         if type(expense.category_id) is not int:
@@ -144,3 +158,6 @@ class ExpenseSALImplementation(ExpenseSALInterface):
             result = self.expense_dao.delete_expense(expense_id)
             logging.info("Finishing SAL method delete expense")
             return result
+
+    def delete_all_expenses(self, user_id: int) -> bool:
+        pass
