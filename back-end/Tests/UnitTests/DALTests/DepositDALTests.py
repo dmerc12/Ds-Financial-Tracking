@@ -29,6 +29,18 @@ def test_get_deposits_by_date_success():
     result = deposit_dao.get_deposits_by_date(test_deposit.date)
     assert len(result) > 0
 
+def test_get_deposits_total_by_category_success():
+    pass
+
+def test_get_deposits_total_by_month_success():
+    pass
+
+def test_get_deposits_total_by_year_success():
+    pass
+
+def test_get_deposits_by_description_key_words_success():
+    pass
+
 def test_update_deposit_success():
     result = deposit_dao.update_deposit(updated_deposit)
     assert result.date != test_deposit.date and result.description != test_deposit.description and \
@@ -37,3 +49,6 @@ def test_update_deposit_success():
 def test_delete_deposit_success():
     result = deposit_dao.delete_deposit(current_deposit_id)
     assert result
+
+def test_delete_all_deposits_success():
+    pass

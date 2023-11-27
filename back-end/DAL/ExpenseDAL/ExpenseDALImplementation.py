@@ -1,6 +1,6 @@
 import logging
-from datetime import date
 from typing import List
+from datetime import date
 
 from DAL.ExpenseDAL.ExpenseDALInterface import ExpenseDALInterface
 from Database.config import Connection
@@ -50,14 +50,7 @@ class ExpenseDALImplementation(ExpenseDALInterface):
         expense_records = cursor.fetchall()
         expenses = []
         for expense in expense_records:
-            expense = Expense(
-                expense_id=expense[0],
-                user_id=expense[1],
-                category_id=expense[2],
-                expense_date=expense[3],
-                description=expense[4],
-                amount=expense[5]
-            )
+            expense = Expense(*expense)
             expenses.append(expense)
             logging.info("Finishing DAL method get all expenses with result: " +
                          str(expense.convert_to_dictionary()))
@@ -75,14 +68,7 @@ class ExpenseDALImplementation(ExpenseDALInterface):
         expense_records = cursor.fetchall()
         expenses = []
         for expense in expense_records:
-            expense = Expense(
-                expense_id=expense[0],
-                user_id=expense[1],
-                category_id=expense[2],
-                expense_date=expense[3],
-                description=expense[4],
-                amount=expense[5]
-            )
+            expense = Expense(*expense)
             expenses.append(expense)
             logging.info("Finishing DAL method get all expenses by category with result: " +
                          str(expense.convert_to_dictionary()))
@@ -99,14 +85,7 @@ class ExpenseDALImplementation(ExpenseDALInterface):
         expense_records = cursor.fetchall()
         expenses = []
         for expense in expense_records:
-            expense = Expense(
-                expense_id=expense[0],
-                user_id=expense[1],
-                category_id=expense[2],
-                expense_date=expense[3],
-                description=expense[4],
-                amount=expense[5]
-            )
+            expense = Expense(*expense)
             expenses.append(expense)
             logging.info(
                 "Finishing DAL method get all expenses by date with result: " + str(expense.convert_to_dictionary()))
@@ -128,6 +107,18 @@ class ExpenseDALImplementation(ExpenseDALInterface):
         logging.info("Finishing DAL method update expense with result: " + str(expense.convert_to_dictionary()))
         return expense
 
+    def get_expenses_total_by_category(self, category_id: int) -> float:
+        pass
+
+    def get_expenses_total_by_month(self) -> float:
+        pass
+
+    def get_expenses_total_by_year(self) -> float:
+        pass
+
+    def get_expenses_by_description_key_words(self) -> List[Expense]:
+        pass
+
     def delete_expense(self, expense_id: int) -> bool:
         logging.info("Beginning DAL method delete expense with expense ID: " + str(expense_id))
         sql = "DELETE FROM financial_tracker.Expense WHERE expense_id=%s;"
@@ -139,3 +130,6 @@ class ExpenseDALImplementation(ExpenseDALInterface):
         connection.close()
         logging.info("Finishing DAL method delete expense")
         return True
+
+    def delete_all_expenses(self, user_id: int) -> bool:
+        pass

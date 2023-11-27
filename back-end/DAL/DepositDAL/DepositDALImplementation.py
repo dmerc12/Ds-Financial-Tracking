@@ -1,12 +1,10 @@
 import logging
-from datetime import date
 from typing import List
-
+from datetime import date
 
 from DAL.DepositDAL.DepositDALInterface import DepositDALInterface
 from Database.config import Connection
 from Entities.Deposit import Deposit
-
 
 class DepositDALImplementation(DepositDALInterface):
 
@@ -34,7 +32,7 @@ class DepositDALImplementation(DepositDALInterface):
         cursor.close()
         connection.close()
         if deposit_info is None:
-            deposit = Deposit(0, 0, 0, date(1900, 1, 1), '', 0.00)
+            deposit = Deposit(0, 0, 0, date(0000, 0, 0), '', 0.00)
             logging.info("Finishing DAL method get deposit, deposit not found")
             return deposit
         else:
@@ -51,14 +49,7 @@ class DepositDALImplementation(DepositDALInterface):
         deposit_records = cursor.fetchall()
         deposits = []
         for deposit in deposit_records:
-            deposit = Deposit(
-                deposit_id=deposit[0],
-                user_id=deposit[1],
-                category_id=deposit[2],
-                deposit_date=deposit[3],
-                description=deposit[4],
-                amount=deposit[5]
-            )
+            deposit = Deposit(*deposit)
             deposits.append(deposit)
             logging.info("Finishing DAL method get all deposits with result: " +
                          str(deposit.convert_to_dictionary()))
@@ -75,14 +66,7 @@ class DepositDALImplementation(DepositDALInterface):
         deposit_records = cursor.fetchall()
         deposits = []
         for deposit in deposit_records:
-            deposit = Deposit(
-                deposit_id=deposit[0],
-                user_id=deposit[1],
-                category_id=deposit[2],
-                deposit_date=deposit[3],
-                description=deposit[4],
-                amount=deposit[5]
-            )
+            deposit = Deposit(*deposit)
             deposits.append(deposit)
             logging.info("Finishing DAL method get all deposits by category with result: " +
                          str(deposit.convert_to_dictionary()))
@@ -99,20 +83,25 @@ class DepositDALImplementation(DepositDALInterface):
         deposit_records = cursor.fetchall()
         deposits = []
         for deposit in deposit_records:
-            deposit = Deposit(
-                deposit_id=deposit[0],
-                user_id=deposit[1],
-                category_id=deposit[2],
-                deposit_date=deposit[3],
-                description=deposit[4],
-                amount=deposit[5]
-            )
+            deposit = Deposit(*deposit)
             deposits.append(deposit)
             logging.info(
                 "Finishing DAL method get all deposits by date with result: " + str(deposit.convert_to_dictionary()))
         cursor.close()
         connection.close()
         return deposits
+
+    def get_deposits_total_by_category(self, category_id: int) -> float:
+        pass
+
+    def get_deposits_total_by_month(self) -> float:
+        pass
+
+    def get_deposits_total_by_year(self) -> float:
+        pass
+
+    def get_deposits_by_description_key_words(self) -> List[Deposit]:
+        pass
 
     def update_deposit(self, deposit: Deposit) -> Deposit:
         logging.info("Beginning DAL method update deposit with data: " + str(deposit.convert_to_dictionary()))
@@ -139,3 +128,6 @@ class DepositDALImplementation(DepositDALInterface):
         connection.close()
         logging.info("Finishing DAL method delete deposit")
         return True
+
+    def delete_all_deposits(self, user_id: int) -> bool:
+        pass

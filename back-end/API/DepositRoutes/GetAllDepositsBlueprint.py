@@ -1,20 +1,16 @@
 from datetime import timedelta, datetime
 
 from flask import Blueprint, current_app, jsonify, request
-from DAL.CategoryDAL.CategoryDALImplementation import CategoryDALImplementation
 from DAL.DepositDAL.DepositDALImplementation import DepositDALImplementation
-from DAL.SessionDAL.SessionDALImplementation import SessionDALImplementation
-from SAL.CategorySAL.CategorySALImplementation import CategorySALImplementation
 from SAL.DepositSAL.DepositSALImplementation import DepositSALImplementation
+from DAL.SessionDAL.SessionDALImplementation import SessionDALImplementation
 from SAL.SessionSAL.SessionSALImplementation import SessionSALImplementation
 from Entities.CustomError import CustomError
 
 get_all_deposits_route = Blueprint('get_all_deposits_route', __name__)
 
-category_dao = CategoryDALImplementation()
-category_sao = CategorySALImplementation(category_dao)
 deposit_dao = DepositDALImplementation()
-deposit_sao = DepositSALImplementation(deposit_dao, category_sao)
+deposit_sao = DepositSALImplementation(deposit_dao)
 session_dao = SessionDALImplementation()
 session_sao = SessionSALImplementation(session_dao)
 
