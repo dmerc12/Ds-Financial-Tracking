@@ -23,7 +23,7 @@ class CategoryDALInterface(ABC):
         pass
 
     @abstractmethod
-    def update_category(self, category: Category) -> Category:
+    def update_category(self, category: Category) -> bool:
         pass
 
     @abstractmethod

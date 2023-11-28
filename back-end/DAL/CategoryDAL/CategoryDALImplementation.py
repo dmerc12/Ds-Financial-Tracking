@@ -10,11 +10,11 @@ class CategoryDALImplementation(CategoryDALInterface):
 
     def create_category(self, category: Category) -> Category:
         logging.info("Beginning DAL method create category with data: " + str(category.convert_to_dictionary()))
-        sql = "INSERT INTO financial_tracker.Category (category_name, group, user_id) VALUES (%s, %s, %s) " \
+        sql = "INSERT INTO financial_tracker.Category (category_name, grp, user_id) VALUES (%s, %s, %s) " \
               "RETURNING category_id;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql, (category.category_name, category.user_id))
+        cursor.execute(sql, (category.category_name, category.group, category.user_id))
         category.category_id = cursor.fetchone()[0]
         cursor.close()
         connection.commit()
@@ -51,19 +51,32 @@ class CategoryDALImplementation(CategoryDALInterface):
         for category in category_records:
             category = Category(*category)
             categories.append(category)
-            logging.info("Finishing DAL method get all categories with result: " +
+            logging.info("Finishing DAL method get all categories with categories: " +
                          str(category.convert_to_dictionary()))
         cursor.close()
-        connection.commit()
         connection.close()
         return categories
 
     def get_categories_by_group(self, group: str) -> List[Category]:
-        pass
+        logging.info("Beginning DAL method get categories by group with group: " + str(group))
+        sql = "SELECT * FROM financial_tracker.Category WHERE grp=%s;"
+        connection = Connection.db_connection()
+        cursor = connection.cursor()
+        cursor.execute(sql, (group,))
+        category_records = cursor.fetchall()
+        categories = []
+        for category in category_records:
+            category = Category(*category)
+            categories.append(category)
+            logging.info("Finishing DAL method get categories by group with categories: " +
+                         str(category.convert_to_dictionary()))
+        cursor.close()
+        connection.close()
+        return categories
 
-    def update_category(self, category: Category) -> Category:
+    def update_category(self, category: Category) -> bool:
         logging.info("Beginning DAL method update category with data: " + str(category.convert_to_dictionary()))
-        sql = "UPDATE financial_tracker.Category SET category_name=%s AND group=%s WHERE category_id=%s;"
+        sql = "UPDATE financial_tracker.Category SET category_name=%s, grp=%s WHERE category_id=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
         cursor.execute(sql, (category.category_name, category.group, category.category_id))
@@ -71,7 +84,7 @@ class CategoryDALImplementation(CategoryDALInterface):
         connection.commit()
         connection.close()
         logging.info("Finishing DAL method update category with result: " + str(category.convert_to_dictionary()))
-        return category
+        return True
 
     def delete_category(self, category_id: int) -> bool:
         logging.info("Beginning DAL method delete category with category ID: " + str(category_id))
@@ -86,4 +99,13 @@ class CategoryDALImplementation(CategoryDALInterface):
         return True
 
     def delete_all_categories(self, user_id: int) -> bool:
-        pass
+        logging.info("Beginning DAL method delete all categories with user ID: " + str(user_id))
+        sql = "DELETE FROM financial_tracker.Category WHERE user_id=%s;"
+        connection = Connection.db_connection()
+        cursor = connection.cursor()
+        cursor.execute(sql, (user_id,))
+        cursor.close()
+        connection.commit()
+        connection.close()
+        logging.info("Finishing DAL method delete all categories")
+        return True

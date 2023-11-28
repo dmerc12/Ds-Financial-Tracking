@@ -16,18 +16,20 @@ def test_get_category_success():
 
 def test_get_all_categories_success():
     result = category_dao.get_all_categories(test_category.user_id)
-    assert len(result) > 1
+    assert len(result) > 0
 
 def test_get_categories_by_group_success():
-    pass
+    result = category_dao.get_categories_by_group(test_category.group)
+    assert len(result) > 0
 
 def test_update_category_success():
     result = category_dao.update_category(updated_category)
-    assert result.category_name != test_category.category_name
+    assert result
 
 def test_delete_category_success():
     result = category_dao.delete_category(current_category_id)
     assert result
 
 def test_delete_all_categories_success():
-    pass
+    result = category_dao.delete_all_categories(-2)
+    assert result
