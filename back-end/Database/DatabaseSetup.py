@@ -43,6 +43,12 @@ if __name__ == "__main__":
         );
     '''
 
+    test_session_1 = "INSERT INTO financial_tracker.Session (session_id, user_id, expiration) " \
+                     "VALUES ('-1', -1, '2022-1-1 1:30:45');"
+
+    test_session_2 = "INSERT INTO financial_tracker.Session (session_id, user_id, expiration) " \
+                     "VALUES ('-2', -1, '2028-1-1 1:30:45');"
+
     category_table_sql = '''
         CREATE TABLE financial_tracker.Category (
             category_id SERIAL PRIMARY KEY,
@@ -97,6 +103,7 @@ if __name__ == "__main__":
     create_data(test_user_1, "Test user 1")
     create_data(test_user_2, "Test user 2")
     create_data(session_table_sql, "Session table")
+    create_data(test_session_1, "test session")
     create_data(category_table_sql, "Category table")
     create_data(test_category_1, "Test category 1")
     create_data(test_category_2, "Test category 2")

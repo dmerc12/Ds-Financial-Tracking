@@ -1,3 +1,5 @@
+from datetime import timedelta, datetime
+
 import bcrypt
 
 from Database.config import Connection
@@ -32,6 +34,12 @@ if __name__ == "__main__":
     main_cursor.execute(f"INSERT INTO financial_tracker.User (user_id, email, passwrd) "
                         f"VALUES (-2, 'deleteallsessions@email.com', "
                         f"'${test_password}');")
+
+    main_cursor.execute("INSERT INTO financial_tracker.Session (session_id, user_id, expiration) "
+                        "VALUES ('-1', -1, '2022-1-1 1:30:45');")
+
+    main_cursor.execute("INSERT INTO financial_tracker.Session (session_id, user_id, expiration) "
+                        "VALUES ('-2', -1, '2028-1-1 1:30:45');")
 
     main_cursor.execute("INSERT INTO financial_tracker.CATEGORY (category_id, user_id, grp, category_name) VALUES "
                         "(-1, -1, 'b', 'test category');")
