@@ -13,7 +13,7 @@ class SessionDALInterface(ABC):
         pass
 
     @abstractmethod
-    def get_all_sessions(self, user_id: int):
+    def get_all_sessions(self):
         pass
 
     @abstractmethod

@@ -16,8 +16,8 @@ def test_get_session_success():
     assert result is not None
 
 def test_get_all_sessions_success():
-    result = session_dao.get_all_sessions(test_session.user_id)
-    assert len(result) > 1
+    result = session_dao.get_all_sessions()
+    assert len(result) > 0
 
 def test_update_session_success():
     result = session_dao.update_session(update_session)

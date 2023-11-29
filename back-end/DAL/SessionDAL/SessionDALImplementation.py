@@ -41,12 +41,12 @@ class SessionDALImplementation(SessionDALInterface):
             logging.info("Finishing DAL method get session with session: " + str(session.convert_to_dictionary()))
             return session
 
-    def get_all_sessions(self, user_id: int) -> List[Session]:
-        logging.info("Beginning DAL method get all sessions with user ID: " + str(user_id))
-        sql = "SELECT * FROM financial_tracker.Category WHERE user_id=%s;"
+    def get_all_sessions(self) -> List[Session]:
+        logging.info("Beginning DAL method get all sessions")
+        sql = "SELECT * FROM financial_tracker.Session;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql, (user_id,))
+        cursor.execute(sql)
         session_records = cursor.fetchall()
         sessions = []
         cursor.close()
