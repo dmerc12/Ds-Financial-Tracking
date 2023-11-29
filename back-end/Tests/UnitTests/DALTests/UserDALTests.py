@@ -8,7 +8,7 @@ user_dao = UserDALImplementation()
 test_password = str(bcrypt.hashpw("test".encode("utf-8"), bcrypt.gensalt()))
 update_password = str(bcrypt.hashpw("updated".encode("utf-8"), bcrypt.gensalt()))
 
-test_user = User(0, 'test@email.com', test_password)
+test_user = User(0, 'new@email.com', test_password)
 updated_user = User(test_user.user_id, 'updated@email.com', update_password)
 
 def test_create_user_success():
