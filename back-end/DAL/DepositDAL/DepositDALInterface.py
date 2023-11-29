@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import List
-
+from datetime import date
 from Entities.Deposit import Deposit
 
 class DepositDALInterface(ABC):
@@ -22,27 +22,27 @@ class DepositDALInterface(ABC):
         pass
 
     @abstractmethod
-    def get_deposits_by_date(self, date: str) -> List[Deposit]:
+    def get_deposits_by_date(self, deposit_date: date) -> List[Deposit]:
         pass
 
     @abstractmethod
-    def get_deposits_total_by_category(self, category_id: int) -> float:
+    def get_deposits_by_description_key_words(self, keywords: List[str]) -> List[Deposit]:
         pass
 
     @abstractmethod
-    def get_deposits_total_by_month(self) -> float:
+    def get_total_by_category(self, category_id: int) -> float:
         pass
 
     @abstractmethod
-    def get_deposits_total_by_year(self) -> float:
+    def get_total_by_month(self, month: date.month) -> float:
         pass
 
     @abstractmethod
-    def get_deposits_by_description_key_words(self) -> List[Deposit]:
+    def get_total_by_year(self, year: date.year) -> float:
         pass
 
     @abstractmethod
-    def update_deposit(self, deposit: Deposit) -> Deposit:
+    def update_deposit(self, deposit: Deposit) -> bool:
         pass
 
     @abstractmethod
