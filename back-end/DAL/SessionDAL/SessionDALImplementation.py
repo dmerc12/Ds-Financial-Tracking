@@ -9,7 +9,7 @@ from Entities.Session import Session
 class SessionDALImplementation(SessionDALInterface):
 
     def create_session(self, session: Session) -> bool:
-        logging.info("Beginning DAL method create session with session: " + session.convert_to_dictionary())
+        logging.info("Beginning DAL method create session with session: " + str(session.convert_to_dictionary()))
         sql = "INSERT INTO financial_tracker.Session (session_id, user_id, expiration) VALUES (%s, %s, %s) " \
               "RETURNING session_id;"
         connection = Connection.db_connection()
@@ -32,7 +32,7 @@ class SessionDALImplementation(SessionDALInterface):
         cursor.close()
         connection.close()
         if session_info is None:
-            session = Session("0", 0, datetime(0000, 00, 00))
+            session = Session("0", 0, datetime(0, 0, 0))
             logging.info("Finishing DAL method get session, not found")
             return session
         else:
