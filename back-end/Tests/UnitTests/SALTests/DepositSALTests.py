@@ -48,7 +48,7 @@ def test_create_deposit_date_not_date():
 
 def test_create_deposit_date_default():
     try:
-        test_deposit = Deposit(0, -1, -1, date(1900, 1, 1), 'description', 10.00)
+        test_deposit = Deposit(0, -1, -1, date(1, 1, 1), 'description', 10.00)
         deposit_sao.create_deposit(test_deposit)
         assert False
     except CustomError as error:
@@ -79,10 +79,20 @@ def test_create_deposit_amount_negative_or_0():
         assert str(error) == "The amount field must be positive and cannot be 0.00, please try again!"
 
 def test_create_deposit_user_id_not_integer():
-    pass
+    try:
+        test_deposit = Deposit(0, "", -1, datetime.now().date(), "test description", 55.99)
+        deposit_sao.create_deposit(test_deposit)
+        assert False
+    except CustomError as error:
+        assert str(error) == "The user ID field must be an integer, please try again!"
 
 def test_create_deposit_user_not_found():
-    pass
+    try:
+        test_deposit = Deposit(0, -576328229736483, -1, datetime.now().date(), "test description", 55.99)
+        deposit_sao.create_deposit(test_deposit)
+        assert False
+    except CustomError as error:
+        assert str(error) == "This user cannot be found, please try again!"
 
 def test_create_deposit_success():
     result = deposit_sao.create_deposit(successful_deposit)
@@ -137,7 +147,7 @@ def test_get_deposits_by_category_category_not_found():
         deposit_sao.get_deposits_by_category(-5849732023984)
         assert False
     except CustomError as error:
-        assert str(error) == "No deposits found, please try again!"
+        assert str(error) == "Category not found, please try again!"
 
 def test_get_deposits_by_category_success():
     result = deposit_sao.get_deposits_by_category(successful_deposit.category_id)
@@ -148,18 +158,18 @@ def test_get_deposits_by_date_date_not_date():
         deposit_sao.get_deposits_by_date(13336820)
         assert False
     except CustomError as error:
-        assert str(error) == "The date field must be a string, please try again!"
+        assert str(error) == "The date field must be a date, please try again!"
 
 def test_get_deposits_by_date_date_default():
     try:
-        deposit_sao.get_deposits_by_date(date(1900, 1, 1))
+        deposit_sao.get_deposits_by_date(date(1, 1, 1))
         assert False
     except CustomError as error:
         assert str(error) == "The date field cannot be left empty, please try again!"
 
 def test_get_deposits_by_date_none_found():
     try:
-        deposit_sao.get_deposits_by_date(datetime.now().date())
+        deposit_sao.get_deposits_by_date(datetime.now().date() - timedelta(days=99999))
         assert False
     except CustomError as error:
         assert str(error) == "No deposits found, please try again!"
@@ -168,23 +178,147 @@ def test_get_deposits_by_date_success():
     result = deposit_sao.get_deposits_by_date(successful_deposit.date)
     assert len(result) > 0
 
-def test_get_deposits_total_by_category_success():
-    pass
+def test_get_deposits_by_description_key_words_not_strings():
+    try:
+        keywords = [1, 2]
+        deposit_sao.get_deposits_by_description_key_words(keywords)
+        assert False
+    except CustomError as error:
+        assert str(error) == "The key words must be strings, please try again!"
 
-def test_get_deposits_total_by_month_success():
-    pass
-
-def test_get_deposits_total_by_year_success():
-    pass
+def test_get_deposits_by_description_key_words_none_found():
+    try:
+        keywords = ["none", "found"]
+        deposit_sao.get_deposits_by_description_key_words(keywords)
+        assert False
+    except CustomError as error:
+        assert str(error) == "No deposits found, please try again!"
 
 def test_get_deposits_by_description_key_words_success():
-    pass
+    result = deposit_sao.get_deposits_by_description_key_words(["test", "description"])
+    assert len(result) > 0
+
+def test_get_total_by_category_id_not_integer():
+    try:
+        deposit_sao.get_total_by_category("")
+        assert False
+    except CustomError as error:
+        assert str(error) == "The category ID field must be an integer please try again"
+
+def test_get_total_by_category_not_found():
+    try:
+        deposit_sao.get_total_by_category(-58738923873)
+        assert False
+    except CustomError as error:
+        assert str(error) == "Category not found, please try again!"
+
+def test_get_total_by_category_no_deposits():
+    try:
+        deposit_sao.get_total_by_category(-2)
+        assert False
+    except CustomError as error:
+        assert str(error) == "No deposits found, please try again!"
+
+def test_get_total_by_category_success():
+    result = deposit_sao.get_total_by_category(successful_deposit.category_id)
+    assert result is not None
+
+
+def test_get_total_by_month_user_id_not_integer():
+    try:
+        deposit_sao.get_total_by_month("", 1, 1982)
+        assert False
+    except CustomError as error:
+        assert str(error) == "The user ID field must be an integer, please try again!"
+
+def test_get_total_by_month_user_not_found():
+    try:
+        deposit_sao.get_total_by_month(-5736789283764, 2, 1982)
+        assert False
+    except CustomError as error:
+        assert str(error) == "This user cannot be found, please try again!"
+
+def test_get_total_by_month_not_integer():
+    try:
+        deposit_sao.get_total_by_month(-1, "", 1982)
+        assert False
+    except CustomError as error:
+        assert str(error) == "The month field must be an integer, please try again!"
+
+def test_get_total_by_month_not_1_through_12():
+    try:
+        deposit_sao.get_total_by_month(-1, 33, 2343)
+        assert False
+    except CustomError as error:
+        assert str(error) == "The month field must be an integer between 1 and 12, please try again!"
+
+def test_get_total_by_month_year_not_integer():
+    try:
+        deposit_sao.get_total_by_month(-1, 1, "")
+        assert False
+    except CustomError as error:
+        assert str(error) == "The year field must be an integer, please try again!"
+
+
+def test_get_total_by_month_no_deposits():
+    try:
+        deposit_sao.get_total_by_month(-1, 7, 2)
+        assert False
+    except CustomError as error:
+        assert str(error) == "No deposits made during this time, please try again!"
+
+def test_get_total_by_month_success():
+    result = deposit_sao.get_total_by_month(successful_deposit.user_id, successful_deposit.date.month,
+                                            successful_deposit.date.year)
+    assert result is not None
+
+def test_get_total_by_year_user_id_not_integer():
+    try:
+        deposit_sao.get_total_by_year("", 1973)
+        assert False
+    except CustomError as error:
+        assert str(error) == "The user ID field must be an integer, please try again!"
+
+def test_get_total_by_year_user_not_found():
+    try:
+        deposit_sao.get_total_by_year(-5736789283764, 1983)
+        assert False
+    except CustomError as error:
+        assert str(error) == "This user cannot be found, please try again!"
+
+def test_get_total_by_year_not_integer():
+    try:
+        deposit_sao.get_total_by_year(-1, "")
+        assert False
+    except CustomError as error:
+        assert str(error) == "The year field must be an integer, please try again!"
+
+def test_get_total_by_year_no_deposits():
+    try:
+        deposit_sao.get_total_by_year(-1, -1876)
+        assert False
+    except CustomError as error:
+        assert str(error) == "No deposits made during this time, please try again!"
+
+def test_get_total_by_year_success():
+    result = deposit_sao.get_total_by_year(successful_deposit.user_id, successful_deposit.date.year)
+    assert result is not None
 
 def test_update_deposit_user_id_not_integer():
-    pass
+    try:
+        test_deposit = Deposit(0, "", -1, datetime.now().date(), "test description", 55.99)
+        deposit_sao.create_deposit(test_deposit)
+        assert False
+    except CustomError as error:
+        assert str(error) == "The user ID field must be an integer, please try again!"
 
 def test_update_deposit_user_not_found():
-    pass
+    try:
+        test_deposit = Deposit(0, -576328229736483, -1, datetime.now().date(), "test description", 55.99)
+        deposit_sao.create_deposit(test_deposit)
+        assert False
+    except CustomError as error:
+        assert str(error) == "This user cannot be found, please try again!"
 
 def test_update_deposit_category_id_not_integer():
     try:
@@ -212,7 +346,7 @@ def test_update_deposit_date_not_date():
 
 def test_update_deposit_date_default():
     try:
-        test_deposit = Deposit(current_deposit_id, -1, -1, date(1900, 1, 1), 'test description', 5.00)
+        test_deposit = Deposit(current_deposit_id, -1, -1, date(1, 1, 1), 'test description', 5.00)
         deposit_sao.update_deposit(test_deposit)
         assert False
     except CustomError as error:
@@ -252,8 +386,7 @@ def test_update_deposit_amount_negative_or_0():
 
 def test_update_deposit_success():
     result = deposit_sao.update_deposit(updated_deposit)
-    assert result.date != successful_deposit.date and result.description != successful_deposit.description and \
-           result.amount != successful_deposit.amount
+    assert result
 
 def test_delete_deposit_not_found():
     try:
@@ -274,10 +407,19 @@ def test_delete_deposit_success():
     assert result
 
 def test_delete_all_deposits_user_id_not_integer():
-    pass
+    try:
+        deposit_sao.delete_all_deposits("")
+        assert False
+    except CustomError as error:
+        assert str(error) == "The user ID field must be an integer, please try again!"
 
 def test_delete_all_deposits_user_not_found():
-    pass
+    try:
+        deposit_sao.delete_all_deposits(-8765432123456)
+        assert False
+    except CustomError as error:
+        assert str(error) == "This user cannot be found, please try again!"
 
 def test_delete_all_deposits_success():
-    pass
+    result = deposit_sao.delete_all_deposits(-2)
+    assert result

@@ -1,5 +1,5 @@
 import logging
-from datetime import date, datetime
+from datetime import datetime
 
 from DAL.SessionDAL.SessionDALImplementation import SessionDALImplementation
 from SAL.SessionSAL.SessionSALInterface import SessionSALInterface
@@ -23,17 +23,16 @@ class SessionSALImplementation(SessionSALInterface):
         if type(session.user_id) is not int:
             logging.warning("Error in SAL method create session, user ID not an integer")
             raise CustomError("The user ID field must be an integer, please try again!")
-        elif type(session.expiration) is not date:
+        elif type(session.expiration) is not datetime:
             logging.warning("Error in SAL method create session, expiration not a date")
             raise CustomError("The expiration field must be a date, please try again!")
-        elif session.expiration <= datetime.now().date():
+        elif session.expiration <= datetime.now():
             logging.warning("Error in SAL method create session, expiration already past")
             raise CustomError("The expiration field must be in the future, please try again!")
         else:
             self.user_sao.get_user_by_id(session.user_id)
             session.session_id = self.id_generator.generate_id()
             self.session_dao.create_session(session)
-            session.session_id = session.session_id + self.id_generator.generate_salt()
             logging.info("Finishing SAL method create session with session: " + str(session.convert_to_dictionary()))
             return session
 
@@ -43,9 +42,13 @@ class SessionSALImplementation(SessionSALInterface):
             logging.warning("Error in SAL method get session, session ID not a string")
             raise CustomError("The session ID field must be a string, please try again!")
         else:
-            session_id = self.id_generator.remove_salt(session_id)
+            sessions = self.session_dao.get_all_sessions()
+            for session in sessions:
+                if session.session_id == session_id:
+                    break
             session = self.session_dao.get_session(session_id)
-            if session.expiration == datetime(0000, 00, 00, 00):
+            if session.expiration == datetime(1, 1, 1) and session.session_id == "0" and session.user_id == 0 \
+                    or session is None:
                 logging.warning("Error in SAL method get session, no session found")
                 raise CustomError("No session found, please try again!")
             elif session.expiration <= datetime.now():
@@ -63,10 +66,10 @@ class SessionSALImplementation(SessionSALInterface):
         elif type(session.user_id) is not int:
             logging.warning("Error in SAL method update session, user ID not an integer")
             raise CustomError("The user ID field must be an integer, please try again!")
-        elif type(session.expiration) is not date:
+        elif type(session.expiration) is not datetime:
             logging.warning("Error in SAL method update session, expiration not a date")
             raise CustomError("The expiration field must be a date, please try again!")
-        elif session.expiration <= datetime.now().date():
+        elif session.expiration <= datetime.now():
             logging.warning("Error in SAL method update session, expiration already past")
             raise CustomError("The expiration field must be in the future, please try again!")
         else:
@@ -94,6 +97,6 @@ class SessionSALImplementation(SessionSALInterface):
             raise CustomError("The user ID field must be an integer, please try again!")
         else:
             self.user_sao.get_user_by_id(user_id)
-            result = self.delete_all_sessions(user_id)
+            result = self.session_dao.delete_all_sessions(user_id)
             logging.info("Finishing SAL method delete all sessions with result: " + str(result))
             return result

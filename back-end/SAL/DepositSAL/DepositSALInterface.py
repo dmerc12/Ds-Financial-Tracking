@@ -22,27 +22,27 @@ class DepositSALInterface(ABC):
         pass
 
     @abstractmethod
-    def get_deposits_by_date(self, date: str) -> List[Deposit]:
+    def get_deposits_by_date(self, deposit_date: str) -> List[Deposit]:
         pass
 
     @abstractmethod
-    def get_deposits_total_by_category(self, category_id: int) -> float:
+    def get_deposits_by_description_key_words(self, keywords: List[str]) -> List[Deposit]:
         pass
 
     @abstractmethod
-    def get_deposits_total_by_month(self) -> float:
+    def get_total_by_category(self, category_id: int) -> float:
         pass
 
     @abstractmethod
-    def get_deposits_total_by_year(self) -> float:
+    def get_total_by_month(self, user_id: int, month: int, year: int) -> float:
         pass
 
     @abstractmethod
-    def search_deposits_by_description_key_words(self) -> List[Deposit]:
+    def get_total_by_year(self, user_id: int, year: int) -> float:
         pass
 
     @abstractmethod
-    def update_deposit(self, deposit: Deposit) -> Deposit:
+    def update_deposit(self, deposit: Deposit) -> bool:
         pass
 
     @abstractmethod

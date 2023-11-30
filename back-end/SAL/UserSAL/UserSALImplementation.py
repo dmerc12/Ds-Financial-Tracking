@@ -15,7 +15,7 @@ class UserSALImplementation(UserSALInterface):
 
     def create_user(self, user: User, password_confirmation: str) -> User:
         logging.info("Beginning SAL method create user with user: " + str(user.convert_to_dictionary_full()) +
-                     " and password confirmation: " + password_confirmation)
+                     " and password confirmation: " + str(password_confirmation))
         if type(user.password) is not str:
             logging.warning("Error in SAL method create user, password not a string")
             raise CustomError("The password field must be a string, please try again!")
@@ -48,13 +48,14 @@ class UserSALImplementation(UserSALInterface):
             raise CustomError("The passwords do not match, please try again!")
         else:
             result = self.get_user_by_email(user.email)
-            if result is not None:
+            if result.email == user.email:
                 logging.warning("Error in SAL method create user, user already exists")
                 raise CustomError("A user already exists with this email, please log in!")
             else:
                 user.password = bcrypt.hashpw(user.password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
                 new_user = self.user_dao.create_user(user)
-                logging.info("Finishing SAL method create user with user: " + new_user.convert_to_dictionary_full())
+                logging.info("Finishing SAL method create user with user: " +
+                             str(new_user.convert_to_dictionary_full()))
                 return new_user
 
     def get_user_by_id(self, user_id: int) -> User:
@@ -72,17 +73,17 @@ class UserSALImplementation(UserSALInterface):
                 return user
 
     def get_user_by_email(self, email: str) -> User:
-        logging.info("Beginning SAL method get user by email with email: " + email)
+        logging.info("Beginning SAL method get user by email with email: " + str(email))
         if type(email) is not str:
             logging.warning("Error in SAL method get user by email, email not a string")
             raise CustomError("Email field must be a string, please try again!")
         else:
             user = self.user_dao.get_user_by_email(email)
-            logging.info("Finishing SAL method get user by email with user: " + user.convert_to_dictionary())
+            logging.info("Finishing SAL method get user by email with user: " + str(user.convert_to_dictionary()))
             return user
 
     def login(self, email: str, password: str) -> User:
-        logging.info("Beginning SAL method login with email: " + email + " and password: " + password)
+        logging.info("Beginning SAL method login with email: " + str(email) + " and password: " + str(password))
         if type(email) is not str:
             logging.warning("Error in SAL method login, email not a string")
             raise CustomError("The email field must be a string, please try again!")
@@ -102,7 +103,7 @@ class UserSALImplementation(UserSALInterface):
                 logging.warning("Error in SAL method login, incorrect email or password")
                 raise CustomError("Either the email or password are incorrect, please try again!")
             else:
-                logging.info("Finishing SAL method login with user: " + user.convert_to_dictionary())
+                logging.info("Finishing SAL method login with user: " + str(user.convert_to_dictionary()))
                 return user
 
     def change_email(self, user: User) -> bool:
@@ -128,10 +129,10 @@ class UserSALImplementation(UserSALInterface):
 
     def change_password(self, user: User, confirmation_password: str) -> bool:
         logging.info("Finishing SAL method change password with user: " + str(user.convert_to_dictionary()) +
-                     " and confirmation password: " + confirmation_password)
+                     " and confirmation password: " + str(confirmation_password))
         if type(user.password) is not str:
             logging.warning("Error in SAL method change password, new password not a string")
-            raise CustomError("The new password field must be a string, please try again!")
+            raise CustomError("The password field must be a string, please try again!")
         elif len(user.password) > 60:
             logging.warning("Error in SAL method change password, new password too long")
             raise CustomError("The password field cannot exceed 60 characters, please try again!")
@@ -155,12 +156,12 @@ class UserSALImplementation(UserSALInterface):
             raise CustomError("The passwords don't match, please try again!")
         else:
             current_info = self.get_user_by_id(user.user_id)
-            new_password = bcrypt.hashpw(user.password.encode("utf-8"), bcrypt.gensalt())
-            current_password = current_info.password.encode("utf-8")
-            if bcrypt.checkpw(new_password, current_password):
+            current_password = current_info.password.encode()
+            if bcrypt.checkpw(user.password.encode("utf-8"), current_password):
                 logging.warning("Error in SAL method change password, nothing changed")
                 raise CustomError("Nothing has changed, please try again!")
             else:
+                new_password = bcrypt.hashpw(user.password.encode(), bcrypt.gensalt())
                 user.password = str(new_password)
                 result = self.user_dao.change_password(user)
                 logging.info("Finishing SAL method change password")
@@ -169,6 +170,6 @@ class UserSALImplementation(UserSALInterface):
     def delete_user(self, user_id: int) -> bool:
         logging.info("Beginning SAL method delete user with user ID: " + str(user_id))
         self.get_user_by_id(user_id)
-        result = self.delete_user(user_id)
+        result = self.user_dao.delete_user(user_id)
         logging.info("Finishing SAL method delete user")
         return result

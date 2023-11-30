@@ -12,6 +12,22 @@ successful_category = Category(0, -1, "d", 'another test category')
 current_category_id = 1
 updated_category = Category(current_category_id, successful_category.user_id, "e", 'updated category name')
 
+def test_create_category_user_id_not_an_integer():
+    try:
+        test_category = Category(0, '', "b", 'test')
+        category_sao.create_category(test_category)
+        assert False
+    except CustomError as error:
+        assert str(error) == "The user ID field must be an integer, please try again!"
+
+def test_create_category_user_not_found():
+    try:
+        test_category = Category(0, -576378290374, "b", 'test')
+        category_sao.create_category(test_category)
+        assert False
+    except CustomError as error:
+        assert str(error) == "This user cannot be found, please try again!"
+
 def test_create_category_name_empty():
     try:
         test_category = Category(0, -1, "b", '')
@@ -98,27 +114,48 @@ def test_get_all_categories_none_found():
         except CustomError as error:
             assert str(error) == "No categories found, please try again!"
 
-def testl_get_all_categories_success():
+def test_get_all_categories_success():
     result = category_sao.get_all_categories(successful_category.user_id)
     assert len(result) > 0
 
 def test_get_categories_by_group_not_string():
-    pass
+    try:
+        category_sao.get_categories_by_group(1)
+        assert False
+    except CustomError as error:
+        assert str(error) == "The group field must be a string, please try again!"
 
 def test_get_categories_by_group_too_long():
-    pass
+    try:
+        category_sao.get_categories_by_group("no")
+        assert False
+    except CustomError as error:
+        assert str(error) == "The group field cannot be longer than a single character, please try again!"
 
 def test_get_categories_by_group_empty():
-    pass
+    try:
+        category_sao.get_categories_by_group("")
+        assert False
+    except CustomError as error:
+        assert str(error) == "The group field cannot be left empty, please try again!"
 
 def test_get_categories_by_group_not_allowable():
-    pass
+    try:
+        category_sao.get_categories_by_group("a")
+        assert False
+    except CustomError as error:
+        assert str(error) == "The group field can only be expense (e), deposit (d), or both (b); please try again!"
 
 def test_get_categories_by_group_none_found():
-    pass
+    try:
+        category_sao.get_categories_by_group("e")
+        assert False
+    except CustomError as error:
+        assert str(error) == "No categories found, please try again!"
 
 def test_get_categories_by_group_success():
-    pass
+    result = category_sao.get_categories_by_group("b")
+    assert result is not None
 
 def test_update_category_already_exists():
     try:
@@ -178,7 +215,7 @@ def test_update_category_group_not_allowable():
 
 def test_update_category_success():
     result = category_sao.update_category(updated_category)
-    assert result.category_name != successful_category.category_name
+    assert result
 
 def test_delete_category_not_found():
     try:
@@ -199,10 +236,19 @@ def test_delete_category_success():
     assert result
 
 def test_delete_all_categories_user_id_not_integer():
-    pass
+    try:
+        category_sao.delete_all_categories("no")
+        assert False
+    except CustomError as error:
+        assert str(error) == "The user ID field must be an integer, please try again!"
 
 def test_delete_all_categories_user_not_found():
-    pass
+    try:
+        category_sao.delete_all_categories(-47862890274628)
+        assert False
+    except CustomError as error:
+        assert str(error) == "This user cannot be found, please try again!"
 
 def test_delete_all_categories_success():
-    pass
+    result = category_sao.delete_all_categories(-2)
+    assert result

@@ -13,6 +13,10 @@ class SessionDALInterface(ABC):
         pass
 
     @abstractmethod
+    def get_all_sessions(self):
+        pass
+
+    @abstractmethod
     def update_session(self, session: Session) -> bool:
         pass
 

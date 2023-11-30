@@ -9,8 +9,7 @@ session_dao = SessionDALImplementation()
 session_sao = SessionSALImplementation(session_dao)
 
 successful_session = Session("0", -1, datetime.now() + timedelta(minutes=30))
-update_session = Session(successful_session.session_id, successful_session.user_id,
-                         datetime.now() + timedelta(minutes=30))
+update_session = Session("-2", -1, datetime.now() + timedelta(minutes=30))
 
 def test_create_session_user_id_not_integer():
     try:
@@ -46,6 +45,7 @@ def test_update_session_expiration_expired():
 
 def test_create_session_success():
     result = session_sao.create_session(successful_session)
+    result.session_id = successful_session.session_id
     assert result.session_id != "0"
 
 def test_get_session_id_not_string():
@@ -64,8 +64,7 @@ def test_get_session_not_found():
 
 def test_get_session_expired():
     try:
-        result = session_sao.get_session("-2")
-        print(result)
+        session_sao.get_session("-1")
         assert False
     except CustomError as error:
         assert str(error) == "Session has expired, please log in!"
@@ -100,7 +99,7 @@ def test_update_session_expiration_not_date():
 
 def test_update_session_expired():
     try:
-        test_session = Session("-2", -1, datetime.now() + timedelta(minutes=15))
+        test_session = Session("-1", -1, datetime.now() + timedelta(minutes=15))
         session_sao.update_session(test_session)
         assert False
     except CustomError as error:
@@ -130,6 +129,7 @@ def test_update_session_expiration_past():
     except CustomError as error:
         assert str(error) == "The expiration field must be in the future, please try again!"
 
+print(successful_session.session_id)
 def test_update_session_success():
     result = session_sao.update_session(update_session)
     assert result
@@ -139,7 +139,7 @@ def test_delete_session_id_not_string():
         session_sao.delete_session(1)
         assert False
     except CustomError as error:
-        assert str(error) == "The session ID field must be an integer, please try again!"
+        assert str(error) == "The session ID field must be a string, please try again!"
 
 def test_delete_session_not_found():
     try:

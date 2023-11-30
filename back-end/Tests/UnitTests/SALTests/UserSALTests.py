@@ -6,9 +6,11 @@ from Entities.User import User
 user_dao = UserDALImplementation()
 user_sao = UserSALImplementation(user_dao)
 
-successful_user = User(0, "new@email.com", "password")
+current_user_id = 1
+
+successful_user = User(0, "another@email.com", "password")
 successful_confirmation = "password"
-updated_user = User(successful_user.user_id, successful_user.email, "updated")
+updated_user = User(current_user_id, "updated@email.com", "updated")
 updated_confirmation = "updated"
 
 def test_create_user_password_not_string():
@@ -82,16 +84,15 @@ def test_create_user_email_empty():
 
 def test_create_user_confirmation_password_not_matching_password():
     try:
-        failed_confirmation = "not going to work"
-        user_sao.create_user(successful_user, failed_confirmation)
+        user_sao.create_user(successful_user, "not going to work")
         assert False
     except CustomError as error:
         assert str(error) == "The passwords do not match, please try again!"
 
 def test_create_user_already_exists():
     try:
-        test_user = User(0, "password", "test@email.com")
-        user_sao.create_user(test_user, successful_confirmation)
+        test_user = User(0, "test@email.com", "password")
+        user_sao.create_user(test_user, "password")
         assert False
     except CustomError as error:
         assert str(error) == "A user already exists with this email, please log in!"
@@ -115,7 +116,7 @@ def test_get_user_by_id_not_found():
         assert str(error) == "This user cannot be found, please try again!"
 
 def test_get_user_by_id_success():
-    result = user_sao.get_user_by_id(successful_user.user_id)
+    result = user_sao.get_user_by_id(current_user_id)
     assert result is not None
 
 def test_get_user_by_email_not_a_string():
@@ -165,12 +166,12 @@ def test_login_email_or_password_incorrect():
         assert str(error) == "Either the email or password are incorrect, please try again!"
 
 def test_login_success():
-    result = user_sao.login("test@email.com", "test")
+    result = user_sao.login("another@email.com", "password")
     assert result is not None
 
 def test_change_email_not_string():
     try:
-        test_user = User(successful_user.user_id, 0, "password")
+        test_user = User(current_user_id, 0, "password")
         user_sao.change_email(test_user)
         assert False
     except CustomError as error:
@@ -178,7 +179,7 @@ def test_change_email_not_string():
 
 def test_change_email_empty():
     try:
-        test_user = User(successful_user.user_id, "", "password")
+        test_user = User(current_user_id, "", "password")
         user_sao.change_email(test_user)
         assert False
     except CustomError as error:
@@ -186,7 +187,7 @@ def test_change_email_empty():
 
 def test_change_email_too_long():
     try:
-        test_user = User(successful_user.user_id, "this is much too long and so it should fail and get the "
+        test_user = User(current_user_id, "this is much too long and so it should fail and get the "
                                                   "desired error", "password")
         user_sao.change_email(test_user)
         assert False
@@ -195,7 +196,8 @@ def test_change_email_too_long():
 
 def test_change_email_no_info_changed():
     try:
-        user_sao.change_email(successful_user)
+        test_user = User(current_user_id, successful_user.email, successful_user.password)
+        user_sao.change_email(test_user)
         assert False
     except CustomError as error:
         assert str(error) == "No information has changed!"
@@ -206,7 +208,7 @@ def test_change_email_success():
 
 def test_change_password_user_not_found():
     try:
-        test_user = User(-4767526382987, "test@email.com", "")
+        test_user = User(-4767526382987, "test@email.com", "new")
         user_sao.change_password(test_user, "new")
         assert False
     except CustomError as error:
@@ -218,7 +220,7 @@ def test_change_password_password_new_password_not_string():
         user_sao.change_password(test_user, "new")
         assert False
     except CustomError as error:
-        assert str(error) == "The new password field must be a string, please try again!"
+        assert str(error) == "The password field must be a string, please try again!"
 
 def test_change_password_password_new_password_empty():
     try:
@@ -226,7 +228,7 @@ def test_change_password_password_new_password_empty():
         user_sao.change_password(test_user, "new")
         assert False
     except CustomError as error:
-        assert str(error) == "The new password field cannot be left empty, please try again!"
+        assert str(error) == "The password field cannot be left empty, please try again!"
 
 def test_change_password_password_new_password_too_long():
     try:
@@ -234,7 +236,7 @@ def test_change_password_password_new_password_too_long():
         user_sao.change_password(test_user, "new")
         assert False
     except CustomError as error:
-        assert str(error) == "The new password field cannot exceed 60 characters, please try again!"
+        assert str(error) == "The password field cannot exceed 60 characters, please try again!"
 
 def test_change_password_confirmation_password_not_string():
     try:
@@ -274,7 +276,8 @@ def test_change_password_new_password_does_not_match_confirmation_password():
 
 def test_change_password_nothing_changed():
     try:
-        user_sao.change_password(successful_user, "password")
+        test_user = User(current_user_id, successful_user.email, "password")
+        user_sao.change_password(test_user, "password")
         assert False
     except CustomError as error:
         assert str(error) == "Nothing has changed, please try again!"
@@ -291,5 +294,5 @@ def test_delete_user_not_found():
         assert str(error) == "This user cannot be found, please try again!"
 
 def test_delete_user_success():
-    result = user_sao.delete_user(successful_user.user_id)
+    result = user_sao.delete_user(current_user_id)
     assert result

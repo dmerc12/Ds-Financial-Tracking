@@ -11,8 +11,6 @@ def drop_table(table_name):
         print(f'{table_name} table dropped successfully!')
     except Exception as error:
         print(f'Error dropping {table_name} table: {str(error)}')
-    finally:
-        connection.close()
 
     try:
         cursor.execute("DROP SCHEMA IF EXISTS financial_tracker CASCADE;")
@@ -25,7 +23,7 @@ def drop_table(table_name):
 
 
 if __name__ == "__main__":
-    tables_to_drop = ["User", "Session", "Expense", "Deposit", "Category"]
+    tables_to_drop = ["Expense", "Deposit", "Category", "Session", "User"]
 
     for table in tables_to_drop:
         drop_table(table)
