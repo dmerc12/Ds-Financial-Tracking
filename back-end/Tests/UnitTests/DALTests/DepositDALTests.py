@@ -38,7 +38,7 @@ def test_get_total_by_category_success():
     assert result != 0.00
 
 def test_get_total_by_month_success():
-    result = deposit_dao.get_total_by_month(test_deposit.date.month)
+    result = deposit_dao.get_total_by_month(test_deposit.date.month, test_deposit.date.year)
     assert result != 0.00
 
 def test_get_total_by_year_success():

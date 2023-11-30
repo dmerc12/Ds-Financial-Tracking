@@ -16,7 +16,7 @@ class Deposit:
             'depositId': self.deposit_id,
             'userId': self.user_id,
             'categoryId': self.category_id,
-            'date': str(self.date.strftime("%Y-%m-%d")),
+            'date': self.date,
             'description': self.description,
             'amount': self.amount
         }

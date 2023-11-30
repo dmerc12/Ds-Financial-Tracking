@@ -34,11 +34,11 @@ class DepositDALInterface(ABC):
         pass
 
     @abstractmethod
-    def get_total_by_month(self, month: date.month) -> float:
+    def get_total_by_month(self, month: int, year: int) -> float:
         pass
 
     @abstractmethod
-    def get_total_by_year(self, year: date.year) -> float:
+    def get_total_by_year(self, year: int) -> float:
         pass
 
     @abstractmethod

@@ -32,7 +32,7 @@ class DepositDALImplementation(DepositDALInterface):
         cursor.close()
         connection.close()
         if deposit_info is None:
-            deposit = Deposit(0, 0, 0, date(0000, 0, 0), '', 0.00)
+            deposit = Deposit(0, 0, 0, date(1, 1, 1), '', 0.00)
             logging.info("Finishing DAL method get deposit, deposit not found")
             return deposit
         else:
@@ -122,18 +122,19 @@ class DepositDALImplementation(DepositDALInterface):
         connection.close()
         return total
 
-    def get_total_by_month(self, month: date.month) -> float:
+    def get_total_by_month(self, month: int, year: int) -> float:
         logging.info("Beginning Deposit DAL method get total by category with category ID: " + str(month))
-        sql = "SELECT SUM(amount) FROM financial_tracker.Deposit WHERE EXTRACT(MONTH FROM date)=%s;"
+        sql = "SELECT SUM(amount) FROM financial_tracker.Deposit WHERE EXTRACT(MONTH FROM date)=%s AND " \
+              "EXTRACT(YEAR FROM date)=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
-        cursor.execute(sql, (month,))
+        cursor.execute(sql, (month, year))
         total = cursor.fetchone()[0]
         cursor.close()
         connection.close()
         return total
 
-    def get_total_by_year(self, year: date.year) -> float:
+    def get_total_by_year(self, year: int) -> float:
         logging.info("Beginning Deposit DAL method get total by category with category ID: " + str(year))
         sql = "SELECT SUM(amount) FROM financial_tracker.Deposit WHERE EXTRACT(YEAR FROM date)=%s;"
         connection = Connection.db_connection()
