@@ -44,6 +44,9 @@ class DepositSALImplementation(DepositSALInterface):
         elif deposit.description == "":
             logging.warning("Error in SAL method create deposit, description empty")
             raise CustomError("The description field cannot be left empty, please try again!")
+        elif type(deposit.amount) is not float:
+            logging.warning("Error in SAL method create deposit, amount not a float")
+            raise CustomError("The amount field must be a float, please try again!")
         elif deposit.amount <= 0.00:
             logging.warning("Error in SAL method create deposit, amount negative or 0.00")
             raise CustomError("The amount field must be positive and cannot be 0.00, please try again!")
@@ -192,11 +195,11 @@ class DepositSALImplementation(DepositSALInterface):
                 if deposit.date.year == year:
                     total = total + deposit.amount
             if total == 0.00 or total == 0:
-                logging.warning("Error in Deposit SAL method get total by month, no deposits this month")
+                logging.warning("Error in Deposit SAL method get total by year, no deposits this month")
                 raise CustomError("No deposits made during this time, please try again!")
             else:
                 total = self.deposit_dao.get_total_by_year(year)
-                logging.warning("Finishing Deposit SAL method get total by month with total: " + str(total))
+                logging.info("Finishing Deposit SAL method get total by year with total: " + str(total))
                 return total
 
     def update_deposit(self, deposit: Deposit) -> bool:

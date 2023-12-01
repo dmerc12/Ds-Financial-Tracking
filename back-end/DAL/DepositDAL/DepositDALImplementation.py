@@ -120,10 +120,12 @@ class DepositDALImplementation(DepositDALInterface):
         total = cursor.fetchone()[0]
         cursor.close()
         connection.close()
+        logging.info("Finishing Deposit DAL method get total by category with total: " + str(total))
         return total
 
     def get_total_by_month(self, month: int, year: int) -> float:
-        logging.info("Beginning Deposit DAL method get total by category with category ID: " + str(month))
+        logging.info("Beginning Deposit DAL method get total by month with month: " + str(month) + " and year" +
+                     str(year))
         sql = "SELECT SUM(amount) FROM financial_tracker.Deposit WHERE EXTRACT(MONTH FROM date)=%s AND " \
               "EXTRACT(YEAR FROM date)=%s;"
         connection = Connection.db_connection()
@@ -132,10 +134,11 @@ class DepositDALImplementation(DepositDALInterface):
         total = cursor.fetchone()[0]
         cursor.close()
         connection.close()
+        logging.info("Finishing Deposit DAL method get total by month with total: " + str(total))
         return total
 
     def get_total_by_year(self, year: int) -> float:
-        logging.info("Beginning Deposit DAL method get total by category with category ID: " + str(year))
+        logging.info("Beginning Deposit DAL method get total by year with year: " + str(year))
         sql = "SELECT SUM(amount) FROM financial_tracker.Deposit WHERE EXTRACT(YEAR FROM date)=%s;"
         connection = Connection.db_connection()
         cursor = connection.cursor()
@@ -143,6 +146,7 @@ class DepositDALImplementation(DepositDALInterface):
         total = cursor.fetchone()[0]
         cursor.close()
         connection.close()
+        logging.info("Finishing Deposit DAL method get total by year with total: " + str(total))
         return total
 
     def update_deposit(self, deposit: Deposit) -> bool:

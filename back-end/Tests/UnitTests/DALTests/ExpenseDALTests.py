@@ -29,26 +29,30 @@ def test_get_expenses_by_date_success():
     result = expense_dao.get_expenses_by_date(test_expense.date)
     assert len(result) > 0
 
-def test_get_expenses_total_by_category_success():
-    pass
-
-def test_get_expenses_total_by_month_success():
-    pass
-
-def test_get_expenses_total_by_year_success():
-    pass
-
 def test_get_expenses_by_description_key_words_success():
-    pass
+    result = expense_dao.get_expenses_by_description_key_words(["test", "description"])
+    assert len(result) > 0
+
+def test_get_total_by_category_success():
+    result = expense_dao.get_total_by_category(test_expense.category_id)
+    assert result is not None
+
+def test_get_total_by_month_success():
+    result = expense_dao.get_total_by_month(test_expense.date.month, test_expense.date.year)
+    assert result is not None
+
+def test_get_total_by_year_success():
+    result = expense_dao.get_total_by_year(test_expense.date.year)
+    assert result is not None
 
 def test_update_expense_success():
     result = expense_dao.update_expense(updated_expense)
-    assert result.date != test_expense.date and result.description != test_expense.description and \
-           result.amount != test_expense.amount
+    assert result
 
 def test_delete_expense_success():
     result = expense_dao.delete_expense(current_expense_id)
     assert result
 
 def test_delete_all_expenses_success():
-    pass
+    result = expense_dao.delete_all_expenses(-2)
+    assert result

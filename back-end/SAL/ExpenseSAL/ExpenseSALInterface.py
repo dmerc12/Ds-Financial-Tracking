@@ -26,19 +26,19 @@ class ExpenseSALInterface(ABC):
         pass
 
     @abstractmethod
-    def get_expenses_total_by_category(self, category_id: int) -> float:
+    def get_expenses_by_description_key_words(self, keywords: List[str]) -> List[Expense]:
         pass
 
     @abstractmethod
-    def get_expenses_total_by_month(self) -> float:
+    def get_total_by_category(self, category_id: int) -> float:
         pass
 
     @abstractmethod
-    def get_expenses_total_by_year(self) -> float:
+    def get_total_by_month(self, user_id: int, month: int, year: int) -> float:
         pass
 
     @abstractmethod
-    def get_expenses_by_description_key_words(self) -> List[Expense]:
+    def get_total_by_year(self, user_id: int, year: int) -> float:
         pass
 
     @abstractmethod
