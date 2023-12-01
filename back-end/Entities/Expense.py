@@ -16,7 +16,7 @@ class Expense:
             'expenseId': self.expense_id,
             'userId': self.user_id,
             'categoryId': self.category_id,
-            'date': self.date.strftime("%%%Y-%%m-%%d"),
+            'date': self.date,
             'description': self.description,
             'amount': self.amount
         }
