@@ -43,10 +43,10 @@
             </div>
             <div class="nav-right">
                 {% if user.is_authenticated %}
-                    <form class="nav-item navbar-nav" method="post" action="{% url 'logout' %}">
+                    {% comment %} <form class="nav-item navbar-nav" method="post" action="{% url 'logout' %}">
                         {% csrf_token %}
                         <button type="submit" class="nav-link p-2 btn">Logout</button>
-                    </form>
+                    </form> {% endcomment %}
                 {% else %}
                     <div>
                         <a class="nav-link" href="#">Register</a>
