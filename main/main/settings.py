@@ -1,3 +1,5 @@
+import os
+
 """
 Django settings for main project.
 
@@ -31,8 +33,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+
     'crispy_forms',
     'crispy_bootstrap5',
+    'entry.apps.EntryConfig',
     'users.apps.UsersConfig',
     'finance_tracking.apps.FinanceTrackingConfig',
     'django.contrib.admin',
@@ -58,7 +62,7 @@ ROOT_URLCONF = 'main.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'main/main/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
