@@ -27,12 +27,11 @@ def update_category(request, category_id):
     if request.method == 'POST':
         form = CategoryForm(request.POST, instance=category)
         if form.is_valid():
-            category = Category(**form.cleaned_data)
-            category.save()
+            form.save()
             messages.success(request, 'Category successfully updated!')
             return redirect(f'{form.cleaned_data["group"]}-home')
     else:
-        form = CategoryForm(initial={'group': group})
+        form = CategoryForm(initial={'group': group}, instance=category)
     return render(request, 'finance_tracking/category/update.html', {'form': form, 'action': 'update', 'category': category})
 
 def delete_category(request, category_id):
