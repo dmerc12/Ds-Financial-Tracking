@@ -6,23 +6,25 @@ from ..models import Category
 
 def category_list(request):
     categories = Category.objects.all()
-    return render(request, 'finance_tracking/category/list.html', {'categories': categories})
-
-def category_detail(request, category_id):
-    category = get_object_or_404(Category, pk=category_id)
-    return render(request, 'finance_tracking/category/detail.html', {'category', category})
+    return render(request, 'finance_tracking/deposit/list.html', {'categories': categories})
 
 def create_category(request):
+    return_url = request.META.get('HTTP_REFERER', '/')
     if request.method == 'POST':
         form = CategoryForm(request.POST)
         if form.is_valid():
             CategoryMiddleware.create_category(request, form)
-            return redirect('category-list')
+            if '/deposits/' in return_url:
+                return redirect('deposit-home')
+            elif '/expenses/' in return_url:
+                return redirect('expense-home')
+            else:
+                return redirect('home')
     else:
         form = CategoryForm()
-    return render(request, 'finance_tracking/category/create.html', {'form': form, 'action': 'create'})
+    return render(request, 'finance_tracking/category/create.html', {'form': form, 'action': 'create', 'return_url': return_url})
 
-def update_review(request, category_id):
+def update_category(request, category_id):
     category = get_object_or_404(Category, pk=category_id)
     if request.method == 'POST':
         form = CategoryForm(request.POST, instance=category)
@@ -33,10 +35,9 @@ def update_review(request, category_id):
         form = CategoryForm()
     return render(request, 'finance_tracking/category/update.html', {'form': form, 'action': 'update', 'category': category})
 
-def delete_review(request, category_id):
+def delete_category(request, category_id):
     category = get_object_or_404(Category, pk=category_id)
     if request.method == 'POST':
         CategoryMiddleware.delete_category(request, category)
         return redirect('category-list')
     return render(request, 'finance_tracking/category/delete.html', {'category': category})
-    
