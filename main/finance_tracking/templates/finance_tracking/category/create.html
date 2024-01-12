@@ -2,5 +2,18 @@
 {% block title %}
     <title>Adding Category</title>
 {% endblock title %}
+{% load crispy_forms_tags %}
 {% block content %}
+    <div class='content-section'>
+        <form method='POST'>
+            {% csrf_token %}
+            <fieldset class='form-group'>
+                <legend class='border-bottom mb-4'>Create Category</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class='form-group'>
+                <button class="btn btn-outline-info" type="submit">Create Category</button>
+                <a class="btn btn-outline-secondary" href="{% url 'store-home' %}">Go Back</a>
+            </div>
+    </div>
 {% endblock content %}
