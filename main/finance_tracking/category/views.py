@@ -10,19 +10,20 @@ def category_list(request):
 
 def create_category(request):
     return_url = request.META.get('HTTP_REFERER', '/')
+    group = 'deposit' if '/deposits/' in return_url else 'expense' if '/expenses/' in return_url else ''
+    
     if request.method == 'POST':
-        form = CategoryForm(request.POST)
+        form = CategoryForm(request.POST, initial={'group': group})
         if form.is_valid():
-            CategoryMiddleware.create_category(request, form)
-            if '/deposits/' in return_url:
-                return redirect('deposit-home')
-            elif '/expenses/' in return_url:
-                return redirect('expense-home')
-            else:
-                return redirect('home')
+            category = Category()
+            category = Category(**form.cleaned_data)
+            category.user = request.user
+            category.save()
+            messages.success(request, 'Category successfully created!')
+            return redirect(f'{form.cleaned_data["group"]}-home')
     else:
-        form = CategoryForm()
-    return render(request, 'finance_tracking/category/create.html', {'form': form, 'action': 'create', 'return_url': return_url})
+        form = CategoryForm(initial={'group': group})
+    return render(request, 'finance_tracking/category/create.html', {'form': form, 'action': 'create'})
 
 def update_category(request, category_id):
     category = get_object_or_404(Category, pk=category_id)
