@@ -5,12 +5,12 @@
 {% block content %}
     <h1 class='text-center pb-2'>Manage Deposits</h1>
     <div>
-        <a class='btn btn-primary btn-lg btn-outline-primary p-1 mb-2 mt-1 ml-1' href="{% url  'create-category' %}">Create Category</a>
-        <select name='selected_item' id='item-select' class='btn btn-sm btn-primary form-select-lg ml-1 mt-1 mb-2'>
+        <a class='btn btn-primary btn-outline-primary p-1 mb-2 mt-1 ml-1' href="{% url  'create-category' %}">Create Category</a>
+        <select name='selected_item' id='item-select' class='btn btn-primary form-select-lg ml-1 mt-1 mb-2'>
             {% for category in categories %}
-                <option value='{{ category.pk }}'>{{ category.group }}{{ category.name }}</option>
+                <option value='{{ category.pk }}'>{{ category.group }} - {{ category.name }}</option>
             {% endfor %}
-            {% if categories %}
+            {% if categories > 0 %}
                 <button id='item-update-btn' class='btn btn-seconcary btn-sm ml-1 mt-1 mb-2 p-1' {% if not categories %}disabled{% endif %}>Update Category</button>
                 <button id='item-delete-btn' class='btn btn-danger btn-sm ml-1 mt-1 mb-2 p-1' {% if not categories %}disabled{% endif %}>Delete Category</button>
             {% endif %}
