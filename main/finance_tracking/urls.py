@@ -7,10 +7,9 @@ from .deposit import views as deposit_views
 
 urlpatterns = [
     # path('', views.home, name='finance-tracking-home'),
-    path('categories', category_views.category_list, name='category-list'),
     path('category/create/', category_views.create_category, name='create-category'),
-    path('category/<int:category_id>/update', category_views.update_category, name='update-category'),
-    path('category/<int:category_id>/delete', category_views.delete_category, name='delete-category'),
+    path('category/<int:category_id>/update/', category_views.update_category, name='update-category'),
+    path('category/<int:category_id>/delete/', category_views.delete_category, name='delete-category'),
     path('deposits/', deposit_views.home, name='deposit-home'),
     # path('deposit/<int:deposit_id>/', deposit_views.deposit_detail, name='deposit-detail'),
     # path('deposit/create/', deposit_views.create_deposit, name='create-deposit'),

@@ -2,5 +2,18 @@
 {% block title %}
     <title>Updating Category</title>
 {% endblock title %}
+{% load crispy_forms_tags %}
 {% block content %}
+    <div class='content-section'>
+        <form method='POST'>
+            {% csrf_token %}
+            <fieldset class='form-group'>
+                <legend class='border-bottom mb-4'>Update Category</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class='form-group'>
+                <button class="btn btn-outline-info" type="submit">Update Category</button>
+                <a class="btn btn-outline-secondary" href="{% if form.group.value == 'deposit' %}{% url 'deposit-home' %}{% elif form.group.value == 'expense' %}{% url 'expense-home' %}{% endif %}">Go Back</a>
+            </div>
+    </div>
 {% endblock content %}
