@@ -44,3 +44,12 @@ def update_deposit(request, deposit_id):
     else:
         form = DepositForm(instance=deposit)
     return render(request, 'finance_tracking/deposit/update.html', {'form': form, 'action': 'update', 'deposit': deposit})
+
+def delete_deposit(request, deposit_id):
+    deposit = get_object_or_404(Deposit, pk=deposit_id)
+    if request.method == 'POST':
+        deposit.delete()
+        messages.success(request, 'Deposit successfully deleted!')
+        return redirect('deposit-home')
+    return render(request, 'finance_tracking/deposit/delete.html', {'deposit': deposit})
+    
