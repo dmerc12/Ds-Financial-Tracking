@@ -33,8 +33,31 @@
                         <a href="{% url 'deposit-home-by-category' %}" class="btn btn-primary {% if current_order_by == 'category' %}active{% endif %}">
                             <i class="bi bi-list-ul"></i> Category
                         </a>
+                        <button id="search-toggle" class="btn btn-primary">
+                            <i class="bi bi-search"></i> Search
+                        </button>
                     </div>
                 </div>
+                <form id="search-form" method="get" action="{% url 'deposit-search' %}" style="display: none;">
+                    <label for="deposit_id">Deposit ID:</label>
+                    <input type="text" name="deposit_id">
+                
+                    <label for="start_date">Start Date:</label>
+                    <input type="date" name="start_date">
+                
+                    <label for="end_date">End Date:</label>
+                    <input type="date" name="end_date">
+                
+                    <label for="category_id">Category:</label>
+                    <select name="category_id">
+                        <option value="">Select Category</option>
+                        {% for category in categories %}
+                            <option value="{{ category.pk }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                
+                    <button type="submit">Search</button>
+                </form>
                 <table class="table">
                     <thead>
                         <tr>
@@ -89,6 +112,19 @@
                 var selectedCategoryId = categorySelect.value;
                 if (selectedCategoryId) {
                     window.location.href = `/financial/tracker/category/${selectedCategoryId}/delete/`;
+                }
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var searchToggle = document.getElementById("search-toggle");
+            var searchForm = document.getElementById("search-form");
+
+            searchToggle.addEventListener("click", function() {
+                if (searchForm.style.display === "none") {
+                    searchForm.style.display = "block";
+                } else {
+                    searchForm.style.display = "none";
                 }
             });
         });
