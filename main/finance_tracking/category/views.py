@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from .forms import CategoryForm
-from ..models import Category
+from ..models import Category, Deposit
 
 def create_category(request):
     return_url = request.META.get('HTTP_REFERER', '/')
@@ -36,8 +36,12 @@ def update_category(request, category_id):
 def delete_category(request, category_id):
     category = get_object_or_404(Category, pk=category_id)
     group = category.group
-    if request.method == 'POST':
-        category.delete()
-        messages.success(request, 'Category successfully deleted!')
+    if not Deposit.objects.filter(category=category).exists():
+        if request.method == 'POST':
+            category.delete()
+            messages.success(request, 'Category successfully deleted!')
+            return redirect(f'{group}-home')
+    else:
+        messages.error(request, 'Category is currently being used and cannot be deleted!')
         return redirect(f'{group}-home')
     return render(request, 'finance_tracking/category/delete.html', {'category': category, 'group': group})
