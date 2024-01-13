@@ -9,7 +9,7 @@ from ..models import Category, Deposit
 
 def home(request):
     try:
-        categories = Category.objects.all()
+        categories = Category.objects.filter(group='deposit')
     except RuntimeError as error:
         categories = []
         messages.warning(request, str(error))
