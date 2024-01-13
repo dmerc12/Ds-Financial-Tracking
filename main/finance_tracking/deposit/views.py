@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models.functions import TruncMonth, TruncYear
 from django.contrib import messages
 from .forms import DepositForm
 
@@ -7,11 +8,31 @@ from ..models import Category, Deposit
 def home(request):
     try:
         categories = Category.objects.filter(group='deposit')
-        deposits = Deposit.objects.filter(user=request.user)
+        deposits = Deposit.objects.filter(user=request.user).annotate(order_date=TruncMonth('date')).order_by('-date')
     except RuntimeError as error:
         categories = []
         messages.warning(request, str(error))
-    context = {'categories': categories, 'deposits': deposits}
+    context = {'categories': categories, 'deposits': deposits, 'current_order_by': 'month'}
+    return render(request, 'finance_tracking/deposit/list.html', context)
+
+def home_by_year(request):
+    try:
+        categories = Category.objects.filter(group='deposit')
+        deposits = Deposit.objects.filter(user=request.user).annotate(order_date=TruncYear('date')).order_by('-order_date', '-date')
+    except RuntimeError as error:
+        categories = []
+        messages.warning(request, str(error))
+    context = {'categories': categories, 'deposits': deposits, 'current_order_by': 'year'}
+    return render(request, 'finance_tracking/deposit/list.html', context)
+
+def home_by_category(request):
+    try:
+        categories = Category.objects.filter(group='deposit')
+        deposits = Deposit.objects.filter(user=request.user).order_by('category')
+    except RuntimeError as error:
+        categories = []
+        messages.warning(request, str(error))
+    context = {'categories': categories, 'deposits': deposits, 'current_order_by': 'category'}
     return render(request, 'finance_tracking/deposit/list.html', context)
 
 def deposit_detail(request, deposit_id):

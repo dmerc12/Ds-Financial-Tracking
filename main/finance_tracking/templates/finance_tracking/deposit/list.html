@@ -21,6 +21,20 @@
         <div class="mt-1">
             <h2 class="deposit-heading text-center">Deposits:</h2>
             {% if deposits %}
+                <div class="mb-3 text-center">
+                    <label for="order-by" class="form-label">Order by:</label>
+                    <div class="btn-group">
+                        <a href="{% url 'deposit-home' %}" class="btn btn-primary {% if current_order_by == 'month' %}active{% endif %}">
+                            <i class="bi bi-calendar"></i> Month
+                        </a>
+                        <a href="{% url 'deposit-home-by-year' %}" class="btn btn-primary {% if current_order_by == 'year' %}active{% endif %}">
+                            <i class="bi bi-calendar"></i> Year
+                        </a>
+                        <a href="{% url 'deposit-home-by-category' %}" class="btn btn-primary {% if current_order_by == 'category' %}active{% endif %}">
+                            <i class="bi bi-list-ul"></i> Category
+                        </a>
+                    </div>
+                </div>
                 <table class="table">
                     <thead>
                         <tr>
