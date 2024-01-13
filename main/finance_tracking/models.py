@@ -8,7 +8,7 @@ class Category(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Category - {self.pk}: name - {self.name}, group - {self.group}, user - {self.user.__str__()}"
+        return f"{self.name}"
 
 class Deposit(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
