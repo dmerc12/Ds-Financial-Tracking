@@ -36,6 +36,7 @@ def home_by_category(request):
     return render(request, 'finance_tracking/deposit/list.html', context)
 
 def search_deposits(request):
+    categories = Category.objects.filter(group='deposit')
     deposit_id = request.GET.get('deposit_id')
     start_date = request.GET.get('start_date')
     end_date = request.GET.get('end_date')
@@ -50,7 +51,7 @@ def search_deposits(request):
     elif category_id:
         deposits = deposits.filter(category_id=category_id)
 
-    context = {'deposits': deposits, 'current_order_by': 'search'}
+    context = {'categories': categories, 'deposits': deposits, 'current_order_by': 'search'}
     return render(request, 'finance_tracking/deposit/list.html', context)
 
 def deposit_detail(request, deposit_id):
