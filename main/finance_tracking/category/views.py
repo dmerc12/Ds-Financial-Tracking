@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .middleware import CategoryMiddleware
 from django.contrib import messages
 from .forms import CategoryForm
 from ..models import Category
@@ -36,7 +35,9 @@ def update_category(request, category_id):
 
 def delete_category(request, category_id):
     category = get_object_or_404(Category, pk=category_id)
+    group = category.group
     if request.method == 'POST':
-        CategoryMiddleware.delete_category(request, category)
-        return redirect('category-list')
-    return render(request, 'finance_tracking/category/delete.html', {'category': category})
+        category.delete()
+        messages.success(request, 'Category successfully deleted!')
+        return redirect(f'{group}-home')
+    return render(request, 'finance_tracking/category/delete.html', {'category': category, 'group': group})
