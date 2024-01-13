@@ -25,6 +25,7 @@
                     <thead>
                         <tr>
                             <th class="deposit-table">Deposit ID</th>
+                            <th class="deposit-table">Date</th>
                             <th class="deposit-table">Category</th>
                             <th class="deposit-table">Description</th>
                             <th class="deposit-table">Amount</th>
@@ -34,6 +35,7 @@
                         {% for deposit in deposits %}
                             <tr>
                                 <td><a href="{% url 'deposit-detail' deposit.pk %}" class="deposit-link deposit-table">{{ deposit.pk }}</a></td>
+                                <td><a href="{% url 'deposit-detail' deposit.pk %}" class="deposit-link deposit-table">{{ deposit.date }}</a></td>
                                 <td><a href="{% url 'deposit-detail' deposit.pk %}" class="deposit-link deposit-table">{{ deposit.category }}</a></td>
                                 <td><a href="{% url 'deposit-detail' deposit.pk %}" class="deposit-link deposit-table">{{ deposit.description }}</a></td>
                                 <td><a href="{% url 'deposit-detail' deposit.pk %}" class="deposit-link deposit-table">{{ deposit.amount }}</a></td>
