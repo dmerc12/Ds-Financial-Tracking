@@ -28,7 +28,7 @@
                         <a class="nav-link" href="{% url 'home' %}">Home<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Manage Information</a>
+                        <a class="nav-link" href="{% url 'user-home' %}">Manage Information</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'deposit-home' %}">Manage Deposits</a>
@@ -40,14 +40,14 @@
             </div>
             <div class="nav-right">
                 {% if user.is_authenticated %}
-                    {% comment %} <form class="nav-item navbar-nav" method="post" action="{% url 'logout' %}">
+                    <form class="nav-item navbar-nav" method="post" action="{% url 'logout' %}">
                         {% csrf_token %}
                         <button type="submit" class="nav-link p-2 btn">Logout</button>
-                    </form> {% endcomment %}
+                    </form>
                 {% else %}
                     <div>
-                        <a class="nav-link" href="#">Register</a>
-                        <a class="nav-link" href="#">Login</a>
+                        <a class="nav-link" href="{% url 'add-user' %}">Register</a>
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
                     </div>
                 {% endif %}
             </div>

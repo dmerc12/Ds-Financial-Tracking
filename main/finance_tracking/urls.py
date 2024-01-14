@@ -6,7 +6,6 @@ from .deposit import views as deposit_views
 from .expense import views as expense_views
 
 urlpatterns = [
-    # path('', views.home, name='finance-tracking-home'),
     path('category/create/', category_views.create_category, name='create-category'),
     path('category/<int:category_id>/update/', category_views.update_category, name='update-category'),
     path('category/<int:category_id>/delete/', category_views.delete_category, name='delete-category'),

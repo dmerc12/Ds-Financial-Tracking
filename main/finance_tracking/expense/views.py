@@ -1,11 +1,13 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models.functions import TruncMonth, TruncYear
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import ExpenseForm
 
 from ..models import Category, Expense
 
+@login_required
 def home(request):
     try:
         categories = Category.objects.filter(group='expense') 
@@ -25,6 +27,7 @@ def home(request):
     context = {'categories': categories, 'expenses': expenses, 'current_order_by': 'month'}
     return render(request, 'finance_tracking/expense/list.html', context)
 
+@login_required
 def home_by_year(request):
     try:
         categories = Category.objects.filter(group='expense')
@@ -44,6 +47,7 @@ def home_by_year(request):
     context = {'categories': categories, 'expenses': expenses, 'current_order_by': 'year'}
     return render(request, 'finance_tracking/expense/list.html', context)
 
+@login_required
 def home_by_category(request):
     try:
         categories = Category.objects.filter(group='expense')
@@ -63,6 +67,7 @@ def home_by_category(request):
     context = {'categories': categories, 'expenses': expenses, 'current_order_by': 'category'}
     return render(request, 'finance_tracking/expense/list.html', context)
 
+@login_required
 def search_expenses(request):
     try:
         categories = Category.objects.filter(group='expense')
@@ -92,10 +97,12 @@ def search_expenses(request):
     context = {'categories': categories, 'expenses': expenses, 'current_order_by': 'search'}
     return render(request, 'finance_tracking/expense/list.html', context)
 
+@login_required
 def expense_detail(request, expense_id):
     expense = get_object_or_404(Expense, pk=expense_id)
     return render(request, 'finance_tracking/expense/detail.html', {'expense': expense})
 
+@login_required
 def create_expense(request):
     if request.method == 'POST':
         form = ExpenseForm(request.POST)
@@ -111,6 +118,7 @@ def create_expense(request):
         form.fields['category'].queryset = Category.objects.filter(group='expense')
     return render(request, 'finance_tracking/expense/create.html', {'form': form, 'action': 'create'})
 
+@login_required
 def update_expense(request, expense_id):
     expense = get_object_or_404(Expense, pk=expense_id)
     if request.method == 'POST':
@@ -123,6 +131,7 @@ def update_expense(request, expense_id):
         form = ExpenseForm(instance=expense)
     return render(request, 'finance_tracking/expense/update.html', {'form': form, 'action': 'update', 'expense': expense})
 
+@login_required
 def delete_expense(request, expense_id):
     expense = get_object_or_404(Expense, pk=expense_id)
     if request.method == 'POST':

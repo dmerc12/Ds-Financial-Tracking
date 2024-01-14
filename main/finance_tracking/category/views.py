@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from ..models import Category, Deposit
 from django.contrib import messages
 from .forms import CategoryForm
-from ..models import Category, Deposit
 
+@login_required
 def create_category(request):
     return_url = request.META.get('HTTP_REFERER', '/')
     group = 'deposit' if '/deposits/' in return_url else 'expense' if '/expenses/' in return_url else ''
@@ -19,6 +21,7 @@ def create_category(request):
         form = CategoryForm(initial={'group': group})
     return render(request, 'finance_tracking/category/create.html', {'form': form, 'action': 'create'})
 
+@login_required
 def update_category(request, category_id):
     return_url = request.META.get('HTTP_REFERER', '/')
     group = 'deposit' if '/deposits/' in return_url else 'expense' if '/expenses/' in return_url else ''
@@ -33,6 +36,7 @@ def update_category(request, category_id):
         form = CategoryForm(initial={'group': group}, instance=category)
     return render(request, 'finance_tracking/category/update.html', {'form': form, 'action': 'update', 'category': category})
 
+@login_required
 def delete_category(request, category_id):
     category = get_object_or_404(Category, pk=category_id)
     group = category.group

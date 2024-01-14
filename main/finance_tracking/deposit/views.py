@@ -1,11 +1,13 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models.functions import TruncMonth, TruncYear
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import DepositForm
 
 from ..models import Category, Deposit
 
+@login_required
 def home(request):
     try:
         categories = Category.objects.filter(group='deposit') 
@@ -25,6 +27,7 @@ def home(request):
     context = {'categories': categories, 'deposits': deposits, 'current_order_by': 'month'}
     return render(request, 'finance_tracking/deposit/list.html', context)
 
+@login_required
 def home_by_year(request):
     try:
         categories = Category.objects.filter(group='deposit')
@@ -44,6 +47,7 @@ def home_by_year(request):
     context = {'categories': categories, 'deposits': deposits, 'current_order_by': 'year'}
     return render(request, 'finance_tracking/deposit/list.html', context)
 
+@login_required
 def home_by_category(request):
     try:
         categories = Category.objects.filter(group='deposit')
@@ -63,6 +67,7 @@ def home_by_category(request):
     context = {'categories': categories, 'deposits': deposits, 'current_order_by': 'category'}
     return render(request, 'finance_tracking/deposit/list.html', context)
 
+@login_required
 def search_deposits(request):
     try:
         categories = Category.objects.filter(group='deposit')
@@ -92,10 +97,12 @@ def search_deposits(request):
     context = {'categories': categories, 'deposits': deposits, 'current_order_by': 'search'}
     return render(request, 'finance_tracking/deposit/list.html', context)
 
+@login_required
 def deposit_detail(request, deposit_id):
     deposit = get_object_or_404(Deposit, pk=deposit_id)
     return render(request, 'finance_tracking/deposit/detail.html', {'deposit': deposit})
 
+@login_required
 def create_deposit(request):
     if request.method == 'POST':
         form = DepositForm(request.POST)
@@ -111,6 +118,7 @@ def create_deposit(request):
         form.fields['category'].queryset = Category.objects.filter(group='deposit')
     return render(request, 'finance_tracking/deposit/create.html', {'form': form, 'action': 'create'})
 
+@login_required
 def update_deposit(request, deposit_id):
     deposit = get_object_or_404(Deposit, pk=deposit_id)
     if request.method == 'POST':
@@ -123,6 +131,7 @@ def update_deposit(request, deposit_id):
         form = DepositForm(instance=deposit)
     return render(request, 'finance_tracking/deposit/update.html', {'form': form, 'action': 'update', 'deposit': deposit})
 
+@login_required
 def delete_deposit(request, deposit_id):
     deposit = get_object_or_404(Deposit, pk=deposit_id)
     if request.method == 'POST':

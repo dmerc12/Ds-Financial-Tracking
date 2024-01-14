@@ -3,4 +3,13 @@
     <title>Home</title>
 {% endblock title %}
 {% block content %}
+    <h1 class="text-center pb-2">Welcome to Finance Tracker</h1>
+    <div class="d-flex justify-content-center">
+        <!-- Button to Manage Information -->
+        <a class="btn btn-primary btn-lg btn-outline-secondary p-3 m-3" href="{% url 'user-home' %}">Manage Information</a>
+        <!-- Button to Manage Deposits -->
+        <a class="btn btn-primary btn-lg btn-outline-secondary p-3 m-3" href="{% url 'deposit-home' %}">Manage Deposits</a>
+        <!-- Button to Manage Expenses -->
+        <a class="btn btn-primary btn-lg btn-outline-secondary p-3 m-3" href="{% url 'expense-home' %}">Manage Expenses</a>
+    </div>
 {% endblock content %}
