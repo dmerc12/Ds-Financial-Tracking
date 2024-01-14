@@ -26,8 +26,8 @@ def view_finances(request):
     except RuntimeError as error:
         transactions = []
         messages.error(request, str(error))
-    total_income = deposits.aggregate(total=Sum('amount'))['total'] or 0.00
-    total_expenses = expenses.aggregate(total=Sum('amount'))['total'] or 0.00
+    total_income = sum(transaction.amount for transaction in transactions if isinstance(transaction, Deposit))
+    total_expenses = sum(transaction.amount for transaction in transactions if isinstance(transaction, Expense))
     context = {
         'categories': categories,
         'transactions': transactions,
@@ -56,8 +56,8 @@ def view_finances_by_category(request):
     except RuntimeError as error:
         transactions = []
         messages.error(request, str(error))
-    total_income = deposits.aggregate(total=Sum('amount'))['total'] or 0.00
-    total_expenses = expenses.aggregate(total=Sum('amount'))['total'] or 0.00
+    total_income = sum(transaction.amount for transaction in transactions if isinstance(transaction, Deposit))
+    total_expenses = sum(transaction.amount for transaction in transactions if isinstance(transaction, Expense))
     context = {
         'categories': categories,
         'transactions': transactions,
@@ -95,8 +95,8 @@ def search_finances(request):
     except RuntimeError as error:
         transactions = []
         messages.warning(request, str(error.message))
-    total_income = deposits.aggregate(total=Sum('amount'))['total'] or 0.00
-    total_expenses = expenses.aggregate(total=Sum('amount'))['total'] or 0.00
+    total_income = sum(transaction.amount for transaction in transactions if isinstance(transaction, Deposit))
+    total_expenses = sum(transaction.amount for transaction in transactions if isinstance(transaction, Expense))
     context = {
         'categories': categories,
         'transactions': transactions,
