@@ -28,26 +28,6 @@ def home(request):
     return render(request, 'finance_tracking/deposit/list.html', context)
 
 @login_required
-def home_by_year(request):
-    try:
-        categories = Category.objects.filter(group='deposit')
-        deposits = Deposit.objects.filter(user=request.user).annotate(order_date=TruncYear('date')).order_by('-order_date', '-date')
-        deposits_per_page = int(request.GET.get('deposits-per-page', 10)) 
-        page = request.GET.get('page', 1)
-        paginator = Paginator(deposits, deposits_per_page)
-        try:
-            deposits = paginator.page(page)
-        except PageNotAnInteger:
-            deposits = paginator.page(1)
-        except EmptyPage:
-            deposits = paginator.page(paginator.num_pages)
-    except RuntimeError as error:
-        categories = []
-        messages.warning(request, str(error))
-    context = {'categories': categories, 'deposits': deposits, 'current_order_by': 'year'}
-    return render(request, 'finance_tracking/deposit/list.html', context)
-
-@login_required
 def home_by_category(request):
     try:
         categories = Category.objects.filter(group='deposit')
