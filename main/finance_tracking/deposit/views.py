@@ -90,16 +90,8 @@ def deposit_detail(request, deposit_id):
         return_url = 'deposits-search'
     elif '/deposits/category/' in url:
         return_url = 'deposit-home-by-category'
-    elif '/deposits/' in url:
-        return_url = 'deposit-home'
-    elif '/expenses/search/' in url:
-        return_url = 'expenses-search'
-    elif '/expenses/category/' in url:
-        return_url = 'expense-home-by-category'
-    elif '/expenses/' in url:
-        return_url = 'expense-home'
     else:
-        return_url = ''
+        return_url = 'deposit-home'
     deposit = get_object_or_404(Deposit, pk=deposit_id)
     return render(request, 'finance_tracking/deposit/detail.html', {'deposit': deposit, 'return_url': return_url})
 

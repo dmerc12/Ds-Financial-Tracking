@@ -4,10 +4,16 @@
 {% endblock title %}
 {% block content %}
     <h1 class="text-center">Manage Finances</h1>
-    <!-- Display Total Income and Expenses -->
     <p class="text-center">Total Income: {{ total_income }}</p>
     <p class="text-center">Total Expenses: {{ total_expenses }}</p>
-    <!-- Display Combined List of Deposits and Expenses -->
+    <div>
+        <div>{{ bar_chart|safe }}</div>
+        {% if line_chart %}
+            <div>{{ line_chart|safe }}</div>
+        {% endif %}
+        <div>{{ income_pie_chart|safe }}</div>
+        <div>{{ expense_pie_chart|safe }}</div>
+    </div>
     <h2 class="text-center">Transactions</h2>
     <div class="mb-3 text-center">
         <label for="order-by" class="form-label">Order by:</label>
@@ -115,10 +121,10 @@
                     searchForm.style.display = "none";
                 }
             });
-        });
 
-        function changeDepositsPerPage(value) {
-            window.location.href = `?page=1&deposits-per-page=${value}`;
-        }
+            function changeDepositsPerPage(value) {
+                window.location.href = `?page=1&deposits-per-page=${value}`;
+            }
+        });
     </script>
 {% endblock content %}

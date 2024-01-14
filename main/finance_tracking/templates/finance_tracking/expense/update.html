@@ -13,7 +13,7 @@
             </fieldset>
             <div class='form-group'>
                 <button class="btn btn-outline-info" type="submit">Update Expense</button>
-                <a class="btn btn-outline-secondary" href="{% url 'expense-home' %}">Go Back</a>
+                <a class="btn btn-outline-secondary" href="{% url 'expense-detail' expense.pk %}">Go Back</a>
             </div>
     </div>
 {% endblock content %}
