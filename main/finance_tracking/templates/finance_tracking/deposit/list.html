@@ -80,6 +80,31 @@
                         {% endfor %}
                     </tbody>
                 </table>
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if deposits.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            <a href="?page={{ deposits.previous_page_number }}">previous</a>
+                        {% endif %}
+            
+                        <span class="current">
+                            Page {{ deposits.number }} of {{ deposits.paginator.num_pages }}.
+                        </span>
+            
+                        {% if deposits.has_next %}
+                            <a href="?page={{ deposits.next_page_number }}">next</a>
+                            <a href="?page={{ deposits.paginator.num_pages }}">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                    <div class="mb-3 float-end">
+                        <label for="deposits-per-page" class="form-label">Deposits per page:</label>
+                        <select name="deposits-per-page" id="deposits-per-page" class="form-select" onchange="changeDepositsPerPage(this.value)">
+                            <option value="10" {% if deposits_per_page == 10 %}selected{% endif %}>10</option>
+                            <option value="20" {% if deposits_per_page == 20 %}selected{% endif %}>20</option>
+                            <option value="50" {% if deposits_per_page == 50 %}selected{% endif %}>50</option>
+                        </select>
+                    </div>
+                </div>
             {% else %}
                 <p class='text-center text-danger'>No deposits have been made yet. Please use the Create Deposit button above to add deposits!</p>
             {% endif %}
@@ -128,5 +153,9 @@
                 }
             });
         });
+
+        function changeDepositsPerPage(value) {
+            window.location.href = `?page=1&deposits-per-page=${value}`;
+        }
     </script>
 {% endblock content %}
