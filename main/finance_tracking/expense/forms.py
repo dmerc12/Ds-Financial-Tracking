@@ -1,9 +1,9 @@
 from django import forms
-from ..models import Deposit
+from ..models import Expense
 
-class DepositForm(forms.ModelForm):
+class ExpenseForm(forms.ModelForm):
     class Meta:
-        model = Deposit
+        model = Expense
         fields = ['category', 'date', 'description', 'amount']
         widgets = {
             'category': forms.Select(),

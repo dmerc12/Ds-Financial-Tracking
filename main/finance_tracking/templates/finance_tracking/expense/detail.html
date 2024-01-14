@@ -1,0 +1,17 @@
+{% extends "entry/base.html" %}
+{% block title %}
+    <title>Expense - {{ expense.pk }}</title>
+{% endblock title %}
+{% block content %}
+    <div class="text-center">
+        <h1 class="mb-3">Expense - {{ expense.pk }}</h1>
+        <p>Date: {{ expense.date }}</p>
+        <p>Category: {{ expense.category }}</p>
+        <p>Description: {{ expense.description }}</p>
+        <p>Description: {{ expense.description }}</p>
+        <p>Amount: {{ expense.amount }}</p>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'update-expense' expense.pk %}">Update</a>
+        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'delete-expense' expense.pk %}">Delete</a>
+        <a class="btn btn-outline-secondary btn-sm mt-1 mb-1" href="{% url 'expense-home' %}">Go Back</a>
+    </div>
+{% endblock content %}

@@ -1,12 +1,12 @@
 {% extends "entry/base.html" %}
 {% block title %}
-    <title>Managing Deposits</title>
+    <title>Managing Expenses</title>
 {% endblock title %}
 {% block content %}
-    <h1 class='text-center pb-2'>Manage Deposits</h1>
+    <h1 class='text-center pb-2'>Manage Expenses</h1>
     <div class='text-center'>
         <div class="align-items-center">
-            <a class='btn btn-primary btn-outline-primary p-1 mb-2 mt-1 ml-1' href="{% url  'create-deposit' %}">Create Deposit</a>
+            <a class='btn btn-primary btn-outline-primary p-1 mb-2 mt-1 ml-1' href="{% url  'create-expense' %}">Create Expense</a>
             <a class='btn btn-primary btn-outline-primary p-1 mb-2 mt-1 ml-1' href="{% url  'create-category' %}">Create Category</a>
             <select name='selected_category' id='category-select' class='btn btn-primary form-select-lg ml-1 mt-1 mb-2'>
                 {% for category in categories %}
@@ -19,17 +19,17 @@
             {% endif %}
         </div>
         <div class="mt-1">
-            <h2 class="deposit-heading text-center">Deposits:</h2>
+            <h2 class="expense-heading text-center">Expenses:</h2>
             <div class="mb-3 text-center">
                 <label for="order-by" class="form-label">Order by:</label>
                 <div class="btn-group">
-                    <a href="{% url 'deposit-home' %}" class="btn btn-primary {% if current_order_by == 'month' %}active{% endif %}">
+                    <a href="{% url 'expense-home' %}" class="btn btn-primary {% if current_order_by == 'month' %}active{% endif %}">
                         <i class="bi bi-calendar"></i> Month
                     </a>
-                    <a href="{% url 'deposit-home-by-year' %}" class="btn btn-primary {% if current_order_by == 'year' %}active{% endif %}">
+                    <a href="{% url 'expense-home-by-year' %}" class="btn btn-primary {% if current_order_by == 'year' %}active{% endif %}">
                         <i class="bi bi-calendar"></i> Year
                     </a>
-                    <a href="{% url 'deposit-home-by-category' %}" class="btn btn-primary {% if current_order_by == 'category' %}active{% endif %}">
+                    <a href="{% url 'expense-home-by-category' %}" class="btn btn-primary {% if current_order_by == 'category' %}active{% endif %}">
                         <i class="bi bi-list-ul"></i> Category
                     </a>
                     <button id="search-toggle" class="btn btn-primary">
@@ -37,9 +37,9 @@
                     </button>
                 </div>
             </div>
-            <form id="search-form" method="get" action="{% url 'deposit-search' %}" style="display: none;">
-                <label for="deposit_id">Deposit ID:</label>
-                <input type="text" name="deposit_id">
+            <form id="search-form" method="get" action="{% url 'expense-search' %}" style="display: none;">
+                <label for="expense_id">Expense ID:</label>
+                <input type="text" name="expense_id">
             
                 <label for="start_date">Start Date:</label>
                 <input type="date" name="start_date">
@@ -57,56 +57,56 @@
             
                 <button type="submit">Search</button>
             </form>
-            {% if deposits %}
+            {% if expenses %}
                 <table class="table">
                     <thead>
                         <tr>
-                            <th class="deposit-table">Deposit ID</th>
-                            <th class="deposit-table">Date</th>
-                            <th class="deposit-table">Category</th>
-                            <th class="deposit-table">Description</th>
-                            <th class="deposit-table">Amount</th>
+                            <th class="expense-table">Expense ID</th>
+                            <th class="expense-table">Date</th>
+                            <th class="expense-table">Category</th>
+                            <th class="expense-table">Description</th>
+                            <th class="expense-table">Amount</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for deposit in deposits %}
+                        {% for expense in expenses %}
                             <tr>
-                                <td><a href="{% url 'deposit-detail' deposit.pk %}" class="deposit-link deposit-table">{{ deposit.pk }}</a></td>
-                                <td><a href="{% url 'deposit-detail' deposit.pk %}" class="deposit-link deposit-table">{{ deposit.date }}</a></td>
-                                <td><a href="{% url 'deposit-detail' deposit.pk %}" class="deposit-link deposit-table">{{ deposit.category }}</a></td>
-                                <td><a href="{% url 'deposit-detail' deposit.pk %}" class="deposit-link deposit-table">{{ deposit.description }}</a></td>
-                                <td><a href="{% url 'deposit-detail' deposit.pk %}" class="deposit-link deposit-table">{{ deposit.amount }}</a></td>
+                                <td><a href="{% url 'expense-detail' expense.pk %}" class="expense-link expense-table">{{ expense.pk }}</a></td>
+                                <td><a href="{% url 'expense-detail' expense.pk %}" class="expense-link expense-table">{{ expense.date }}</a></td>
+                                <td><a href="{% url 'expense-detail' expense.pk %}" class="expense-link expense-table">{{ expense.category }}</a></td>
+                                <td><a href="{% url 'expense-detail' expense.pk %}" class="expense-link expense-table">{{ expense.description }}</a></td>
+                                <td><a href="{% url 'expense-detail' expense.pk %}" class="expense-link expense-table">{{ expense.amount }}</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
                 <div class="pagination">
                     <span class="step-links">
-                        {% if deposits.has_previous %}
+                        {% if expenses.has_previous %}
                             <a href="?page=1">&laquo; first</a>
-                            <a href="?page={{ deposits.previous_page_number }}">previous</a>
+                            <a href="?page={{ expenses.previous_page_number }}">previous</a>
                         {% endif %}
             
                         <span class="current">
-                            Page {{ deposits.number }} of {{ deposits.paginator.num_pages }}.
+                            Page {{ expenses.number }} of {{ expenses.paginator.num_pages }}.
                         </span>
             
-                        {% if deposits.has_next %}
-                            <a href="?page={{ deposits.next_page_number }}">next</a>
-                            <a href="?page={{ deposits.paginator.num_pages }}">last &raquo;</a>
+                        {% if expenses.has_next %}
+                            <a href="?page={{ expenses.next_page_number }}">next</a>
+                            <a href="?page={{ expenses.paginator.num_pages }}">last &raquo;</a>
                         {% endif %}
                     </span>
                     <div class="mb-3 float-end">
-                        <label for="deposits-per-page" class="form-label">Deposits per page:</label>
-                        <select name="deposits-per-page" id="deposits-per-page" class="form-select" onchange="changeDepositsPerPage(this.value)">
-                            <option value="10" {% if deposits_per_page == 10 %}selected{% endif %}>10</option>
-                            <option value="20" {% if deposits_per_page == 20 %}selected{% endif %}>20</option>
-                            <option value="50" {% if deposits_per_page == 50 %}selected{% endif %}>50</option>
+                        <label for="expenses-per-page" class="form-label">Expenses per page:</label>
+                        <select name="expenses-per-page" id="expenses-per-page" class="form-select" onchange="changeExpensesPerPage(this.value)">
+                            <option value="10" {% if expenses_per_page == 10 %}selected{% endif %}>10</option>
+                            <option value="20" {% if expenses_per_page == 20 %}selected{% endif %}>20</option>
+                            <option value="50" {% if expenses_per_page == 50 %}selected{% endif %}>50</option>
                         </select>
                     </div>
                 </div>
             {% else %}
-                <p class='text-center text-danger'>No deposits have been made yet. Please use the Create Deposit button above to add deposits!</p>
+                <p class='text-center text-danger'>No expenses have been made yet. Please use the Create Expense button above to add expenses!</p>
             {% endif %}
         </div>
     </div>
@@ -154,8 +154,8 @@
             });
         });
 
-        function changeDepositsPerPage(value) {
-            window.location.href = `?page=1&deposits-per-page=${value}`;
+        function changeExpensesPerPage(value) {
+            window.location.href = `?page=1&expenses-per-page=${value}`;
         }
     </script>
 {% endblock content %}
