@@ -23,7 +23,7 @@ class Deposit(models.Model):
 class Expense(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField()
     description = models.TextField(max_length=255)
     amount = models.FloatField(validators=[MinValueValidator(0.0)])
 
