@@ -18,7 +18,7 @@
                 <a href="{% url 'view-finances-by-category' %}" class="btn btn-primary {% if current_order_by == 'category' %}active{% endif %}">
                     <i class="bi bi-list-ul"></i> Category
                 </a>
-                <button id="search-toggle" class="btn btn-primary">
+                <button id="search-toggle" class="btn btn-primary {% if current_order_by == 'search' %}active{% endif %}">
                     <i class="bi bi-search"></i> Search
                 </button>
             </div>
@@ -60,7 +60,7 @@
                             <td><a class="text-center" href="{% url 'deposit-detail' transaction.id %}">{{ transaction.date }}</a></td>
                             <td><a class="text-center" href="{% url 'deposit-detail' transaction.id %}">{{ transaction.category }}</a></td>
                             <td><a class="text-center" href="{% url 'deposit-detail' transaction.id %}">{{ transaction.description }}</a></td>
-                            <td><a class="text-center" href="{% url 'deposit-detail' transaction.id %}">Deposit</a></td>
+                            <td><a class="text-center text-success" href="{% url 'deposit-detail' transaction.id %}">Deposit</a></td>
                             <td><a class="text-center" href="{% url 'deposit-detail' transaction.id}">{{ transaction.amount }}</a></td>
 
                         {% elif transaction.category.group == 'expense' %}
@@ -68,7 +68,7 @@
                             <td><a class="text-center" href="{% url 'expense-detail' transaction.id %}">{{ transaction.date }}</a></td>
                             <td><a class="text-center" href="{% url 'expense-detail' transaction.id %}">{{ transaction.category }}</a></td>
                             <td><a class="text-center" href="{% url 'expense-detail' transaction.id %}">{{ transaction.description }}</a></td>
-                            <td><a class="text-center" href="{% url 'expense-detail' transaction.id %}">Expense</a></td>
+                            <td><a class="text-center text-danger" href="{% url 'expense-detail' transaction.id %}">Expense</a></td>
                             <td><a class="text-center" href="{% url 'deposit-detail' transaction.id}">{{ transaction.amount }}</a></td>
                         {% endif %}
                     </tr>

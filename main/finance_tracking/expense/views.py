@@ -79,8 +79,29 @@ def search_expenses(request):
 
 @login_required
 def expense_detail(request, expense_id):
+    url = request.META.get('HTTP_REFERER', '/')
+    if '/view/finances/search/' in url:
+        return_url = 'finances-search'
+    elif '/view/finances/category/' in url:
+        return_url = 'view-finances-by-category'
+    elif '/view/finances/' in url:
+        return_url = 'view-finances'
+    elif '/deposits/search/' in url:
+        return_url = 'deposits-search'
+    elif '/deposits/category/' in url:
+        return_url = 'deposit-home-by-category'
+    elif '/deposits/' in url:
+        return_url = 'deposit-home'
+    elif '/expenses/search/' in url:
+        return_url = 'expenses-search'
+    elif '/expenses/category/' in url:
+        return_url = 'expense-home-by-category'
+    elif '/expenses/' in url:
+        return_url = 'expense-home'
+    else:
+        return_url = ''
     expense = get_object_or_404(Expense, pk=expense_id)
-    return render(request, 'finance_tracking/expense/detail.html', {'expense': expense})
+    return render(request, 'finance_tracking/expense/detail.html', {'expense': expense, 'return_url': return_url})
 
 @login_required
 def create_expense(request):
