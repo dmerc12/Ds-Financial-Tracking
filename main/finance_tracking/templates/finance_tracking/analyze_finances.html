@@ -22,20 +22,26 @@
             </div>
         </div>
     </form>
-    <h2>Expense Totals by Category</h2>
-    <ul>
-        {% for expense_total in expense_totals_by_category %}
-            <li>{{ expense_total.category__name }}: ${{ expense_total.total }}</li>
-        {% endfor %}
-    </ul>
-    <h2>Deposit Totals by Category</h2>
-    <ul>
-        {% for deposit_total in deposit_totals_by_category %}
-            <li>{{ deposit_total.category__name }}: ${{ deposit_total.total }}</li>
-        {% endfor %}
-    </ul>
-    <h2>Total Finances</h2>
-    <p>Total Income: ${{ total_income }}</p>
-    <p>Total Expenses: ${{ total_expenses }}</p>
-    <p>Gross Income/Loss: ${{ gross_income_loss }}</p>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center">Expense Totals</h2>
+            <ul class="list-unstyled text-center">
+                {% for expense_total in expense_totals_by_category %}
+                    <li>{{ expense_total.category__name }}: ${{ expense_total.total|floatformat:2 }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h2 class="text-center">Deposit Totals</h2>
+            <ul class="list-unstyled text-center">
+                {% for deposit_total in deposit_totals_by_category %}
+                    <li>{{ deposit_total.category__name }}: ${{ deposit_total.total|floatformat:2 }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <h2 class="text-center">Finance Totals</h2>
+    <p class="text-center">Total Income: ${{ total_income|floatformat:2 }}</p>
+    <p class="text-center">Total Expenses: ${{ total_expenses|floatformat:2 }}</p>
+    <p class="text-center">Gross Income/Loss: ${{ gross_income_loss|floatformat:2 }}</p>
 {% endblock content %}
