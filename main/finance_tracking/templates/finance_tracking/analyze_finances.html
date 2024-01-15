@@ -1,0 +1,41 @@
+{% extends "entry/base.html" %}
+{% block title %}
+    <title>Analyzing Finances</title>
+{% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <h1 class="text-center">Analyze Finances</h1>
+        <form class="mb-4 text-center" id="search-form" method="get" action="{% url 'analyze-finances' %}">
+        <div class='row justify-content-center'>
+            <div class='col-md-4'>
+                <div class='text-center'>
+                    {{ form.start_date|as_crispy_field }}
+                </div>
+            </div>
+            <div class='col-md-4'>
+                <div class='text-center'>
+                    {{ form.end_date|as_crispy_field }}
+                </div>
+            </div>
+            <div class='col-md-1 mt-3'>
+                <button class='btn btn-primary' type="submit">Search</button>
+            </div>
+        </div>
+    </form>
+    <h2>Expense Totals by Category</h2>
+    <ul>
+        {% for expense_total in expense_totals_by_category %}
+            <li>{{ expense_total.category__name }}: ${{ expense_total.total }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Deposit Totals by Category</h2>
+    <ul>
+        {% for deposit_total in deposit_totals_by_category %}
+            <li>{{ deposit_total.category__name }}: ${{ deposit_total.total }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Total Finances</h2>
+    <p>Total Income: ${{ total_income }}</p>
+    <p>Total Expenses: ${{ total_expenses }}</p>
+    <p>Gross Income/Loss: ${{ gross_income_loss }}</p>
+{% endblock content %}

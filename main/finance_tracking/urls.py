@@ -1,4 +1,3 @@
-from .view_finances import views as  view_finance_views
 from .category import views as category_views
 from .deposit import views as deposit_views
 from .expense import views as expense_views
@@ -8,8 +7,10 @@ from . import views
 urlpatterns = [
     path('', views.home, name='finance-home'),
 
-    path('view/finances/', view_finance_views.view_finances, name='view-finances'),
-    path('view/finances/search/', view_finance_views.search_finances, name='finances-search'),
+    path('/analyze/finances/', views.analyze_finances, name='analyze-finances'),
+
+    path('view/finances/', views.view_finances, name='view-finances'),
+    path('view/finances/search/', views.search_finances, name='finances-search'),
 
     path('category/create/', category_views.create_category, name='create-category'),
     path('category/<int:category_id>/update/', category_views.update_category, name='update-category'),
