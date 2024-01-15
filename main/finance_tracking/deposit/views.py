@@ -82,8 +82,6 @@ def deposit_detail(request, deposit_id):
     url = request.META.get('HTTP_REFERER', '/')
     if '/view/finances/search/' in url:
         return_url = 'finances-search'
-    elif '/view/finances/category/' in url:
-        return_url = 'view-finances-by-category'
     elif '/view/finances/' in url:
         return_url = 'view-finances'
     elif '/deposits/search/' in url:

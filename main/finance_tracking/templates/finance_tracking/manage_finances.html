@@ -1,50 +1,51 @@
 {% extends "entry/base.html" %}
 {% block title %}
-    <title>Manage Finances</title>
+    <title>Viewing Finances</title>
 {% endblock title %}
+{% load crispy_forms_tags %}
 {% block content %}
-    <h1 class="text-center">Manage Finances</h1>
-    <p class="text-center">Total Income: {{ total_income }}</p>
-    <p class="text-center">Total Expenses: {{ total_expenses }}</p>
-    <div>
-        <div>{{ bar_chart|safe }}</div>
-        {% if line_chart %}
-            <div>{{ line_chart|safe }}</div>
-        {% endif %}
-        <div>{{ income_pie_chart|safe }}</div>
-        <div>{{ expense_pie_chart|safe }}</div>
+    <h1 class="text-center">View Finances</h1>
+    <div class='row'>
+        <div class='col-md-6'>
+            <div class='plotly-graph-div'>{{ bar_chart|safe }}</div>
+            <div class='plotly-graph-div'>{{ income_pie_chart|safe }}</div>
+        </div>
+        <div class='col-md-6'>
+            {% if line_chart %}
+                <div class='plotly-graph-div'>{{ line_chart|safe }}</div>
+            {% endif %}
+            <div class='plotly-graph-div'>{{ expense_pie_chart|safe }}</div>
+        </div>
     </div>
     <h2 class="text-center">Transactions</h2>
     <div class="mb-3 text-center">
+        <p class="text-center">Total Income: {{ total_income }} - Total Expenses: {{ total_expenses }}</p>
         <label for="order-by" class="form-label">Order by:</label>
         <div class="btn-group">
             <a href="{% url 'view-finances' %}" class="btn btn-primary {% if current_order_by == 'month' %}active{% endif %}">
                 <i class="bi bi-calendar"></i> Date
             </a>
-                <a href="{% url 'view-finances-by-category' %}" class="btn btn-primary {% if current_order_by == 'category' %}active{% endif %}">
-                    <i class="bi bi-list-ul"></i> Category
-                </a>
-                <button id="search-toggle" class="btn btn-primary {% if current_order_by == 'search' %}active{% endif %}">
-                    <i class="bi bi-search"></i> Search
-                </button>
+            <button id="search-toggle" class="btn btn-primary {% if current_order_by == 'search' %}active{% endif %}">
+                <i class="bi bi-search"></i> Search
+            </button>
+        </div>
+    </div>
+    <form class="mb-4 text-center" id="search-form" method="get" action="{% url 'finances-search' %}" style="display: none;">
+        <div class='row justify-content-center'>
+            <div class='col-md-4'>
+                <div class='text-center'>
+                    {{ form.start_date|as_crispy_field }}
+                </div>
+            </div>
+            <div class='col-md-4'>
+                <div class='text-center'>
+                    {{ form.end_date|as_crispy_field }}
+                </div>
+            </div>
+            <div class='col-md-1 mt-3'>
+                <button class='btn btn-primary' type="submit">Search</button>
             </div>
         </div>
-    <form id="search-form" method="get" action="{% url 'finances-search' %}" style="display: none;">
-        <label for="start_date">Start Date:</label>
-        <input type="date" name="start_date">
-    
-        <label for="end_date">End Date:</label>
-        <input type="date" name="end_date">
-    
-        <label for="category_id">Category:</label>
-        <select name="category_id">
-            <option value="">Select Category</option>
-            {% for category in categories %}
-                <option value="{{ category.pk }}">{{ category.name }}</option>
-            {% endfor %}
-        </select>
-    
-        <button type="submit">Search</button>
     </form>
     {% if transactions %}
         <table class="table">
