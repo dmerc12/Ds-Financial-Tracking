@@ -1,5 +1,6 @@
+from ..models import Deposit, Category
+from ..forms import SearchForm
 from django import forms
-from ..models import Deposit
 
 class DepositForm(forms.ModelForm):
     class Meta:
@@ -12,3 +13,15 @@ class DepositForm(forms.ModelForm):
             'amount': forms.NumberInput(attrs={'step': '0.01'})
         }
         
+class DepositSearchForm(SearchForm):
+    deposit_id = forms.IntegerField(required=False)
+    category = forms.ModelChoiceField(
+        queryset=Category.objects.filter(group='deposit'),
+        required=False,
+        empty_label="All Deposit Categories"
+    )
+
+    def __init__(self, user, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        self.fields['category'].queryset = Category.objects.filter(user=user, group='deposit')

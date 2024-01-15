@@ -8,13 +8,9 @@
     <div class='row'>
         <div class='col-md-6'>
             <div class='plotly-graph-div'>{{ bar_chart|safe }}</div>
-            <div class='plotly-graph-div'>{{ income_pie_chart|safe }}</div>
         </div>
         <div class='col-md-6'>
-            {% if line_chart %}
-                <div class='plotly-graph-div'>{{ line_chart|safe }}</div>
-            {% endif %}
-            <div class='plotly-graph-div'>{{ expense_pie_chart|safe }}</div>
+            <div class='plotly-graph-div'>{{ line_chart|safe }}</div>
         </div>
     </div>
     <h2 class="text-center">Transactions</h2>
