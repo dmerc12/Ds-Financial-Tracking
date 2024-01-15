@@ -1,0 +1,17 @@
+{% extends "entry/base.html" %}
+{% block title %}
+    <title>Finance Tracking Home</title>
+{% endblock title %}
+{% block content %}
+    <h1 class="text-center pb-2">Finance Tracking Home</h1>
+    <div class="d-flex justify-content-center">
+        <!-- Button to Manage Deposits -->
+        <a class="btn btn-primary btn-lg btn-outline-secondary p-3 m-3" href="{% url 'deposit-home' %}">Manage Deposits</a>
+        <!-- Button to Manage Expenses -->
+        <a class="btn btn-primary btn-lg btn-outline-secondary p-3 m-3" href="{% url 'expense-home' %}">Manage Expenses</a>
+        <!-- Button to View Finances -->
+        <a class="btn btn-primary btn-lg btn-outline-secondary p-3 m-3" href="{% url 'view-finances' %}">View Finances</a>
+        <!-- Button to Analyze Finances -->
+        <a class="btn btn-primary btn-lg btn-outline-secondary p-3 m-3" href="{% url 'analyze-finances' %}">Analyze Finances</a>
+    </div>
+{% endblock content %}

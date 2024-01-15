@@ -28,26 +28,6 @@ def home(request):
     return render(request, 'finance_tracking/expense/list.html', context)
 
 @login_required
-def home_by_year(request):
-    try:
-        categories = Category.objects.filter(group='expense')
-        expenses = Expense.objects.filter(user=request.user).annotate(order_date=TruncYear('date')).order_by('-order_date', '-date')
-        expenses_per_page = int(request.GET.get('expenses-per-page', 10)) 
-        page = request.GET.get('page', 1)
-        paginator = Paginator(expenses, expenses_per_page)
-        try:
-            expenses = paginator.page(page)
-        except PageNotAnInteger:
-            expenses = paginator.page(1)
-        except EmptyPage:
-            expenses = paginator.page(paginator.num_pages)
-    except RuntimeError as error:
-        categories = []
-        messages.warning(request, str(error))
-    context = {'categories': categories, 'expenses': expenses, 'current_order_by': 'year'}
-    return render(request, 'finance_tracking/expense/list.html', context)
-
-@login_required
 def home_by_category(request):
     try:
         categories = Category.objects.filter(group='expense')
@@ -99,8 +79,19 @@ def search_expenses(request):
 
 @login_required
 def expense_detail(request, expense_id):
+    url = request.META.get('HTTP_REFERER', '/')
+    if '/view/finances/search/' in url:
+        return_url = 'finances-search'
+    elif '/view/finances/' in url:
+        return_url = 'view-finances'
+    elif '/expenses/search/' in url:
+        return_url = 'expenses-search'
+    elif '/expenses/category/' in url:
+        return_url = 'expense-home-by-category'
+    else:
+        return_url = 'expense-home'
     expense = get_object_or_404(Expense, pk=expense_id)
-    return render(request, 'finance_tracking/expense/detail.html', {'expense': expense})
+    return render(request, 'finance_tracking/expense/detail.html', {'expense': expense, 'return_url': return_url})
 
 @login_required
 def create_expense(request):

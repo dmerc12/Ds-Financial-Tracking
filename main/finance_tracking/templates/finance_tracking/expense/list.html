@@ -24,10 +24,7 @@
                 <label for="order-by" class="form-label">Order by:</label>
                 <div class="btn-group">
                     <a href="{% url 'expense-home' %}" class="btn btn-primary {% if current_order_by == 'month' %}active{% endif %}">
-                        <i class="bi bi-calendar"></i> Month
-                    </a>
-                    <a href="{% url 'expense-home-by-year' %}" class="btn btn-primary {% if current_order_by == 'year' %}active{% endif %}">
-                        <i class="bi bi-calendar"></i> Year
+                        <i class="bi bi-calendar"></i> Date
                     </a>
                     <a href="{% url 'expense-home-by-category' %}" class="btn btn-primary {% if current_order_by == 'category' %}active{% endif %}">
                         <i class="bi bi-list-ul"></i> Category
