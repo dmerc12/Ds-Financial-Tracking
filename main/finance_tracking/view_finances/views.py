@@ -114,7 +114,7 @@ def view_finances(request):
         'income_pie_chart': income_pie_chart,
         'expense_pie_chart': expense_pie_chart
     }
-    return render(request, 'finance_tracking/manage_finances.html', context)
+    return render(request, 'finance_tracking/view_finances.html', context)
 
 @login_required
 def search_finances(request):
@@ -227,4 +227,4 @@ def search_finances(request):
         'income_pie_chart': income_pie_chart,
         'expense_pie_chart': expense_pie_chart
     }
-    return render(request, 'finance_tracking/manage_finances.html', context)
+    return render(request, 'finance_tracking/view_finances.html', context)

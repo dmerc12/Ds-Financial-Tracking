@@ -3,5 +3,5 @@ from django.shortcuts import render
 
 @login_required
 def home(request):
-    return render(request, 'entry/home.html')
+    return render(request, 'finance_tracking/home.html')
     

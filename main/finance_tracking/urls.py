@@ -1,10 +1,13 @@
-from django.urls import path
 from .view_finances import views as  view_finance_views
 from .category import views as category_views
 from .deposit import views as deposit_views
 from .expense import views as expense_views
+from django.urls import path
+from . import views
 
 urlpatterns = [
+    path('', views.home, name='finance-home'),
+
     path('view/finances/', view_finance_views.view_finances, name='view-finances'),
     path('view/finances/search/', view_finance_views.search_finances, name='finances-search'),
 
