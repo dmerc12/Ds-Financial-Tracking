@@ -2,6 +2,7 @@
 {% block title %}
     <title>Managing Expenses</title>
 {% endblock title %}
+{% load crispy_forms_tags %}
 {% block content %}
     <h1 class='text-center pb-2'>Manage Expenses</h1>
     <div class='text-center'>
@@ -23,37 +24,40 @@
             <div class="mb-3 text-center">
                 <label for="order-by" class="form-label">Order by:</label>
                 <div class="btn-group">
-                    <a href="{% url 'expense-home' %}" class="btn btn-primary {% if current_order_by == 'month' %}active{% endif %}">
+                    <a href="{% url 'expense-home' %}" class="btn btn-primary {% if current_order_by == 'date' %}active{% endif %}">
                         <i class="bi bi-calendar"></i> Date
                     </a>
-                    <a href="{% url 'expense-home-by-category' %}" class="btn btn-primary {% if current_order_by == 'category' %}active{% endif %}">
-                        <i class="bi bi-list-ul"></i> Category
-                    </a>
-                    <button id="search-toggle" class="btn btn-primary">
+                    <a id="search-toggle" class="btn btn-primary {% if current_order_by == 'search' %}active{% endif %}">
                         <i class="bi bi-search"></i> Search
-                    </button>
+                    </a>
                 </div>
             </div>
-            <form id="search-form" method="get" action="{% url 'expense-search' %}" style="display: none;">
-                <label for="expense_id">Expense ID:</label>
-                <input type="text" name="expense_id">
-            
-                <label for="start_date">Start Date:</label>
-                <input type="date" name="start_date">
-            
-                <label for="end_date">End Date:</label>
-                <input type="date" name="end_date">
-            
-                <label for="category_id">Category:</label>
-                <select name="category_id">
-                    <option value="">Select Category</option>
-                    {% for category in categories %}
-                        <option value="{{ category.pk }}">{{ category.name }}</option>
-                    {% endfor %}
-                </select>
-            
-                <button type="submit">Search</button>
+            <form class="mb-3" id="search-form" method="get" action="{% url 'expense-home' %}" style="display: none;">
+                <div class='row justify-content-center'>
+                    <h3 class="text-center">Search By Expense ID or Date Below</h3>
+                    <h4 class="text-center">Search By Expense ID</h4>
+                    <div class='col-md-4'>
+                        <div class='text-center'>
+                            {{ form.expense_id|as_crispy_field }}
+                        </div>
+                    </div>
+                    <h4 class="text-center">Search By Date</h4>
+                    <div class='col-md-4'>
+                        <div class='text-center'>
+                            {{ form.start_date|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class='col-md-4'>
+                        <div class='text-center'>
+                            {{ form.end_date|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class='col-md-1 mt-3'>
+                        <button class='btn btn-primary' type="submit">Search</button>
+                    </div>
+                </div>
             </form>
+            <div class='plotly-graph-div'>{{ chart|safe }}</div>
             {% if expenses %}
                 <table class="table">
                     <thead>

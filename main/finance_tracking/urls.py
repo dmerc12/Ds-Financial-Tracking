@@ -22,10 +22,8 @@ urlpatterns = [
     path('deposit/<int:deposit_id>/delete/', deposit_views.delete_deposit, name='delete-deposit'),
 
     path('expenses/', expense_views.home, name='expense-home'),
-    path('expenses/category/', expense_views.home_by_category, name='expense-home-by-category'),    
     path('expense/<int:expense_id>/', expense_views.expense_detail, name='expense-detail'),
     path('expense/create/', expense_views.create_expense, name='create-expense'),
     path('expense/<int:expense_id>/update/', expense_views.update_expense, name='update-expense'),
     path('expense/<int:expense_id>/delete/', expense_views.delete_expense, name='delete-expense'),
-    path('expenses/search/', expense_views.search_expenses, name='expense-search'),
 ]
