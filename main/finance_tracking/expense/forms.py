@@ -1,5 +1,6 @@
-from django import forms
+from ..forms import SearchForm
 from ..models import Expense
+from django import forms
 
 class ExpenseForm(forms.ModelForm):
     class Meta:
@@ -12,3 +13,6 @@ class ExpenseForm(forms.ModelForm):
             'amount': forms.NumberInput(attrs={'step': '0.01'})
         }
         
+class ExpenseSearchForm(SearchForm):
+    expense_id = forms.IntegerField(required=False)
+    

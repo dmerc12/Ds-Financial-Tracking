@@ -1,93 +1,86 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, get_object_or_404
-from django.db.models.functions import TruncMonth, TruncYear
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from .forms import ExpenseForm
-
+from .forms import ExpenseForm, ExpenseSearchForm
+from datetime import datetime, timedelta
 from ..models import Category, Expense
+from django.contrib import messages
+import plotly.express as px
+import pandas as pd
 
 @login_required
 def home(request):
+    order_by = 'date'
+    categories = Category.objects.filter(user=request.user, group='expense')
+    form = ExpenseSearchForm()
+    expenses = Expense.objects.filter(user=request.user)
+    expense_id = request.GET.get('expense_id')
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
+    if expense_id:
+        expenses = expenses.filter(pk=expense_id)
+        order_by = 'search'
+    elif start_date and end_date:
+        if start_date and end_date:
+            start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+            end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+        expenses = expenses.filter(date__range=[start_date, end_date])
+        order_by = 'search'
+    elif start_date:
+        start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+        end_date = datetime.now().replace(day=1).date()
+        expenses = expenses.filter(date__range=[start_date, end_date])
+        order_by = 'search'
+    else:
+        end_date = datetime.now().replace(day=1).date()
+        start_date = end_date - timedelta(days=30)
+        expenses = expenses.filter(date__range=[start_date, end_date])
+    expenses = expenses.order_by('-date')
+    expenses_per_page = int(request.GET.get('expenses-per-page', 10))
+    page = request.GET.get('page', 1)
+    paginator = Paginator(expenses, expenses_per_page)
     try:
-        categories = Category.objects.filter(group='expense') 
-        expenses = Expense.objects.filter(user=request.user).annotate(order_date=TruncMonth('date')).order_by('-date')
-        expenses_per_page = int(request.GET.get('expenses-per-page', 10))
-        page = request.GET.get('page', 1)
-        paginator = Paginator(expenses, expenses_per_page)
-        try:
-            expenses = paginator.page(page)
-        except PageNotAnInteger:
-            expenses = paginator.page(1)
-        except EmptyPage:
-            expenses = paginator.page(paginator.num_pages)
-    except RuntimeError as error:
-        categories = []
-        messages.warning(request, str(error))
-    context = {'categories': categories, 'expenses': expenses, 'current_order_by': 'month'}
-    return render(request, 'finance_tracking/expense/list.html', context)
-
-@login_required
-def home_by_category(request):
-    try:
-        categories = Category.objects.filter(group='expense')
-        expenses = Expense.objects.filter(user=request.user).order_by('category')
-        expenses_per_page = int(request.GET.get('expenses-per-page', 10))
-        page = request.GET.get('page', 1)
-        paginator = Paginator(expenses, expenses_per_page)
-        try:
-            expenses = paginator.page(page)
-        except PageNotAnInteger:
-            expenses = paginator.page(1)
-        except EmptyPage:
-            expenses = paginator.page(paginator.num_pages)
-    except RuntimeError as error:
-        categories = []
-        messages.warning(request, str(error))
-    context = {'categories': categories, 'expenses': expenses, 'current_order_by': 'category'}
-    return render(request, 'finance_tracking/expense/list.html', context)
-
-@login_required
-def search_expenses(request):
-    try:
-        categories = Category.objects.filter(group='expense')
-        expense_id = request.GET.get('expense_id')
-        start_date = request.GET.get('start_date')
-        end_date = request.GET.get('end_date')
-        category_id = request.GET.get('category_id')
-        expenses = Expense.objects.filter(user=request.user)
-        if expense_id:
-            expenses = expenses.filter(pk=expense_id)
-        elif start_date and end_date:
-            expenses = expenses.filter(date__range=[start_date, end_date])
-        elif category_id:
-            expenses = expenses.filter(category_id=category_id)
-        expenses_per_page = int(request.GET.get('expenses-per-page', 10))
-        page = request.GET.get('page', 1)
-        paginator = Paginator(expenses, expenses_per_page)
-        try:
-            expenses = paginator.page(page)
-        except PageNotAnInteger:
-            expenses = paginator.page(1)
-        except EmptyPage:
-            expenses = paginator.page(paginator.num_pages)
-    except RuntimeError as error:
-        categories = []
-        messages.warning(request, str(error.message))
-    context = {'categories': categories, 'expenses': expenses, 'current_order_by': 'search'}
+        expenses = paginator.page(page)
+    except PageNotAnInteger:
+        expenses = paginator.page(1)
+    except EmptyPage:
+        expenses = paginator.page(paginator.num_pages)
+    line_data = {
+        'Date': [expense.date for expense in expenses],
+        'Amount': [expense.amount for expense in expenses],
+    }
+    line_df = pd.DataFrame(line_data)
+    start_date = start_date.strftime('%B %m,%Y')
+    end_date = end_date.strftime('%B %m,%Y')
+    line_fig = px.line(
+        line_df,
+        x='Date',
+        y='Amount',
+        labels={'x': 'Date', 'y': 'Amount'},
+        title=f'Expenses From {start_date} to {end_date}',
+        line_shape='linear'
+    )
+    line_fig.update_layout(
+        title=dict(
+            text=f"Expenses From {start_date} to {end_date}",
+            x=0.5
+        )
+    )
+    chart = line_fig.to_html(full_html=False)
+    context = {
+        'categories': categories,
+        'expenses': expenses,
+        'current_order_by': order_by,
+        'form': form,
+        'chart':chart
+    }
     return render(request, 'finance_tracking/expense/list.html', context)
 
 @login_required
 def expense_detail(request, expense_id):
     url = request.META.get('HTTP_REFERER', '/')
-    if '/view/finances/search/' in url:
-        return_url = 'finances-search'
-    elif '/view/finances/' in url:
+    if '/view/finances/' in url:
         return_url = 'view-finances'
-    elif '/expenses/search/' in url:
-        return_url = 'expenses-search'
-    elif '/expenses/category/' in url:
-        return_url = 'expense-home-by-category'
     else:
         return_url = 'expense-home'
     expense = get_object_or_404(Expense, pk=expense_id)
