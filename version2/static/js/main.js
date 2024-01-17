@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var deleteBtn = document.getElementById("category-delete-btn");
     var searchToggle = document.getElementById("search-toggle");
     var searchForm = document.getElementById("search-form");
+    var selectedCategoryId = categorySelect.value;
 
     categorySelect.addEventListener("change", function() {
         if (categorySelect.value) {
@@ -16,14 +17,12 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     updateBtn.addEventListener("click", function() {
-        var selectedCategoryId = categorySelect.value;
         if (selectedCategoryId) {
             window.location.href = `/financial/tracker/category/${selectedCategoryId}/update/`;
         }
     });
 
     deleteBtn.addEventListener("click", function() {
-        var selectedCategoryId = categorySelect.value;
         if (selectedCategoryId) {
             window.location.href = `/financial/tracker/category/${selectedCategoryId}/delete/`;
         }
@@ -49,5 +48,3 @@ document.addEventListener("DOMContentLoaded", function() {
         window.location.href = `?page=1&transactions-per-page=${value}`;
     }
 });
-
-console.log('Hello!')

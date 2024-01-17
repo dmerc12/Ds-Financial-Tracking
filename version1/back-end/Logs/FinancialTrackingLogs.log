@@ -1,0 +1,24 @@
+2023-12-12 20:25:33,812 - API - INFO - Beginning API function create user with user info: {'email': 'new@email.com', 'password': 'new', 'confirmationPassword': 'new'}
+2023-12-12 20:25:34,194 - API - INFO - Finishing API function create user with user: {'userId': 1, 'email': 'new@email.com'}
+2023-12-12 20:25:55,296 - API - INFO - Beginning API function create user with user info: {'email': 'test@email.com', 'password': 'new', 'confirmationPassword': 'new'}
+2023-12-12 20:25:55,348 - API - ERROR - Error with API function create user with error: A user already exists with this email, please log in!
+2023-12-12 20:26:08,108 - API - INFO - Beginning API function create user with user info: {'email': 'new@email.com', 'password': 'new', 'confirmationPassword': 'not'}
+2023-12-12 20:26:08,108 - API - ERROR - Error with API function create user with error: The passwords do not match, please try again!
+2023-12-12 20:26:21,238 - API - INFO - Beginning API function create user with user info: {'email': 'new@email.com', 'password': 'new', 'confirmationPassword': ''}
+2023-12-12 20:26:21,239 - API - ERROR - Error with API function create user with error: The confirmation password field cannot be left empty, please try again!
+2023-12-12 20:26:50,727 - API - INFO - Beginning API function create user with user info: {'email': 'new@email.com', 'password': 'new', 'confirmationPassword': 'this is too long and so it should fail and raise the desired error message'}
+2023-12-12 20:26:50,728 - API - ERROR - Error with API function create user with error: The confirmation password field cannot exceed 60 characters, please try again!
+2023-12-12 20:27:02,740 - API - INFO - Beginning API function create user with user info: {'email': 'new@email.com', 'password': 'new', 'confirmationPassword': 1}
+2023-12-12 20:27:02,741 - API - ERROR - Error with API function create user with error: The confirmation password field must be a string, please try again!
+2023-12-12 20:27:17,409 - API - INFO - Beginning API function create user with user info: {'email': 'new@email.com', 'password': '', 'confirmationPassword': 'new'}
+2023-12-12 20:27:17,411 - API - ERROR - Error with API function create user with error: The password field cannot be left  empty, please try again!
+2023-12-12 20:27:37,536 - API - INFO - Beginning API function create user with user info: {'email': 'new@email.com', 'password': 'this is too long and so it should fail and raise the desired error message', 'confirmationPassword': 'new'}
+2023-12-12 20:27:37,538 - API - ERROR - Error with API function create user with error: The password field cannot exceed 60 characters, please try again!
+2023-12-12 20:27:50,411 - API - INFO - Beginning API function create user with user info: {'email': 'new@email.com', 'password': 1, 'confirmationPassword': 'new'}
+2023-12-12 20:27:50,411 - API - ERROR - Error with API function create user with error: The password field must be a string, please try again!
+2023-12-12 20:28:09,233 - API - INFO - Beginning API function create user with user info: {'email': '', 'password': 'new', 'confirmationPassword': 'new'}
+2023-12-12 20:28:09,235 - API - ERROR - Error with API function create user with error: The email field cannot be left empty, please try again!
+2023-12-12 20:28:32,053 - API - INFO - Beginning API function create user with user info: {'email': 'this is too long and so it should fail and raise the desired error message', 'password': 'new', 'confirmationPassword': 'new'}
+2023-12-12 20:28:32,054 - API - ERROR - Error with API function create user with error: The email field cannot exceed 60 characters, please try again!
+2023-12-12 20:28:42,063 - API - INFO - Beginning API function create user with user info: {'email': 1, 'password': 'new', 'confirmationPassword': 'new'}
+2023-12-12 20:28:42,063 - API - ERROR - Error with API function create user with error: The email field must be a string, please try again!

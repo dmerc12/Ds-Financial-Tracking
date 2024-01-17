@@ -18,15 +18,16 @@
         <p class="text-center">Total Income: {{ total_income }} - Total Expenses: {{ total_expenses }}</p>
         <label for="order-by" class="form-label">Order by:</label>
         <div class="btn-group">
-            <a href="{% url 'view-finances' %}" class="btn btn-primary {% if current_order_by == 'month' %}active{% endif %}">
+            <a href="{% url 'view-finances' %}" class="btn btn-primary {% if current_order_by == 'date' %}active{% endif %}">
                 <i class="bi bi-calendar"></i> Date
             </a>
-            <button id="search-toggle" class="btn btn-primary {% if current_order_by == 'search' %}active{% endif %}">
+            <a id="search-toggle" class="btn btn-primary {% if current_order_by == 'search' %}active{% endif %}">
                 <i class="bi bi-search"></i> Search
-            </button>
+            </a>
         </div>
     </div>
-    <form class="mb-4 text-center" id="search-form" method="get" action="{% url 'finances-search' %}" style="display: none;">
+    <form class="mb-3" id="search-form" method="get" action="{% url 'view-finances' %}" style="display: none;">
+        <h3>Search By Date</h3>
         <div class='row justify-content-center'>
             <div class='col-md-4'>
                 <div class='text-center'>

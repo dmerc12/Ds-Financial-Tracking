@@ -2,7 +2,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
 from .models import Deposit, Expense
-from django.contrib import messages
 from django.shortcuts import render
 from django.db.models import Sum
 from .forms import SearchForm
@@ -16,47 +15,35 @@ def home(request):
 
 @login_required
 def view_finances(request):
+    order_by = 'date'
+    form = SearchForm()
+    start_date = request.GET.get('start_date'), 
+    end_date = request.GET.get('end_date')
+    deposits = Deposit.objects.filter(user=request.user)
+    expenses = Expense.objects.filter(user=request.user)
+    if start_date and end_date:
+        deposits = deposits.filter(date__range=[start_date, end_date])
+        expenses = expenses.filter(date__range=[start_date, end_date])
+        order_by = 'search'
+    transactions = sorted(chain(deposits, expenses), key=lambda transaction: transaction.date, reverse=True)
+    transactions_per_page = int(request.GET.get('transactions-per-page', 10))
+    paginator = Paginator(transactions, transactions_per_page)
+    page = request.GET.get('page', 1)
     try:
-        form = SearchForm(request.GET)
-        if form.is_valid():
-            start_date = form.cleaned_data.get('start_date')
-            end_date = form.cleaned_data.get('end_date')
-            deposits = Deposit.objects.filter(user=request.user, date__range=[start_date, end_date])
-            expenses = Expense.objects.filter(user=request.user, date__range=[start_date, end_date])
-        else:
-            deposits = Deposit.objects.filter(user=request.user)
-            expenses = Expense.objects.filter(user=request.user)
-
-        transactions_per_page = int(request.GET.get('transactions-per-page', 10))
-        transactions = sorted(chain(deposits, expenses), key=lambda transaction: transaction.date, reverse=True)
-        page = request.GET.get('page', 1)
-        paginator = Paginator(transactions, transactions_per_page)
-
-        try:
-            transactions = paginator.page(page)
-        except PageNotAnInteger:
-            transactions = paginator.page(page)
-        except EmptyPage:
-            transactions = paginator.page(paginator.num_pages)
-    except RuntimeError as error:
-        transactions = []
-        messages.warning(request, str(error.message))
+        transactions = paginator.page(page)
+    except (PageNotAnInteger, EmptyPage):
+        transactions = paginator.page(paginator.num_pages)
     total_income = sum(transaction.amount for transaction in transactions if isinstance(transaction, Deposit))
     total_expenses = sum(transaction.amount for transaction in transactions if isinstance(transaction, Expense))
     bar_fig = px.bar(
-        x=['Income', 'Expenses'], 
-        y=[total_income, total_expenses], 
+        x=['Income', 'Expenses'],
+        y=[total_income, total_expenses],
         labels={'x': 'Category', 'y': 'Amount'},
         title="Financial Overview",
         color=['Income', 'Expenses'],
         color_discrete_map={'Income': 'green', 'Expenses': 'red'}
     )
-    bar_fig.update_layout(
-        title=dict(
-            text="Financial Overview",
-            x=0.5
-        )
-    )
+    bar_fig.update_layout(title=dict(text="Financial Overview", x=0.5))
     bar_chart = bar_fig.to_html(full_html=False)
     line_data = {
         'Date': [transaction.date for transaction in transactions],
@@ -73,24 +60,19 @@ def view_finances(request):
         title='Deposits vs Expenses Over Time',
         line_shape='linear'
     )
-    line_fig.update_layout(
-        title=dict(
-            text="Deposits vs Expenses Over Time",
-            x=0.5
-        )
-    )
+    line_fig.update_layout(title=dict(text="Deposits vs Expenses Over Time", x=0.5))
     line_chart = line_fig.to_html(full_html=False)
     context = {
         'form': form,
         'transactions': transactions,
         'total_income': total_income,
         'total_expenses': total_expenses,
-        'current_order_by': 'month',
+        'current_order_by': order_by,
         'bar_chart': bar_chart,
         'line_chart': line_chart,
     }
     return render(request, 'finance_tracking/view_finances.html', context)
-    
+     
 @login_required
 def analyze_finances(request):
     form = SearchForm(request.GET or None)
