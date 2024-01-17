@@ -50,29 +50,46 @@ def home(request):
         'Amount': [deposit.amount for deposit in deposits],
     }
     line_df = pd.DataFrame(line_data)
-    start_date = start_date.strftime('%B %m,%Y')
-    end_date = end_date.strftime('%B %m,%Y')
     line_fig = px.line(
         line_df,
         x='Date',
         y='Amount',
         labels={'x': 'Date', 'y': 'Amount'},
-        title=f'Deposits From {start_date} to {end_date}',
+        title=f'Deposits Over Time',
         line_shape='linear'
     )
     line_fig.update_layout(
         title=dict(
-            text=f"Deposits From {start_date} to {end_date}",
+            text=f"Deposits Over Time",
             x=0.5
         )
     )
-    chart = line_fig.to_html(full_html=False)
+    line_chart = line_fig.to_html(full_html=False)
+    pie_data = {
+        'Category': [deposit.category.name for deposit in deposits],
+        'Amount': [deposit.amount for deposit in deposits]
+    }
+    pie_df = pd.DataFrame(pie_data)
+    pie_fig = px.pie(
+        pie_df,
+        names='Category',
+        values='Amount',
+        title=f'Deposits By Category'
+    )
+    pie_fig.update_layout(
+        title=dict(
+            text=f'Deposits By Category',
+            x=0.5
+        )
+    )
+    pie_chart = pie_fig.to_html(full_html=False)
     context = {
         'categories': categories,
         'deposits': deposits,
         'current_order_by': order_by,
         'form': form,
-        'chart':chart
+        'pie_chart':pie_chart,
+        'line_chart': line_chart
     }
     return render(request, 'finance_tracking/deposit/list.html', context)
 

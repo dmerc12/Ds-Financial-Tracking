@@ -57,7 +57,10 @@
                     </div>
                 </div>
             </form>
-            <div class='plotly-graph-div'>{{ chart|safe }}</div>
+            <div class="row">
+                <div class='plotly-graph-div col-md-6'>{{ line_chart|safe }}</div>
+                <div class='plotly-graph-div col-md-6'>{{ pie_chart|safe }}</div>
+            </div>
             {% if deposits %}
                 <table class="table">
                     <thead>
@@ -109,44 +112,4 @@
             {% endif %}
         </div>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var categorySelect = document.getElementById("category-select");
-            var updateBtn = document.getElementById("category-update-btn");
-            var deleteBtn = document.getElementById("category-delete-btn");
-            var searchToggle = document.getElementById("search-toggle");
-            var searchForm = document.getElementById("search-form");
-            categorySelect.addEventListener("change", function() {
-                if (categorySelect.value) {
-                    updateBtn.disabled = false;
-                    deleteBtn.disabled = false;
-                } else {
-                    updateBtn.disabled = true;
-                    deleteBtn.disabled = true;
-                }
-            });
-            updateBtn.addEventListener("click", function() {
-                var selectedCategoryId = categorySelect.value;
-                if (selectedCategoryId) {
-                    window.location.href = `/financial/tracker/category/${selectedCategoryId}/update/`;
-                }
-            });
-            deleteBtn.addEventListener("click", function() {
-                var selectedCategoryId = categorySelect.value;
-                if (selectedCategoryId) {
-                    window.location.href = `/financial/tracker/category/${selectedCategoryId}/delete/`;
-                }
-            });
-            searchToggle.addEventListener("click", function() {
-                if (searchForm.style.display === "none") {
-                    searchForm.style.display = "block";
-                } else {
-                    searchForm.style.display = "none";
-                }
-            });
-            function changeDepositsPerPage(value) {
-                window.location.href = `?page=1&deposits-per-page=${value}`;
-            }
-        });
-    </script>
 {% endblock content %}
