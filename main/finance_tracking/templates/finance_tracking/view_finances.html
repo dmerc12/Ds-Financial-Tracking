@@ -98,30 +98,12 @@
             {% endif %}
         </span>
         <div class="mb-3 float-end">
-            <label for="deposits-per-page" class="form-label">Deposits per page:</label>
-            <select name="deposits-per-page" id="deposits-per-page" class="form-select" onchange="changeDepositsPerPage(this.value)">
-                <option value="10" {% if deposits_per_page == 10 %}selected{% endif %}>10</option>
-                <option value="20" {% if deposits_per_page == 20 %}selected{% endif %}>20</option>
-                <option value="50" {% if deposits_per_page == 50 %}selected{% endif %}>50</option>
+            <label for="transactions-per-page" class="form-label">Transactions per page:</label>
+            <select name="transactions-per-page" id="transactions-per-page" class="form-select" onchange="changeTransactionsPerPage(this.value)">
+                <option value="10" {% if transactions_per_page == 10 %}selected{% endif %}>10</option>
+                <option value="20" {% if transactions_per_page == 20 %}selected{% endif %}>20</option>
+                <option value="50" {% if transactions_per_page == 50 %}selected{% endif %}>50</option>
             </select>
         </div>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var searchToggle = document.getElementById("search-toggle");
-            var searchForm = document.getElementById("search-form");
-
-            searchToggle.addEventListener("click", function() {
-                if (searchForm.style.display === "none") {
-                    searchForm.style.display = "block";
-                } else {
-                    searchForm.style.display = "none";
-                }
-            });
-
-            function changeDepositsPerPage(value) {
-                window.location.href = `?page=1&deposits-per-page=${value}`;
-            }
-        });
-    </script>
 {% endblock content %}

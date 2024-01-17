@@ -50,29 +50,46 @@ def home(request):
         'Amount': [expense.amount for expense in expenses],
     }
     line_df = pd.DataFrame(line_data)
-    start_date = start_date.strftime('%B %m,%Y')
-    end_date = end_date.strftime('%B %m,%Y')
     line_fig = px.line(
         line_df,
         x='Date',
         y='Amount',
         labels={'x': 'Date', 'y': 'Amount'},
-        title=f'Expenses From {start_date} to {end_date}',
+        title=f'Expenses Over Time',
         line_shape='linear'
     )
     line_fig.update_layout(
         title=dict(
-            text=f"Expenses From {start_date} to {end_date}",
+            text=f"Expenses Over Time",
             x=0.5
         )
     )
-    chart = line_fig.to_html(full_html=False)
+    line_chart = line_fig.to_html(full_html=False)
+    pie_data = {
+        'Category': [expense.category.name for expense in expenses],
+        'Amount': [expense.amount for expense in expenses]
+    }
+    pie_df = pd.DataFrame(pie_data)
+    pie_fig = px.pie(
+        pie_df,
+        names='Category',
+        values='Amount',
+        title=f'Expenses By Category'
+    )
+    pie_fig.update_layout(
+        title=dict(
+            text=f'Expenses By Category',
+            x=0.5
+        )
+    )
+    pie_chart = pie_fig.to_html(full_html=False)
     context = {
         'categories': categories,
         'expenses': expenses,
         'current_order_by': order_by,
         'form': form,
-        'chart':chart
+        'pie_chart':pie_chart,
+        'line_chart': line_chart
     }
     return render(request, 'finance_tracking/expense/list.html', context)
 
