@@ -5,3 +5,4 @@ back-end/Logs/*
 .idea
 .vscode
 venv
+**/*.sqlite3
