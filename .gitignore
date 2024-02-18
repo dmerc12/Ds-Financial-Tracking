@@ -7,3 +7,4 @@ back-end/Logs/*
 venv
 **/*.sqlite3
 **/*/migrations/*
+.coverage
