@@ -8,6 +8,7 @@ from django.contrib import messages
 import plotly.express as px
 import pandas as pd
 
+# Deposit home view
 @login_required
 def home(request):
     order_by = 'date'
@@ -45,6 +46,7 @@ def home(request):
         deposits = paginator.page(1)
     except EmptyPage:
         deposits = paginator.page(paginator.num_pages)
+    # Line chart showing deposits over time
     line_data = {
         'Date': [deposit.date for deposit in deposits],
         'Amount': [deposit.amount for deposit in deposits],
@@ -65,6 +67,7 @@ def home(request):
         )
     )
     line_chart = line_fig.to_html(full_html=False)
+    # Pie chart showing deposits by cateogry
     pie_data = {
         'Category': [deposit.category.name for deposit in deposits],
         'Amount': [deposit.amount for deposit in deposits]
@@ -93,6 +96,7 @@ def home(request):
     }
     return render(request, 'finance_tracking/deposit/list.html', context)
 
+# Deposit detail view
 @login_required
 def deposit_detail(request, deposit_id):
     url = request.META.get('HTTP_REFERER', '/')
@@ -103,6 +107,7 @@ def deposit_detail(request, deposit_id):
     deposit = get_object_or_404(Deposit, pk=deposit_id)
     return render(request, 'finance_tracking/deposit/detail.html', {'deposit': deposit, 'return_url': return_url})
 
+# Create deposit view
 @login_required
 def create_deposit(request):
     if request.method == 'POST':
@@ -119,6 +124,7 @@ def create_deposit(request):
         form.fields['category'].queryset = Category.objects.filter(group='deposit')
     return render(request, 'finance_tracking/deposit/create.html', {'form': form, 'action': 'create'})
 
+# Update deposit view
 @login_required
 def update_deposit(request, deposit_id):
     deposit = get_object_or_404(Deposit, pk=deposit_id)
@@ -132,6 +138,7 @@ def update_deposit(request, deposit_id):
         form = DepositForm(instance=deposit)
     return render(request, 'finance_tracking/deposit/update.html', {'form': form, 'action': 'update', 'deposit': deposit})
 
+# Delete deposit view
 @login_required
 def delete_deposit(request, deposit_id):
     deposit = get_object_or_404(Deposit, pk=deposit_id)

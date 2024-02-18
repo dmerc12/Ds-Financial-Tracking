@@ -2,6 +2,7 @@ from ..forms import SearchForm
 from ..models import Expense
 from django import forms
 
+# Expense form
 class ExpenseForm(forms.ModelForm):
     class Meta:
         model = Expense
@@ -12,7 +13,8 @@ class ExpenseForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'rows': 3}),
             'amount': forms.NumberInput(attrs={'step': '0.01'})
         }
-        
+
+# Expense search form     
 class ExpenseSearchForm(SearchForm):
     expense_id = forms.IntegerField(required=False)
     

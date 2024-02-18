@@ -5,11 +5,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 
+# User home view
 @login_required
 def home(request):
     user = User.objects.get(pk=request.user.pk)
     return render(request, 'users/home.html', {'user': user})
 
+# User register view
 def register(request):
     try:
         if request.method == 'POST':
@@ -25,6 +27,7 @@ def register(request):
         messages.error(request, str(error.message))
     return render(request, 'users/register.html', {'form':  form})
 
+# Update user view
 @login_required
 def update_user(request):
     try:
@@ -40,6 +43,7 @@ def update_user(request):
         messages.error(request, str(error.message))
     return render(request, 'users/update.html', {'form': form})
 
+# Change password view
 @login_required
 def change_password(request):
     try:
@@ -56,7 +60,8 @@ def change_password(request):
     except RuntimeError as error:
         messages.error(request, str(error.message))
     return render(request, 'users/change_password.html', {'form': form})
-        
+
+# Delete user view  
 @login_required
 def delete_user(request):
     if request.method == 'POST':

@@ -4,6 +4,9 @@
 - Git
 - GitHub
 - Visual Studio Code
-- Postman
 - Python
-- React JS
+- Django
+- Pandas
+- Plotly
+- Crispy Forms
+
