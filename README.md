@@ -36,7 +36,7 @@
     - Create a local or cloud based Posegre RDS.
     - Use your preferred database management software for viewing the data within the database.
 - Deployment:
-    - Install dependencies using the setup script in the scripts folder.
+    - Install dependencies using the install script in the scripts folder.
     - Run project using the run script in the scripts folder.
     - Stop the running project using the stop script in the scripts folder.
     
