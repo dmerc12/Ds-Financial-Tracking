@@ -12,8 +12,7 @@ def create_category(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST, initial={'group': group})
         if form.is_valid():
-            category = Category()
-            category = Category(**form.cleaned_data)
+            category = form.save(commit=False)
             category.user = request.user
             category.save()
             messages.success(request, 'Category successfully created!')
