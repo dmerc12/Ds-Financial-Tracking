@@ -13,52 +13,43 @@ def home(request):
 
 # User register view
 def register(request):
-    try:
-        if request.method == 'POST':
-            form = UserRegisterForm(request.POST)
-            if form.is_valid():
-                form.save()
-                username = form.cleaned_data.get('username')
-                messages.success(request, f'Account created for {username}!')
-                return redirect('login')
-        else:
-            form = UserRegisterForm()
-    except RuntimeError as error:
-        messages.error(request, str(error.message))
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {username}!')
+            return redirect('login')
+    else:
+        form = UserRegisterForm()
     return render(request, 'users/register.html', {'form':  form})
 
 # Update user view
 @login_required
 def update_user(request):
-    try:
-        if request.method == 'POST':
-            form = UserUpdateForm(request.POST, instance=request.user)
-            if form.is_valid():
-                form.save()
-                messages.success(request, "Your account has been updated!")
-                return redirect('user-home')
-        else:
-            form = UserUpdateForm(instance=request.user)
-    except RuntimeError as error:
-        messages.error(request, str(error.message))
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your account has been updated!")
+            return redirect('user-home')
+    else:
+        form = UserUpdateForm(instance=request.user)
     return render(request, 'users/update.html', {'form': form})
 
 # Change password view
 @login_required
 def change_password(request):
-    try:
-        if request.method == 'POST':
-            form = PasswordChangeForm(data=request.POST, user=request.user)
-            if form.is_valid():
-                form.save()
-                messages.success(request, "Your password has been changed!")
-                return redirect('user-home')
-            else:
-                messages.error(request, 'There was an error changing your password, please try again!')
+    if request.method == 'POST':
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your password has been changed!")
+            return redirect('user-home')
         else:
-            form = PasswordChangeForm(user=request.user)
-    except RuntimeError as error:
-        messages.error(request, str(error.message))
+            messages.error(request, 'There was an error changing your password, please try again!')
+    else:
+        form = PasswordChangeForm(user=request.user)
     return render(request, 'users/change_password.html', {'form': form})
 
 # Delete user view  
