@@ -9,7 +9,7 @@ urlpatterns = [
     path('', views.home, name='finance-home'),
 
     # Analyze finances route
-    path('/analyze/finances/', views.analyze_finances, name='analyze-finances'),
+    path('analyze/finances/', views.analyze_finances, name='analyze-finances'),
 
     # View finances route
     path('view/finances/', views.view_finances, name='view-finances'),
