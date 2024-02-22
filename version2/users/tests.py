@@ -77,15 +77,11 @@ class TestChangePasswordForm(TestCase):
         self.assertTrue(form.is_valid)
 
 # Tests for the user views
-class TestUserView(TestCase):
+class TestUserViews(TestCase):
     # Setup before the tests
     def setUp(self):
         self.client = Client()
         self.user = User.objects.create_user(username='testuser', password='old_password')
-
-    # Teardown after tests
-    def tearDown(self):
-        User.objects.all().delete() 
 
     # Test home view
     def test_home_view(self):
@@ -192,4 +188,3 @@ class TestUserView(TestCase):
         response = self.client.post(reverse('delete-user'))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/login/')
-
