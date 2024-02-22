@@ -6,3 +6,5 @@ back-end/Logs/*
 .vscode
 venv
 **/*.sqlite3
+**/*/migrations/*
+.coverage

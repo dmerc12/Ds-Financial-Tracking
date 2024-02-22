@@ -8,6 +8,7 @@ from django.contrib import messages
 import plotly.express as px
 import pandas as pd
 
+# Expense home view
 @login_required
 def home(request):
     order_by = 'date'
@@ -45,6 +46,7 @@ def home(request):
         expenses = paginator.page(1)
     except EmptyPage:
         expenses = paginator.page(paginator.num_pages)
+    # Line graph showing expenses over time
     line_data = {
         'Date': [expense.date for expense in expenses],
         'Amount': [expense.amount for expense in expenses],
@@ -65,6 +67,7 @@ def home(request):
         )
     )
     line_chart = line_fig.to_html(full_html=False)
+    # Pie graph showing expenses by category
     pie_data = {
         'Category': [expense.category.name for expense in expenses],
         'Amount': [expense.amount for expense in expenses]
@@ -93,6 +96,7 @@ def home(request):
     }
     return render(request, 'finance_tracking/expense/list.html', context)
 
+# Expense detail view
 @login_required
 def expense_detail(request, expense_id):
     url = request.META.get('HTTP_REFERER', '/')
@@ -103,6 +107,7 @@ def expense_detail(request, expense_id):
     expense = get_object_or_404(Expense, pk=expense_id)
     return render(request, 'finance_tracking/expense/detail.html', {'expense': expense, 'return_url': return_url})
 
+# Create expense view
 @login_required
 def create_expense(request):
     if request.method == 'POST':
@@ -119,6 +124,7 @@ def create_expense(request):
         form.fields['category'].queryset = Category.objects.filter(group='expense')
     return render(request, 'finance_tracking/expense/create.html', {'form': form, 'action': 'create'})
 
+# Update expense view
 @login_required
 def update_expense(request, expense_id):
     expense = get_object_or_404(Expense, pk=expense_id)
@@ -132,6 +138,7 @@ def update_expense(request, expense_id):
         form = ExpenseForm(instance=expense)
     return render(request, 'finance_tracking/expense/update.html', {'form': form, 'action': 'update', 'expense': expense})
 
+# Delete expense view
 @login_required
 def delete_expense(request, expense_id):
     expense = get_object_or_404(Expense, pk=expense_id)

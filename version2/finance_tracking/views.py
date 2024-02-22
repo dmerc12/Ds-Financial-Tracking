@@ -9,10 +9,12 @@ from itertools import chain
 import plotly.express as px
 import pandas as pd
 
+# Finance tracking home view
 @login_required
 def home(request):
     return render(request, 'finance_tracking/home.html')
 
+# View finances view
 @login_required
 def view_finances(request):
     order_by = 'date'
@@ -33,8 +35,10 @@ def view_finances(request):
         transactions = paginator.page(page)
     except (PageNotAnInteger, EmptyPage):
         transactions = paginator.page(paginator.num_pages)
+    # Calculate total income and expenses
     total_income = sum(transaction.amount for transaction in transactions if isinstance(transaction, Deposit))
     total_expenses = sum(transaction.amount for transaction in transactions if isinstance(transaction, Expense))
+    # Bar chart
     bar_fig = px.bar(
         x=['Income', 'Expenses'],
         y=[total_income, total_expenses],
@@ -45,6 +49,7 @@ def view_finances(request):
     )
     bar_fig.update_layout(title=dict(text="Financial Overview", x=0.5))
     bar_chart = bar_fig.to_html(full_html=False)
+    # Line chart
     line_data = {
         'Date': [transaction.date for transaction in transactions],
         'Amount': [transaction.amount for transaction in transactions],
@@ -73,6 +78,7 @@ def view_finances(request):
     }
     return render(request, 'finance_tracking/view_finances.html', context)
      
+# Analyze finances view
 @login_required
 def analyze_finances(request):
     form = SearchForm(request.GET or None)

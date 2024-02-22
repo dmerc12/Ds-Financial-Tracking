@@ -1,7 +1,7 @@
+from ..models import Category
 from django import forms
 
-from ..models import Category
-
+# Category form
 class CategoryForm(forms.ModelForm):
     group = forms.CharField(widget=forms.HiddenInput())
 
