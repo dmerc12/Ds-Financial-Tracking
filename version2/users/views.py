@@ -5,15 +5,6 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import CustomUser
 
-# User home view
-def home(request):
-    if request.user.is_authenticated:
-        user = User.objects.get(pk=request.user.pk)
-        return render(request, 'users/home.html', {'user': user})
-    else:
-        messages.error(request, 'You must be logged in to access this page. Please register or login then try again!')
-        return redirect('login')
-
 # Login view 
 def login_user(request):
     if request.method == 'POST':
