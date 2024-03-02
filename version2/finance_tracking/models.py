@@ -2,10 +2,19 @@ from django.core.validators import MinValueValidator, ValidationError
 from django.db import models
 from django.contrib.auth.models import User
 
+# Choices for categories
+DEPOSIT = 'deposit'
+EXPENSE = 'expense'
+
+CATEGORY_CHOICES = {
+    'deposit': DEPOSIT,
+    'expense': EXPENSE
+}
+
 # Categories for deposits and expenses
 class Category(models.Model):
     name = models.CharField(max_length=60)
-    group = models.CharField(max_length=7)
+    group = models.CharField(max_length=7, choices=CATEGORY_CHOICES)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
