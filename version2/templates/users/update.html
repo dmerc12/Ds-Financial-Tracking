@@ -5,7 +5,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
     <h1 class="text-center pb-2">Update Information</h1>
-    <form method="post">
+    <form method="post" action="{% url 'update-user' %}">
         {% csrf_token %}
         {{ form|crispy }}
         <div class="d-flex justify-content-center">
