@@ -1,11 +1,10 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from .forms import DepositForm, DepositSearchForm
 from datetime import datetime, timedelta
 from ..models import Category, Deposit
 from django.contrib import messages
 import plotly.express as px
+from .forms import *
 import pandas as pd
 
 # Deposit home view
@@ -131,26 +130,32 @@ def create_deposit(request):
         return redirect('login')
 
 # Update deposit view
-@login_required
 def update_deposit(request, deposit_id):
-    deposit = get_object_or_404(Deposit, pk=deposit_id)
-    if request.method == 'POST':
-        form = DepositForm(request.POST, instance=deposit)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Deposit successfully updated!')
-            return redirect('deposit-home')
+    if request.user.is_authenticated:
+        deposit = get_object_or_404(Deposit, pk=deposit_id)
+        if request.method == 'POST':
+            form = DepositForm(request.POST, instance=deposit)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Deposit successfully updated!')
+                return redirect('deposit-home')
+        else:
+            form = DepositForm(instance=deposit)
+        return render(request, 'finance_tracking/deposit/update.html', {'form': form, 'action': 'update', 'deposit': deposit})
     else:
-        form = DepositForm(instance=deposit)
-    return render(request, 'finance_tracking/deposit/update.html', {'form': form, 'action': 'update', 'deposit': deposit})
+        messages.error(request, 'You must be logged in to access this page. Please register or login then try again!')
+        return redirect('login')
 
 # Delete deposit view
-@login_required
 def delete_deposit(request, deposit_id):
-    deposit = get_object_or_404(Deposit, pk=deposit_id)
-    if request.method == 'POST':
-        deposit.delete()
-        messages.success(request, 'Deposit successfully deleted!')
-        return redirect('deposit-home')
-    return render(request, 'finance_tracking/deposit/delete.html', {'deposit': deposit})
-    
+    if request.user.is_authenticated:
+        deposit = get_object_or_404(Deposit, pk=deposit_id)
+        if request.method == 'POST':
+            deposit.delete()
+            messages.success(request, 'Deposit successfully deleted!')
+            return redirect('deposit-home')
+        return render(request, 'finance_tracking/deposit/delete.html', {'deposit': deposit})
+    else:
+        messages.error(request, 'You must be logged in to access this page. Please register or login then try again!')
+        return redirect('login')
+        

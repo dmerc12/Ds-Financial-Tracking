@@ -23,8 +23,8 @@ urlpatterns = [
     path('deposits/', deposit_views.home, name='deposit-home'),
     path('deposit/<int:deposit_id>/', deposit_views.deposit_detail, name='deposit-detail'),
     path('deposit/create/', deposit_views.create_deposit, name='create-deposit'),
-    path('deposit/<int:deposit_id>/update/', deposit_views.update_deposit, name='update-deposit'),
-    path('deposit/<int:deposit_id>/delete/', deposit_views.delete_deposit, name='delete-deposit'),
+    path('deposit/update/<int:deposit_id>/', deposit_views.update_deposit, name='update-deposit'),
+    path('deposit/delete/<int:deposit_id>/', deposit_views.delete_deposit, name='delete-deposit'),
 
     # Expense routes
     path('expenses/', expense_views.home, name='expense-home'),

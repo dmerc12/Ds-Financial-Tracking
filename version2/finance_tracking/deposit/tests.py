@@ -140,14 +140,38 @@ class TestDepositViews(TestCase):
         response = self.client.post(reverse('create-deposit'), data)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('deposit-home'))
-        self.assertTrue(Deposit.objects.filter(user=self.deposit.user, pk=self.deposit.pk, category=self.deposit.category).exists())
+        self.assertTrue(Deposit.objects.filter(user=self.user, category=self.category, description=data['description'], amount=data['amount'], date=data['date']).exists())
         
     ## Tests for update view
     # Test for update view redirect
+    def test_update_view_redirect(self):
+        response = self.client.get(reverse('update-deposit', args=[self.deposit.pk]))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('login'))
+        messages = [m.message for m in get_messages(response.wsgi_request)]
+        self.assertIn('You must be logged in to access this page. Please register or login then try again!', messages)        
         
     # Test for update view rendering success
+    def test_update_view_rendering_success(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse('update-deposit', args=[self.deposit.pk]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'finance_tracking/deposit/update.html')
+        self.assertIsInstance(response.context['form'], DepositForm)
         
     # Test for update view success
+    def test_update_view_success(self):
+        self.client.force_login(self.user)
+        data = {
+            'description': 'updated description',
+            'category': self.category.pk,
+            'amount': 23.12,
+            'date': datetime.now().date() - timedelta(days=34)
+        }
+        response = self.client.post(reverse('update-deposit', args=[self.deposit.pk]), data)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('deposit-home'))
+        self.assertTrue(Deposit.objects.filter(user=self.deposit.user, pk=self.deposit.pk, category=self.deposit.category, description=data['description'], amount=data['amount'], date=data['date']).exists())
         
     ## Tests for delete view
     # Test for delete view redirect
