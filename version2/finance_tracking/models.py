@@ -1,4 +1,5 @@
-from django.core.validators import MinValueValidator, ValidationError
+from django.core.validators import MinValueValidator
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -22,11 +23,15 @@ class Category(models.Model):
     
     # Overriding clean method
     def clean(self):
-        super().clean()
-        if not self.name.strip():
+        if self.name.strip() == '':
             raise ValidationError('Name cannot be empty, please try again!')
-        if not self.group.strip():
+        if self.group.strip() == '':
             raise ValidationError('Group cannot be empty, please try again!')
+    
+    # Overriding save method
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
 
 # Deposits for income
 class Deposit(models.Model):
