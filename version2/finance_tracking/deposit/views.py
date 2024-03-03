@@ -111,21 +111,24 @@ def deposit_detail(request, deposit_id):
         return redirect('login')
 
 # Create deposit view
-@login_required
 def create_deposit(request):
-    if request.method == 'POST':
-        form = DepositForm(request.POST)
-        form.fields['category'].queryset = Category.objects.filter(group='deposit')
-        if form.is_valid():
-            deposit = form.save(commit=False)
-            deposit.user = request.user
-            deposit.save()
-            messages.success(request, 'Deposit successfully created!')
-            return redirect('deposit-home')
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = DepositForm(request.POST)
+            form.fields['category'].queryset = Category.objects.filter(group='deposit')
+            if form.is_valid():
+                deposit = form.save(commit=False)
+                deposit.user = request.user
+                deposit.save()
+                messages.success(request, 'Deposit successfully created!')
+                return redirect('deposit-home')
+        else:
+            form = DepositForm()
+            form.fields['category'].queryset = Category.objects.filter(group='deposit')
+        return render(request, 'finance_tracking/deposit/create.html', {'form': form, 'action': 'create'})
     else:
-        form = DepositForm()
-        form.fields['category'].queryset = Category.objects.filter(group='deposit')
-    return render(request, 'finance_tracking/deposit/create.html', {'form': form, 'action': 'create'})
+        messages.error(request, 'You must be logged in to access this page. Please register or login then try again!')
+        return redirect('login')
 
 # Update deposit view
 @login_required
