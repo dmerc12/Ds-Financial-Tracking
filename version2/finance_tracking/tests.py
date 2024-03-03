@@ -2,8 +2,10 @@ from django.core.exceptions import ValidationError
 from django.contrib.messages import get_messages
 from django.contrib.auth.models import User
 from django.test import TestCase, Client
+from datetime import datetime, timedelta
+from django.utils import timezone
 from django.urls import reverse
-from datetime import datetime
+from .forms import SearchForm
 from .models import *
 
 # Test cases for finance tracking models
@@ -53,5 +55,90 @@ class TestFinanceTrackingViews(TestCase):
     # Setup
     def setUp(self):
         self.client = Client()
+        self.user = User.objects.create_user(username='test_user', password='password')
 
-    
+    ## Tests for home view
+    # Test for home view redirect
+    def test_home_view_redirect(self):
+        response = self.client.get(reverse('finance-home'))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('login'))
+        messages = [m.message for m in get_messages(response.wsgi_request)]
+        self.assertIn('You must be logged in to access this page. Please register or login then try again!', messages)
+        
+    # Test for home view rendering success
+    def test_home_view_rendering_success(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse('finance-home'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'finance_tracking/home.html')
+        
+    ## Tests for view finances view
+    # Test for view finances view redirect
+    def test_view_finances_view_redirect(self):
+        response = self.client.get(reverse('view-finances'))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('login'))
+        messages = [m.message for m in get_messages(response.wsgi_request)]
+        self.assertIn('You must be logged in to access this page. Please register or login then try again!', messages)
+        
+    # Test for view finances view rendering success
+    def test_view_finances_view_rendering_success(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse('view-finances'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'finance_tracking/view_finances.html')
+        
+    # Test for view finances view search success
+    def test_view_finances_view_search_success(self):
+        self.client.force_login(self.user)
+        start_date = str(datetime.now().date() - timedelta(weeks=1))
+        end_date = str(datetime.now().date())
+        data = {
+            'start_date': start_date,
+            'end_date': end_date
+        }
+        form = SearchForm(data=data)
+        self.assertTrue(form.is_valid())
+        response = self.client.get(reverse('view-finances'), data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'finance_tracking/view_finances.html')
+
+    # Test for view finances view pagination error
+    def test_view_finances_view_pagination(self):
+        self.client.force_login(self.user)
+        data = {
+            'page': 'invalid_page_number'
+        }
+        response = self.client.get(reverse('view-finances'), data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['transactions'].number, response.context['transactions'].paginator.num_pages)
+            
+    ## Tests for analyze finances view
+    # Test for analyze finances view redirect
+    def test_analyze_finances_view_redirect(self):
+        response = self.client.get(reverse('analyze-finances'))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('login'))
+        messages = [m.message for m in get_messages(response.wsgi_request)]
+        self.assertIn('You must be logged in to access this page. Please register or login then try again!', messages)
+
+    # Test for analyze finances view rendering success
+    def test_analyze_finances_view_rendering_success(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse('analyze-finances'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'finance_tracking/analyze_finances.html')
+        
+    # Test for analyze finances view search success
+    def test_analyze_finances_view_search_success(self):
+        self.client.force_login(self.user)
+        data = {
+            'start_date': datetime.now().date() - timedelta(weeks=1),
+            'end_date': datetime.now().date() - timedelta(weeks=4)
+        }
+        form = SearchForm(data=data)
+        self.assertTrue(form.is_valid())
+        response = self.client.get(reverse('analyze-finances'), data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'finance_tracking/analyze_finances.html')
