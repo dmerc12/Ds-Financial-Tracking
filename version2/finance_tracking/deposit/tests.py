@@ -85,8 +85,27 @@ class TestDepositViews(TestCase):
         
     ## Tests for detail view
     # Test for detail view redirect
-        
+    def test_detail_view_redirect(self):
+        response = self.client.get(reverse('deposit-detail', args=[self.deposit.id]))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('login'))
+        messages = [m.message for m in get_messages(response.wsgi_request)]
+        self.assertIn('You must be logged in to access this page. Please register or login then try again!', messages)        
+
     # Test for detail view rendering success
+    def test_detail_view_rendering_success(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse('deposit-detail', args=[self.deposit.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'finance_tracking/deposit/detail.html')
+
+    # Test for detail view return url from view finances
+    def test_deposit_detail_return_url_view_finances(self):
+        self.client.force_login(self.user)
+        url = reverse('deposit-detail', args=[self.deposit.id])
+        response = self.client.get(url, HTTP_REFERER='/view/finances/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['return_url'], 'view-finances')
         
     ## Tests for create view
     # Test for create view redirect

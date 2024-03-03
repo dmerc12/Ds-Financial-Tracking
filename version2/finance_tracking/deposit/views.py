@@ -97,15 +97,18 @@ def home(request):
         return redirect('login')
 
 # Deposit detail view
-@login_required
 def deposit_detail(request, deposit_id):
-    url = request.META.get('HTTP_REFERER', '/')
-    if '/view/finances/' in url:
-        return_url = 'view-finances'
+    if request.user.is_authenticated:
+        url = request.META.get('HTTP_REFERER', '/')
+        if '/view/finances/' in url:
+            return_url = 'view-finances'
+        else:
+            return_url = 'deposit-home'
+        deposit = get_object_or_404(Deposit, pk=deposit_id)
+        return render(request, 'finance_tracking/deposit/detail.html', {'deposit': deposit, 'return_url': return_url})
     else:
-        return_url = 'deposit-home'
-    deposit = get_object_or_404(Deposit, pk=deposit_id)
-    return render(request, 'finance_tracking/deposit/detail.html', {'deposit': deposit, 'return_url': return_url})
+        messages.error(request, 'You must be logged in to access this page. Please register or login then try again!')
+        return redirect('login')
 
 # Create deposit view
 @login_required
