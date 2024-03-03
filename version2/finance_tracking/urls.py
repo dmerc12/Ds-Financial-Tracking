@@ -16,8 +16,8 @@ urlpatterns = [
 
     # Category routes
     path('category/create/', category_views.create_category, name='create-category'),
-    path('category/<int:category_id>/update/', category_views.update_category, name='update-category'),
-    path('category/<int:category_id>/delete/', category_views.delete_category, name='delete-category'),
+    path('category/update/<int:category_id>/', category_views.update_category, name='update-category'),
+    path('category/delete/<int:category_id>/', category_views.delete_category, name='delete-category'),
 
     # Deposit routes
     path('deposits/', deposit_views.home, name='deposit-home'),

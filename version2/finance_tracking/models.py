@@ -1,11 +1,21 @@
-from django.core.validators import MinValueValidator, ValidationError
+from django.core.validators import MinValueValidator
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User
+
+# Choices for categories
+DEPOSIT = 'deposit'
+EXPENSE = 'expense'
+
+CATEGORY_CHOICES = {
+    'deposit': DEPOSIT,
+    'expense': EXPENSE
+}
 
 # Categories for deposits and expenses
 class Category(models.Model):
     name = models.CharField(max_length=60)
-    group = models.CharField(max_length=7)
+    group = models.CharField(max_length=7, choices=CATEGORY_CHOICES)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -13,11 +23,15 @@ class Category(models.Model):
     
     # Overriding clean method
     def clean(self):
-        super().clean()
-        if not self.name.strip():
+        if self.name.strip() == '':
             raise ValidationError('Name cannot be empty, please try again!')
-        if not self.group.strip():
+        if self.group.strip() == '':
             raise ValidationError('Group cannot be empty, please try again!')
+    
+    # Overriding save method
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
 
 # Deposits for income
 class Deposit(models.Model):

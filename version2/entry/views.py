@@ -1,8 +1,11 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 
 # Home view
-@login_required
 def home(request):
-    return render(request, 'entry/home.html')
+    if request.user.is_authenticated:
+        return render(request, 'entry/home.html')
+    else:
+        messages.error(request, 'You must be logged in to access this page. Please register or login then try again!')
+        return redirect('login')
     
