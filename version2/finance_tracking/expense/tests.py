@@ -6,19 +6,19 @@ from django.urls import reverse
 from ..models import *
 from .forms import *
 
-# Test cases for deposit views
-class TestDepositViews(TestCase):
+# Test cases for expense views
+class TestExpenseViews(TestCase):
     # Setup
     def setUp(self):
         self.client = Client()
         self.user = User.objects.create_user(username='test_user', password='password')
-        self.category = Category.objects.create(name='Category 1', group=DEPOSIT, user=self.user)
-        self.deposit =  Deposit.objects.create(amount=100, category=self.category, date=datetime.now().date(), user=self.user)
+        self.category = Category.objects.create(name='Category 1', group=EXPENSE, user=self.user)
+        self.expense =  Expense.objects.create(amount=100, category=self.category, date=datetime.now().date(), user=self.user)
         
     ## Tests for home view
     # Test for home view redirect
     def test_home_view_redirect(self):
-        response = self.client.get(reverse('deposit-home'))
+        response = self.client.get(reverse('expense-home'))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('login'))
         messages = [m.message for m in get_messages(response.wsgi_request)]
@@ -27,10 +27,10 @@ class TestDepositViews(TestCase):
     # Test home view rendering success
     def test_home_view_rendering_success(self):
         self.client.force_login(self.user)
-        response = self.client.get(reverse('deposit-home'))
+        response = self.client.get(reverse('expense-home'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'finance_tracking/deposit/list.html')
-        self.assertIsInstance(response.context['form'], DepositSearchForm)
+        self.assertTemplateUsed(response, 'finance_tracking/expense/list.html')
+        self.assertIsInstance(response.context['form'], ExpenseSearchForm)
         
     # Test home view search start only success
     def test_home_view_search_start_only_success(self):
@@ -38,14 +38,14 @@ class TestDepositViews(TestCase):
         data = {
             'start_date': str(datetime.now().date()),
             'end_date': '',
-            'deposit_id': ''
+            'expense_id': ''
         }
-        form = DepositSearchForm(data=data)
+        form = ExpenseSearchForm(data=data)
         self.assertTrue(form.is_valid())
-        response = self.client.post(reverse('deposit-home'), data)
+        response = self.client.post(reverse('expense-home'), data)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'finance_tracking/deposit/list.html')
-        self.assertIsInstance(response.context['form'], DepositSearchForm)
+        self.assertTemplateUsed(response, 'finance_tracking/expense/list.html')
+        self.assertIsInstance(response.context['form'], ExpenseSearchForm)
                 
     # Test home view exact search success
     def test_home_view_search_exact_success(self):
@@ -53,14 +53,14 @@ class TestDepositViews(TestCase):
         data = {
             'start_date': '',
             'end_date': '',
-            'deposit_id': self.deposit.id
+            'expense_id': self.expense.pk
         }
-        form = DepositSearchForm(data=data)
+        form = ExpenseSearchForm(data=data)
         self.assertTrue(form.is_valid())
-        response = self.client.post(reverse('deposit-home'), data)
+        response = self.client.post(reverse('expense-home'), data)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'finance_tracking/deposit/list.html')
-        self.assertIsInstance(response.context['form'], DepositSearchForm)
+        self.assertTemplateUsed(response, 'finance_tracking/expense/list.html')
+        self.assertIsInstance(response.context['form'], ExpenseSearchForm)
 
     # Test home view search success
     def test_home_view_search_search_success(self):
@@ -68,14 +68,14 @@ class TestDepositViews(TestCase):
         data = {
             'start_date': str(datetime.now().date()),
             'end_date': str(datetime.now().date() - timedelta(days=30)),
-            'deposit_id': ''
+            'expense_id': ''
         }
-        form = DepositSearchForm(data=data)
+        form = ExpenseSearchForm(data=data)
         self.assertTrue(form.is_valid())
-        response = self.client.post(reverse('deposit-home'), data)
+        response = self.client.post(reverse('expense-home'), data)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'finance_tracking/deposit/list.html')
-        self.assertIsInstance(response.context['form'], DepositSearchForm)
+        self.assertTemplateUsed(response, 'finance_tracking/expense/list.html')
+        self.assertIsInstance(response.context['form'], ExpenseSearchForm)
    
     # Test home view pagination error
     def test_home_view_pagination_error(self):
@@ -83,14 +83,14 @@ class TestDepositViews(TestCase):
         data = {
             'page': 'invalid_page_number'
         }
-        response = self.client.get(reverse('deposit-home'), data)
+        response = self.client.get(reverse('expense-home'), data)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['deposits'].number, response.context['deposits'].paginator.num_pages)
+        self.assertEqual(response.context['expenses'].number, response.context['expenses'].paginator.num_pages)
         
     ## Tests for detail view
     # Test for detail view redirect
     def test_detail_view_redirect(self):
-        response = self.client.get(reverse('deposit-detail', args=[self.deposit.pk]))
+        response = self.client.get(reverse('expense-detail', args=[self.expense.pk]))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('login'))
         messages = [m.message for m in get_messages(response.wsgi_request)]
@@ -99,14 +99,14 @@ class TestDepositViews(TestCase):
     # Test for detail view rendering success
     def test_detail_view_rendering_success(self):
         self.client.force_login(self.user)
-        response = self.client.get(reverse('deposit-detail', args=[self.deposit.pk]))
+        response = self.client.get(reverse('expense-detail', args=[self.expense.pk]))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'finance_tracking/deposit/detail.html')
+        self.assertTemplateUsed(response, 'finance_tracking/expense/detail.html')
 
     # Test for detail view return url from view finances
-    def test_deposit_detail_return_url_view_finances(self):
+    def test_detail_return_url_view_finances(self):
         self.client.force_login(self.user)
-        url = reverse('deposit-detail', args=[self.deposit.pk])
+        url = reverse('expense-detail', args=[self.expense.pk])
         response = self.client.get(url, HTTP_REFERER='/view/finances/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['return_url'], 'view-finances')
@@ -114,7 +114,7 @@ class TestDepositViews(TestCase):
     ## Tests for create view
     # Test for create view redirect
     def test_create_view_redirect(self):
-        response = self.client.get(reverse('create-deposit'))
+        response = self.client.get(reverse('create-expense'))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('login'))
         messages = [m.message for m in get_messages(response.wsgi_request)]
@@ -123,10 +123,10 @@ class TestDepositViews(TestCase):
     # Test for create view rendering success
     def test_create_view_rendering_success(self):
         self.client.force_login(self.user)
-        response = self.client.get(reverse('create-deposit'))
+        response = self.client.get(reverse('create-expense'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'finance_tracking/deposit/create.html')
-        self.assertIsInstance(response.context['form'], DepositForm)
+        self.assertTemplateUsed(response, 'finance_tracking/expense/create.html')
+        self.assertIsInstance(response.context['form'], ExpenseForm)
         
     # Test for create view success
     def test_create_view_success(self):
@@ -137,15 +137,15 @@ class TestDepositViews(TestCase):
             'amount': 45.67,
             'date': datetime.now().date()
         }
-        response = self.client.post(reverse('create-deposit'), data)
+        response = self.client.post(reverse('create-expense'), data)
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('deposit-home'))
-        self.assertTrue(Deposit.objects.filter(user=self.user, category=self.category, description=data['description'], amount=data['amount'], date=data['date']).exists())
+        self.assertRedirects(response, reverse('expense-home'))
+        self.assertTrue(Expense.objects.filter(user=self.user, category=self.category, description=data['description'], amount=data['amount'], date=data['date']).exists())
         
     ## Tests for update view
     # Test for update view redirect
     def test_update_view_redirect(self):
-        response = self.client.get(reverse('update-deposit', args=[self.deposit.pk]))
+        response = self.client.get(reverse('update-expense', args=[self.expense.pk]))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('login'))
         messages = [m.message for m in get_messages(response.wsgi_request)]
@@ -154,10 +154,10 @@ class TestDepositViews(TestCase):
     # Test for update view rendering success
     def test_update_view_rendering_success(self):
         self.client.force_login(self.user)
-        response = self.client.get(reverse('update-deposit', args=[self.deposit.pk]))
+        response = self.client.get(reverse('update-expense', args=[self.expense.pk]))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'finance_tracking/deposit/update.html')
-        self.assertIsInstance(response.context['form'], DepositForm)
+        self.assertTemplateUsed(response, 'finance_tracking/expense/update.html')
+        self.assertIsInstance(response.context['form'], ExpenseForm)
         
     # Test for update view success
     def test_update_view_success(self):
@@ -168,15 +168,15 @@ class TestDepositViews(TestCase):
             'amount': 23.12,
             'date': datetime.now().date() - timedelta(days=34)
         }
-        response = self.client.post(reverse('update-deposit', args=[self.deposit.pk]), data)
+        response = self.client.post(reverse('update-expense', args=[self.expense.pk]), data)
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('deposit-home'))
-        self.assertTrue(Deposit.objects.filter(user=self.deposit.user, pk=self.deposit.pk, category=self.deposit.category, description=data['description'], amount=data['amount'], date=data['date']).exists())
+        self.assertRedirects(response, reverse('expense-home'))
+        self.assertTrue(Expense.objects.filter(user=self.expense.user, pk=self.expense.pk, category=self.expense.category, description=data['description'], amount=data['amount'], date=data['date']).exists())
         
     ## Tests for delete view
     # Test for delete view redirect
     def test_delete_view_redirect(self):
-        response = self.client.get(reverse('delete-deposit', args=[self.deposit.pk]))
+        response = self.client.get(reverse('delete-expense', args=[self.expense.pk]))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('login'))
         messages = [m.message for m in get_messages(response.wsgi_request)]
@@ -185,15 +185,15 @@ class TestDepositViews(TestCase):
     # Test for delete view rendering success
     def test_delete_view_rendering_success(self):
         self.client.force_login(self.user)
-        response = self.client.get(reverse('delete-deposit', args=[self.deposit.pk]))
+        response = self.client.get(reverse('delete-expense', args=[self.expense.pk]))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'finance_tracking/deposit/delete.html')
+        self.assertTemplateUsed(response, 'finance_tracking/expense/delete.html')
         
     # Test for delete view success
     def test_delete_view_success(self):
         self.client.force_login(self.user)
-        response = self.client.post(reverse('delete-deposit', args=[self.deposit.pk]))
+        response = self.client.post(reverse('delete-expense', args=[self.expense.pk]))
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('deposit-home'))
-        self.assertFalse(Deposit.objects.filter(pk=self.deposit.pk).exists())
-        
+        self.assertRedirects(response, reverse('expense-home'))
+        self.assertFalse(Expense.objects.filter(pk=self.expense.pk).exists())
+       

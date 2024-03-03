@@ -4,14 +4,14 @@
 {% endblock title %}
 {% block content %}
     <div class="content-section">
-        <form method="post">
+        <form method="post" action="{% url 'delete-deposit' deposit.pk %}">
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Delete Deposit</legend>
                 <h2>Are you sure you want to delete the deposit {{ deposit.pk }} with date {{ deposit.date }} and amount {{ deposit.amount }}?</h2>
             </fieldset>
             <div class='form-group'>
-                <button class="btn btn-outline-info" type="submit">Delete Deposit</button>
+                <button id="deleteDepositButton" class="btn btn-outline-info" type="submit">Delete Deposit</button>
                 <a class="btn btn-outline-secondary" href="{% url 'deposit-detail' deposit.pk %}">Go Back</a>
             </div>
         </form>

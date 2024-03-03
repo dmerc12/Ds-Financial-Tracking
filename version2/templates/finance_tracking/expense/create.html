@@ -5,14 +5,14 @@
 {% load crispy_forms_tags %}
 {% block content %}
     <div class='content-section'>
-        <form method='POST'>
+        <form method='POST' action="{% url 'create-expense' %}">
             {% csrf_token %}
             <fieldset class='form-group'>
                 <legend class='border-bottom mb-4'>Create Expense</legend>
                 {{ form|crispy }}
             </fieldset>
             <div class='form-group'>
-                <button class="btn btn-outline-info" type="submit">Create Expense</button>
+                <button id="createExpenseButton" class="btn btn-outline-info" type="submit">Create Expense</button>
                 <a class="btn btn-outline-secondary" href="{% url 'expense-home' %}">Go Back</a>
             </div>
         </form>

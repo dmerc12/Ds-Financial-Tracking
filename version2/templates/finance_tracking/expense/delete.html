@@ -4,7 +4,7 @@
 {% endblock title %}
 {% block content %}
     <div class="content-section">
-        <form method="post">
+        <form method="post" action="{% url 'delete-expense' expense.pk %}">
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Delete Expense</legend>
