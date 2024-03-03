@@ -1,5 +1,5 @@
-from ..models import Deposit, Category
 from ..forms import SearchForm
+from ..models import Deposit
 from django import forms
 
 # Deposit form

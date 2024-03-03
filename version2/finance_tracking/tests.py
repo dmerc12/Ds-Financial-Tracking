@@ -3,7 +3,6 @@ from django.contrib.messages import get_messages
 from django.contrib.auth.models import User
 from django.test import TestCase, Client
 from datetime import datetime, timedelta
-from django.utils import timezone
 from django.urls import reverse
 from .forms import SearchForm
 from .models import *
