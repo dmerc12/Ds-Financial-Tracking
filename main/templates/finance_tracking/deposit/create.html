@@ -1,0 +1,20 @@
+{% extends "entry/base.html" %}
+{% block title %}
+    <title>Create Deposit</title>
+{% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class='content-section'>
+        <form method='POST' action="{% url 'create-deposit' %}">
+            {% csrf_token %}
+            <fieldset class='form-group'>
+                <legend class='border-bottom mb-4'>Create Deposit</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class='form-group'>
+                <button id="createDepositButton" class="btn btn-outline-info" type="submit">Create Deposit</button>
+                <a class="btn btn-outline-secondary" href="{% url 'deposit-home' %}">Go Back</a>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

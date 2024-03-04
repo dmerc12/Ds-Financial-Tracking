@@ -1,0 +1,117 @@
+{% extends "entry/base.html" %}
+{% block title %}
+    <title>Managing Expenses</title>
+{% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <h1 class='text-center pb-2'>Manage Expenses</h1>
+    <div class='text-center'>
+        <div class="align-items-center">
+            <a class='btn btn-primary btn-outline-primary p-1 mb-2 mt-1 ml-1' href="{% url  'create-expense' %}">Create Expense</a>
+            <a class='btn btn-primary btn-outline-primary p-1 mb-2 mt-1 ml-1' href="{% url  'create-category' %}">Create Category</a>
+            <select name='selected_category' id='category-select' class='btn btn-primary form-select-lg ml-1 mt-1 mb-2'>
+                {% for category in categories %}
+                    <option value='{{ category.pk }}'>{{ category.name }}</option>
+                {% endfor %}
+            </select>
+            {% if categories %}
+                <button id='category-update-btn' class='btn btn-seconcary btn-sm ml-1 mt-1 mb-2 p-1' {% if not categories %}disabled{% endif %}>Update Category</button>
+                <button id='category-delete-btn' class='btn btn-danger btn-sm ml-1 mt-1 mb-2 p-1' {% if not categories %}disabled{% endif %}>Delete Category</button>
+            {% endif %}
+        </div>
+        <div class="mt-1">
+            <h2 class="expense-heading text-center">Expenses:</h2>
+            <div class="mb-3 text-center">
+                <label for="order-by" class="form-label">Order by:</label>
+                <div class="btn-group">
+                    <a href="{% url 'expense-home' %}" class="btn btn-primary {% if current_order_by == 'date' %}active{% endif %}">
+                        <i class="bi bi-calendar"></i> Date
+                    </a>
+                    <a id="search-toggle" class="btn btn-primary {% if current_order_by == 'search' %}active{% endif %}">
+                        <i class="bi bi-search"></i> Search
+                    </a>
+                </div>
+            </div>
+            <form class="mb-3" id="search-form" method="POST" action="{% url 'expense-home' %}" style="display: none;">
+                <div class='row justify-content-center'>
+                    <h3 class="text-center">Search By Expense ID or Date Below</h3>
+                    <h4 class="text-center">Search By Expense ID</h4>
+                    <div class='col-md-4'>
+                        <div class='text-center'>
+                            {{ form.expense_id|as_crispy_field }}
+                        </div>
+                    </div>
+                    <h4 class="text-center">Search By Date</h4>
+                    <div class='col-md-4'>
+                        <div class='text-center'>
+                            {{ form.start_date|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class='col-md-4'>
+                        <div class='text-center'>
+                            {{ form.end_date|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class='col-md-1 mt-3'>
+                        <button class='btn btn-primary' type="submit">Search</button>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class='plotly-graph-div col-md-6'>{{ line_chart|safe }}</div>
+                <div class='plotly-graph-div col-md-6'>{{ pie_chart|safe }}</div>
+            </div>
+            {% if expenses %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="expense-table">Expense ID</th>
+                            <th class="expense-table">Date</th>
+                            <th class="expense-table">Category</th>
+                            <th class="expense-table">Description</th>
+                            <th class="expense-table">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for expense in expenses %}
+                            <tr>
+                                <td><a href="{% url 'expense-detail' expense.pk %}" class="expense-link expense-table">{{ expense.pk }}</a></td>
+                                <td><a href="{% url 'expense-detail' expense.pk %}" class="expense-link expense-table">{{ expense.date }}</a></td>
+                                <td><a href="{% url 'expense-detail' expense.pk %}" class="expense-link expense-table">{{ expense.category }}</a></td>
+                                <td><a href="{% url 'expense-detail' expense.pk %}" class="expense-link expense-table">{{ expense.description }}</a></td>
+                                <td><a href="{% url 'expense-detail' expense.pk %}" class="expense-link expense-table">{{ expense.amount }}</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if expenses.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            <a href="?page={{ expenses.previous_page_number }}">previous</a>
+                        {% endif %}
+            
+                        <span class="current">
+                            Page {{ expenses.number }} of {{ expenses.paginator.num_pages }}.
+                        </span>
+            
+                        {% if expenses.has_next %}
+                            <a href="?page={{ expenses.next_page_number }}">next</a>
+                            <a href="?page={{ expenses.paginator.num_pages }}">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                    <div class="mb-3 float-end">
+                        <label for="expenses-per-page" class="form-label">Expenses per page:</label>
+                        <select name="expenses-per-page" id="expenses-per-page" class="form-select" onchange="changeExpensesPerPage(this.value)">
+                            <option value="10" {% if expenses_per_page == 10 %}selected{% endif %}>10</option>
+                            <option value="20" {% if expenses_per_page == 20 %}selected{% endif %}>20</option>
+                            <option value="50" {% if expenses_per_page == 50 %}selected{% endif %}>50</option>
+                        </select>
+                    </div>
+                </div>
+            {% else %}
+                <p class='text-center text-danger'>No expenses have been made yet. Please use the Create Expense button above to add expenses!</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
