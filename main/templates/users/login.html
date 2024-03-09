@@ -12,10 +12,10 @@
                 {{ form|crispy }}
             </fieldset>
             <div class="card-footer text-center py-3">
-                <button class="btn btn-outline-info" type="submit">Sign In</button>
+                <button id="loginButton" class="btn btn-outline-info" type="submit">Sign In</button>
             </div>
             <div class="card-footer text-center py-3">
-                <div class="small"><a href="{% url 'register' %}">Need an account? Sign up!</a></div>
+                <div class="small"><a id="registerLink" href="{% url 'register' %}">Need an account? Sign up!</a></div>
             </div>
         </form>
     </div>
