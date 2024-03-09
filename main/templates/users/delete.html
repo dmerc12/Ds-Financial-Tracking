@@ -8,8 +8,8 @@
     <form method="post" action="{% url 'delete-user' %}">
         {% csrf_token %}
         <div class="d-flex justify-content-center">
-            <button class="btn btn-outline-info mr-2" type="submit">Yes, Delete</button>
-            <a class="btn btn-outline-secondary" href="{% url 'update-user' %}">Go Back</a>
+            <button id="deleteUserButton" class="btn btn-outline-info mr-2" type="submit">Yes, Delete</button>
+            <a id="backButton" class="btn btn-outline-secondary" href="{% url 'update-user' %}">Go Back</a>
         </div>
     </form>
 {% endblock content %}
