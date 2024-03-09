@@ -9,11 +9,11 @@
         {% csrf_token %}
         {{ form|crispy }}
         <div class="d-flex justify-content-center">
-            <!-- update user button-->
+            <!-- Update user link-->
             <button id="updateUserButton" class="btn btn-outline-info mr-2" type="submit">Update Information</button>
-            <!-- change password button -->
-            <a class="btn btn-primary btn-outline-secondary mr-2" href="{% url 'change-password' %}">Change Password</a>
-            <!-- delete user button -->
-            <a class="btn btn-primary btn-outline-danger" href="{% url 'delete-user' %}">Delete User</a>        </div>
+            <!-- Change password link -->
+            <a id="changePasswordLink" class="btn btn-primary btn-outline-secondary mr-2" href="{% url 'change-password' %}">Change Password</a>
+            <!-- Delete user button -->
+            <a id="deleteUserLink" class="btn btn-primary btn-outline-danger" href="{% url 'delete-user' %}">Delete User</a></div>
     </form>
 {% endblock content %}
