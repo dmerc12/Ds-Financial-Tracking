@@ -1,15 +1,28 @@
 {% extends "entry/base.html" %}
 {% block title %}
-    <title>Logging In</title>
+    <title>Log In</title>
 {% endblock title %}
 {% load crispy_forms_tags %}
 {% block content %}
     <div class="content-section">
-        <form method="post" action="{% url 'login' %}">
+        <form method="post" action="{% url 'login' %}" class="mx-auto">
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="card-header text-center border-bottom mb-4">Log In</legend>
-                {{ form|crispy }}
+                <div class="row justify-content-center">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {{ form.username|as_crispy_field }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {{ form.password|as_crispy_field }}
+                        </div>
+                    </div>
+                </div>
             </fieldset>
             <div class="card-footer text-center py-3">
                 <button id="loginButton" class="btn btn-outline-info" type="submit">Sign In</button>
