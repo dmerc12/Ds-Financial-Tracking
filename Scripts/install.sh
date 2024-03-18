@@ -22,7 +22,7 @@ echo
 
 # install dependencies
 echo "Installing dependencies... Please wait..."
-pip install django django-crispy-forms crispy-bootstrap5 plotly pandas
+pip install django django-crispy-forms crispy-bootstrap5 plotly pandas selenium behave
 python3 manage.py makemigrations
 python3 manage.py migrate
 cd ./version2/

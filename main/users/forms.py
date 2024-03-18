@@ -53,7 +53,7 @@ class RegisterForm(UserCreationForm):
 class UpdateUserForm(UserChangeForm):
 	# Hide password field
 	password = None
-	
+
     # Get other fields
 	phone_number = forms.CharField(label="", max_length=20, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Phone Number'}))
 	email = forms.EmailField(label="", max_length=150, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}))
@@ -90,4 +90,3 @@ class ChangePasswordForm(SetPasswordForm):
 		self.fields['new_password2'].widget.attrs['placeholder'] = 'Confirm Password'
 		self.fields['new_password2'].label = ''
 		self.fields['new_password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'
-	
