@@ -33,6 +33,7 @@
                 </div>
             </div>
             <form class="mb-3" id="search-form" method="POST" action="{% url 'expense-home' %}" style="display: none;">
+                {% csrf_token %}
                 <div class='row justify-content-center'>
                     <h3 class="text-center">Search By Expense ID or Date Below</h3>
                     <h4 class="text-center">Search By Expense ID</h4>
@@ -90,11 +91,11 @@
                             <a href="?page=1">&laquo; first</a>
                             <a href="?page={{ expenses.previous_page_number }}">previous</a>
                         {% endif %}
-            
+
                         <span class="current">
                             Page {{ expenses.number }} of {{ expenses.paginator.num_pages }}.
                         </span>
-            
+
                         {% if expenses.has_next %}
                             <a href="?page={{ expenses.next_page_number }}">next</a>
                             <a href="?page={{ expenses.paginator.num_pages }}">last &raquo;</a>

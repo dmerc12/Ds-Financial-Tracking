@@ -20,7 +20,7 @@ class Category(models.Model):
 
     def __str__(self):
         return f"{self.name}"
-    
+
     # Overriding clean method
     def clean(self):
         if self.name.strip() == '':
