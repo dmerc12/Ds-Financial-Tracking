@@ -14,8 +14,8 @@ Feature: Users need to update categories so that they can categorize their depos
 
     Examples:
     |username|password   |name    |title            |
-    |'test'  |'pass12345'|''      |'Adding Category'|
-    |'test'  |'pass12345'|'t' * 61|'Adding Category'|
+    |'test'  |'pass12345'|''      |'Updating Category'|
+    |'test'  |'pass12345'|'t' * 61|'Updating Category'|
 
   Scenario Outline: As a user I should not be able to update a deposit category with invalid information
     Given I am on the login page
@@ -31,8 +31,8 @@ Feature: Users need to update categories so that they can categorize their depos
 
     Examples:
     |username|password   |name    |title            |
-    |'test'  |'pass12345'|''      |'Adding Category'|
-    |'test'  |'pass12345'|'t' * 61|'Adding Category'|
+    |'test'  |'pass12345'|''      |'Updating Category'|
+    |'test'  |'pass12345'|'t' * 61|'Updating Category'|
 
   Scenario Outline: As a user I should be able to update a deposit category with valid information
     Given I am on the login page
