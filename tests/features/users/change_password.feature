@@ -13,10 +13,11 @@ Feature: Users need to change their password so that they can enhance the securi
     Then  I should be on the a page with the title <title>
 
     Examples:
-    |username|password   |new_password1|new_password2|title              |
-    |'test2' |'pass12345'|''           |''           |'Changing Password'|
-    |'test2' |'pass12345'|'test2'      |'test2'      |'Changing Password'|
-    |'test2' |'pass12345'|'not'        |'matching'   |'Changing Password'|
+    |username|password |new_password1|new_password2|title            |
+    |test2   |pass12345|             |new_pass12345|Changing Password|
+    |test2   |pass12345|new_pass12345|             |Changing Password|
+    |test2   |pass12345|test2        |test2        |Changing Password|
+    |test2   |pass12345|not          |matching     |Changing Password|
 
   Scenario Outline: As a user I should be able to change my password with valid information
     Given I am on the login page
@@ -31,5 +32,5 @@ Feature: Users need to change their password so that they can enhance the securi
     Then  I should be on the a page with the title <title>
 
     Examples:
-    |username|password   |new_password1|new_password2|title |
-    |'test2' |'pass12345'|'new_pass1234'|'new_pass1234'|'Home'|
+    |username|password |new_password1|new_password2|title|
+    |test2   |pass12345|new_pass1234 |new_pass1234 |Home |

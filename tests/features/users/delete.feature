@@ -11,5 +11,5 @@ Feature: Users need to delete their account so that they can remove their inform
     Then  I should be on the a page with the title <title>
 
     Examples:
-    |username|password   |title |
-    |'test3' |'pass12345'|'Log In'|
+    |username|password |title |
+    |test3   |pass12345|Log In|

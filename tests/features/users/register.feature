@@ -14,12 +14,22 @@ Feature: Users need to register with the site so that they have an account
     Then  I should be on the a page with the title <title>
 
     Examples:
-    |username |first_name|last_name|email             |phone_number|password  |confirm_password|title        |
-    |''       |''        |''       |''                |''          |''        |''              |'Registering'|
-    |'t' * 151|'t' * 101 |'t' * 100|'t@e.com' * 150   |'1' * 21    |'pass1234'|'pass1234'      |'Registering'|
-    |'test'   |'test'    |'test'   |'incorrect format'|'1234567890'|'pass1234'|'pass1324'      |'Registering'|
-    |'test'   |'test'    |'test'   |'test@email.com'  |'1234567890'|'test'    |'test'          |'Registering'|
-    |'test'   |'test'    |'test'   |'test@email.com'  |'1234567890'|'not'     |'matching'      |'Registering'|
+    |username |first_name|last_name|email           |phone_number|password |confirm_password|title      |
+    |         |test      |test     |t@e.com         |123-456-7890|pass12345|pass12345       |Registering|
+    |test     |          |test     |t@e.com         |123-456-7890|pass12345|pass12345       |Registering|
+    |test     |test      |         |t@e.com         |123-456-7890|pass12345|pass12345       |Registering|
+    |test     |test      |test     |                |123-456-7890|pass12345|pass12345       |Registering|
+    |test     |test      |test     |t@e.com         |            |pass12345|pass12345       |Registering|
+    |test     |test      |test     |t@e.com         |123-456-7890|         |pass12345       |Registering|
+    |test     |test      |test     |t@e.com         |123-456-7890|pass12345|                |Registering|
+    |'t' * 151|test      |test     |t@e.com         |123-456-7890|pass12345|pass12345       |Registering|
+    |test     |'t' * 101 |test     |t@e.com         |123-456-7890|pass12345|pass12345       |Registering|
+    |test     |test      |'t' * 101|t@e.com         |123-456-7890|pass12345|pass12345       |Registering|
+    |test     |test      |test     |'t@e.com' * 150 |123-456-7890|pass12345|pass12345       |Registering|
+    |test     |test      |test     |t@e.com         |'1' * 21    |pass12345|pass12345       |Registering|
+    |test     |test      |test     |incorrect format|123-456-7890|pass1234 |pass1324        |Registering|
+    |test     |test      |test     |test@email.com  |123-456-7890|test     |test            |Registering|
+    |test     |test      |test     |test@email.com  |123-456-7890|not      |matching        |Registering|
 
   Scenario Outline: As a user I should be able to register with valid information
     Given I am on the login page
@@ -35,5 +45,5 @@ Feature: Users need to register with the site so that they have an account
     Then  I should be on the a page with the title <title>
 
     Examples:
-    |username|first_name|last_name|email           |phone_number|password   |confirm_password|title |
-    |'test'  |'test'    |'test'   |'test@email.com'|'1234567890'|'pass12345'|'pass12345'     |'Home'|
+    |username|first_name|last_name|email         |phone_number|password |confirm_password|title|
+    |test    |test      |test     |test@email.com|123-456-7890|pass12345|pass12345       |Home |

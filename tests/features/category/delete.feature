@@ -12,8 +12,8 @@ Feature: Users need to delete categories so that they can remove unused categori
     Then  I should be on the a page with the title <title>
 
     Examples:
-    |username|password   |title              |
-    |'test'  |'pass12345'|'Managing Deposits'|
+    |username|password |title            |
+    |test    |pass12345|Managing Deposits|
 
   Scenario Outline: As a user I should be able to create a deposit category with valid information
     Given I am on the login page
@@ -27,5 +27,5 @@ Feature: Users need to delete categories so that they can remove unused categori
     Then  I should be on the a page with the title <title>
 
     Examples:
-    |username|password   |title              |
-    |'test'  |'pass12345'|'Managing Expenses'|
+    |username|password |title            |
+    |test    |pass12345|Managing Expenses|

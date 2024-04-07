@@ -8,10 +8,11 @@ Feature: Users need to log into the site so that they can access the main portio
     Then  I should be on the a page with the title <title>
 
     Examples:
-    |username |password|title   |
-    |''       |''      |'Log In'|
-    |'t' * 150|'test'  |'Log In'|
-    |'test'   |'test'  |'Log In'|
+    |username |password |title |
+    |         |pass12345|Log In|
+    |test     |         |Log In|
+    |'t' * 150|pass12345|Log In|
+    |incorrect|creds    |Log In|
 
   Scenario Outline: As a user I should be able to login with valid information
     Given I am on the login page
@@ -21,5 +22,5 @@ Feature: Users need to log into the site so that they can access the main portio
     Then  I should be on the a page with the title <title>
 
     Examples:
-    |username|password   |title |
-    |'test'  |'pass12345'|'Home'|
+    |username|password |title|
+    |test    |pass12345|Home |
