@@ -5,7 +5,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
     <div class='content-section'>
-        <form method='POST' action="{% url 'create-category' %}">
+        <form method='POST' action="{% url 'create-category' group %}">
             {% csrf_token %}
             <fieldset class='form-group'>
                 <legend class='border-bottom mb-4'>Create Category</legend>
@@ -15,5 +15,6 @@
                 <button id="createCategoryButton" class="btn btn-outline-info" type="submit">Create Category</button>
                 <a class="btn btn-outline-secondary" href="{% if form.group.value == 'deposit' %}{% url 'deposit-home' %}{% elif form.group.value == 'expense' %}{% url 'expense-home' %}{% endif %}">Go Back</a>
             </div>
+        </form>
     </div>
 {% endblock content %}
