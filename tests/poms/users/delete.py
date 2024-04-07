@@ -4,7 +4,7 @@ from selenium.webdriver.safari.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 
 # POM for delete user page
-class DeleteUserPagePOMs:
+class DeleteUserPOMs:
 
     def __init__(self, driver: WebDriver):
         self.driver = driver
@@ -18,4 +18,3 @@ class DeleteUserPagePOMs:
     def click_delete_user_button(self):
         element: WebElement = self.driver.find_element(By.ID, 'deleteUserButton')
         return element.click()
-        

@@ -4,7 +4,7 @@ from selenium.webdriver.safari.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 
 # POM for register page
-class RegisterPagePOMs:
+class RegisterPOMs:
 
     def __init__(self, driver: WebDriver):
         self.driver = driver
@@ -38,7 +38,7 @@ class RegisterPagePOMs:
     def enter_phone_number_input(self, phone_number):
         element: WebElement = self.driver.find_element(By.ID, 'phone_number')
         return element.send_keys(phone_number)
-    
+
     # POM for entering the password 1 input on the register page
     def enter_password1_input(self, password1):
         element: WebElement = self.driver.find_element(By.ID, 'password1')
@@ -48,9 +48,8 @@ class RegisterPagePOMs:
     def enter_password2_input(self, password2):
         element: WebElement = self.driver.find_element(By.ID, 'password2')
         return element.send_keys(password2)
-        
+
     # POM for clicking the register button on the register page
     def click_register_button(self):
         element: WebElement = self.driver.find_element(By.ID, 'registerButton')
         return element.click()
-        
