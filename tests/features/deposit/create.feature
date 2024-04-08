@@ -12,7 +12,7 @@ Feature: Users need to create deposits so that they can keep track of their inco
     When  I input <date> in the deposit date input
     When  I enter <description> in the deposit description input
     When  I enter <amount> in the deposit amount input
-    When  I enter the create category button
+    When  I enter the create deposit button
     Then  I should be on the a page with the title <title>
 
     Examples:
@@ -36,7 +36,7 @@ Feature: Users need to create deposits so that they can keep track of their inco
     When  I input <date> in the deposit date input
     When  I enter <description> in the deposit description input
     When  I enter <amount> in the deposit amount input
-    When  I enter the create category button
+    When  I enter the create deposit button
     Then  I should be on the a page with the title <title>
 
     Examples:
