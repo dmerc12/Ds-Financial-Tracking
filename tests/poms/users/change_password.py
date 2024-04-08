@@ -3,8 +3,8 @@ from selenium.webdriver.safari.webdriver import WebDriver
 # from selenium.webdriver.edge.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 
-# POM for delete user page
-class DeleteUserPagePOMs:
+# POM for change password page
+class ChangePasswordPOMs:
 
     def __init__(self, driver: WebDriver):
         self.driver = driver
@@ -28,4 +28,3 @@ class DeleteUserPagePOMs:
     def click_change_password_button(self):
         element: WebElement = self.driver.find_element(By.ID, 'changePasswordButton')
         return element.click()
-        

@@ -1,8 +1,10 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, get_object_or_404
-from datetime import datetime, timedelta
 from ..models import Category, Deposit
 from django.contrib import messages
+from collections import defaultdict
+from django.db.models import Sum
+from datetime import datetime
 import plotly.express as px
 from .forms import *
 import pandas as pd
@@ -13,6 +15,7 @@ def home(request):
         categories = Category.objects.filter(group='deposit')
         form = DepositSearchForm()
         deposits = Deposit.objects.filter(user=request.user)
+        order_by = 'date'
         if request.method == 'POST':
             form = DepositSearchForm(request.POST)
             if form.is_valid():
@@ -29,19 +32,7 @@ def home(request):
                     end_date = datetime.now().replace(day=1).date()
                     deposits = deposits.filter(date__range=[start_date, end_date])
                     order_by = 'search'
-        else:
-            end_date = datetime.now().replace(day=1).date()
-            start_date = end_date - timedelta(days=30)
-            deposits = deposits.filter(date__range=[start_date, end_date])
-            order_by = 'date'
         deposits = deposits.order_by('-date')
-        deposits_per_page = int(request.GET.get('deposits-per-page', 10))
-        page = request.GET.get('page', 1)
-        paginator = Paginator(deposits, deposits_per_page)
-        try:
-            deposits = paginator.page(page)
-        except (PageNotAnInteger, EmptyPage):
-            deposits = paginator.page(1)
         # Line chart showing deposits over time
         line_data = {
             'Date': [deposit.date for deposit in deposits],
@@ -64,24 +55,39 @@ def home(request):
         )
         line_chart = line_fig.to_html(full_html=False)
         # Pie chart showing deposits by cateogry
+        total_deposit_amount = deposits.aggregate(total=Sum('amount'))['total'] or 0
+        category_totals = defaultdict(float)
+        for deposit in deposits:
+            category_totals[deposit.category.name] += deposit.amount
+        category_percentages = {category: (amount / total_deposit_amount) * 100 for category, amount in category_totals.items()}
         pie_data = {
-            'Category': [deposit.category.name for deposit in deposits],
-            'Amount': [deposit.amount for deposit in deposits]
+            'Category': list(category_percentages.keys()),
+            'Total Amount': list(category_totals.values()),
+            'Percentage': list(category_percentages.values())
         }
         pie_df = pd.DataFrame(pie_data)
+        hover_data = ['Total Amount']
         pie_fig = px.pie(
             pie_df,
             names='Category',
-            values='Amount',
-            title=f'Deposits By Category'
+            values='Percentage',
+            title='Deposits By Category',
+            hover_data=hover_data
         )
         pie_fig.update_layout(
             title=dict(
-                text=f'Deposits By Category',
+                text='Deposits By Category',
                 x=0.5
             )
         )
         pie_chart = pie_fig.to_html(full_html=False)
+        deposits_per_page = int(request.GET.get('deposits-per-page', 10))
+        page = request.GET.get('page', 1)
+        paginator = Paginator(deposits, deposits_per_page)
+        try:
+            deposits = paginator.page(page)
+        except (PageNotAnInteger, EmptyPage):
+            deposits = paginator.page(1)
         context = {
             'categories': categories,
             'deposits': deposits,
@@ -158,4 +164,3 @@ def delete_deposit(request, deposit_id):
     else:
         messages.error(request, 'You must be logged in to access this page. Please register or login then try again!')
         return redirect('login')
-        

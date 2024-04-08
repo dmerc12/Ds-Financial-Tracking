@@ -15,7 +15,7 @@ urlpatterns = [
     path('view/finances/', views.view_finances, name='view-finances'),
 
     # Category routes
-    path('category/create/', category_views.create_category, name='create-category'),
+    path('category/create/<str:group>', category_views.create_category, name='create-category'),
     path('category/update/<int:category_id>/', category_views.update_category, name='update-category'),
     path('category/delete/<int:category_id>/', category_views.delete_category, name='delete-category'),
 

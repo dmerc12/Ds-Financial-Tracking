@@ -4,7 +4,7 @@ from selenium.webdriver.safari.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 
 # POM for update user page
-class UpdateUserPagePOMs:
+class UpdateUserPOMs:
 
     def __init__(self, driver: WebDriver):
         self.driver = driver
@@ -13,7 +13,7 @@ class UpdateUserPagePOMs:
     def click_change_password_link(self):
         element: WebElement = self.driver.find_element(By.ID, 'changePasswordLink')
         return element.click()
-        
+
     # POM for clicking the delete user link on the update user page
     def click_delete_user_link(self):
         element: WebElement = self.driver.find_element(By.ID, 'deleteUserLink')
@@ -43,9 +43,8 @@ class UpdateUserPagePOMs:
     def enter_phone_number_input(self, phone_number):
         element: WebElement = self.driver.find_element(By.ID, 'phone_number')
         return element.send_keys(phone_number)
-        
+
     # POM for clicking the update user button on the update user page
     def click_update_user_button(self):
         element: WebElement = self.driver.find_element(By.ID, 'updateUserButton')
         return element.click()
-        

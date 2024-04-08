@@ -1,10 +1,11 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
 from .forms import ExpenseForm, ExpenseSearchForm
-from datetime import datetime, timedelta
 from ..models import Category, Expense
 from django.contrib import messages
+from collections import defaultdict
+from django.db.models import Sum
+from datetime import datetime
 import plotly.express as px
 import pandas as pd
 
@@ -15,6 +16,7 @@ def home(request):
         categories = Category.objects.filter(user=request.user, group='expense')
         form = ExpenseSearchForm()
         expenses = Expense.objects.filter(user=request.user)
+        order_by = 'date'
         if request.method == 'POST':
             form = ExpenseSearchForm(request.POST)
             if form.is_valid():
@@ -31,19 +33,7 @@ def home(request):
                     end_date = datetime.now().replace(day=1).date()
                     expenses = expenses.filter(date__range=[start_date, end_date])
                     order_by = 'search'
-        else:
-            end_date = datetime.now().replace(day=1).date()
-            start_date = end_date - timedelta(days=30)
-            expenses = expenses.filter(date__range=[start_date, end_date])
-            order_by = 'date'
         expenses = expenses.order_by('-date')
-        expenses_per_page = int(request.GET.get('expenses-per-page', 10))
-        page = request.GET.get('page', 1)
-        paginator = Paginator(expenses, expenses_per_page)
-        try:
-            expenses = paginator.page(page)
-        except (PageNotAnInteger, EmptyPage):
-            expenses = paginator.page(1)
         # Line graph showing expenses over time
         line_data = {
             'Date': [expense.date for expense in expenses],
@@ -66,24 +56,39 @@ def home(request):
         )
         line_chart = line_fig.to_html(full_html=False)
         # Pie graph showing expenses by category
+        total_expense_amount = expenses.aggregate(total=Sum('amount'))['total'] or 0
+        category_totals = defaultdict(float)
+        for expense in expenses:
+            category_totals[expense.category.name] += expense.amount
+        category_percentages = {category: (amount / total_expense_amount) * 100 for category, amount in category_totals.items()}
         pie_data = {
-            'Category': [expense.category.name for expense in expenses],
-            'Amount': [expense.amount for expense in expenses]
+            'Category': list(category_percentages.keys()),
+            'Total Amount': list(category_totals.values()),
+            'Percentage': list(category_percentages.values())
         }
         pie_df = pd.DataFrame(pie_data)
+        hover_data = ['Total Amount']
         pie_fig = px.pie(
             pie_df,
             names='Category',
-            values='Amount',
-            title=f'Expenses By Category'
+            values='Percentage',
+            title='Expenses By Category',
+            hover_data=hover_data
         )
         pie_fig.update_layout(
             title=dict(
-                text=f'Expenses By Category',
+                text='Expenses By Category',
                 x=0.5
             )
         )
         pie_chart = pie_fig.to_html(full_html=False)
+        expenses_per_page = int(request.GET.get('expenses-per-page', 10))
+        page = request.GET.get('page', 1)
+        paginator = Paginator(expenses, expenses_per_page)
+        try:
+            expenses = paginator.page(page)
+        except (PageNotAnInteger, EmptyPage):
+            expenses = paginator.page(1)
         context = {
             'categories': categories,
             'expenses': expenses,
@@ -160,4 +165,3 @@ def delete_expense(request, expense_id):
     else:
         messages.error(request, 'You must be logged in to access this page. Please register or login then try again!')
         return redirect('login')
-        
