@@ -37,3 +37,15 @@ def step_impl(context, confirm_password):
 def step_impl(context):
     context.register_poms.click_register_button()
 
+# Steps for login feature file
+@when(u'I input {username} in the login username input')
+def step_impl(context, username):
+    context.login_poms.enter_username_input(username)
+
+@when(u'I input {password} in the login password input')
+def step_impl(context, password):
+    context.login_poms.enter_password_input(password)
+
+@when(u'I click the login button')
+def step_impl(context):
+    context.login_poms.click_login_button()
