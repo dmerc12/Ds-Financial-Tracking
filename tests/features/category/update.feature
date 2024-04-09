@@ -26,7 +26,7 @@ Feature: Users need to update categories so that they can categorize their depos
     When  I click the manage expenses buttton
     When  I click the update deposit category button
     When  I enter <name> in the category name input
-    When  I enter the create category button
+    When  I enter the update category button
     Then  I should be on the a page with the title <title>
 
     Examples:

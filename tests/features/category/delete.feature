@@ -8,7 +8,7 @@ Feature: Users need to delete categories so that they can remove unused categori
     When  I click track finances button
     When  I click the manage deposits buttton
     When  I click the delete deposit category button
-    When  I enter the delete category button
+    When  I click the delete category button
     Then  I should be on the a page with the title <title>
 
     Examples:
@@ -23,7 +23,7 @@ Feature: Users need to delete categories so that they can remove unused categori
     When  I click track finances button
     When  I click the manage expenses buttton
     When  I click the delete deposit category button
-    When  I enter the delete category button
+    When  I click the delete category button
     Then  I should be on the a page with the title <title>
 
     Examples:
