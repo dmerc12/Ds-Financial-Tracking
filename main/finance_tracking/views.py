@@ -23,18 +23,6 @@ def view_finances(request):
         form = SearchForm(request.GET or None)
         deposits = Deposit.objects.filter(user=request.user)
         expenses = Expense.objects.filter(user=request.user)
-        # Search by date
-        if form.is_valid():
-            end_date = form.cleaned_data['end_date']
-            start_date = form.cleaned_data['start_date']
-            deposits = deposits.filter(date__range=[start_date, end_date])
-            expenses = expenses.filter(date__range=[start_date, end_date])
-            order_by = 'search'
-        # Default to last month
-        else:
-            end_date = datetime.now().date()
-            start_date = end_date - timedelta(days=30)
-            order_by = 'date'
         transactions = sorted(chain(deposits, expenses), key=lambda transaction: transaction.date, reverse=True)
         transactions_per_page = int(request.GET.get('transactions-per-page', 10))
         paginator = Paginator(transactions, transactions_per_page)
@@ -80,7 +68,6 @@ def view_finances(request):
             'transactions': transactions,
             'total_income': total_income,
             'total_expenses': total_expenses,
-            'current_order_by': order_by,
             'bar_chart': bar_chart,
             'line_chart': line_chart,
         }
@@ -88,7 +75,7 @@ def view_finances(request):
     else:
         messages.error(request, 'You must be logged in to access this page. Please register or login then try again!')
         return redirect('login')
-     
+
 # Analyze finances view
 def analyze_finances(request):
     if request.user.is_authenticated:

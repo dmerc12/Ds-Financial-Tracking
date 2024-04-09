@@ -12,7 +12,7 @@ Feature: Users need to create expenses so that they can keep track of their expe
     When  I input <date> in the expense date input
     When  I enter <description> in the expense description input
     When  I enter <amount> in the expense amount input
-    When  I enter the create expense button
+    When  I click the create expense button
     Then  I should be on the a page with the title <title>
 
     Examples:
@@ -36,7 +36,7 @@ Feature: Users need to create expenses so that they can keep track of their expe
     When  I input <date> in the expense date input
     When  I enter <description> in the expense description input
     When  I enter <amount> in the expense amount input
-    When  I enter the create expense button
+    When  I click the create expense button
     Then  I should be on the a page with the title <title>
 
     Examples:

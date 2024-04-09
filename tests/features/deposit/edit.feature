@@ -13,7 +13,7 @@ Feature: Users need to edit deposits so that they can keep track of their income
     When  I input <date> in the deposit date input
     When  I enter <description> in the deposit description input
     When  I enter <amount> in the deposit amount input
-    When  I enter the update deposit button
+    When  I click the update deposit button
     Then  I should be on the a page with the title <title>
 
     Examples:
@@ -38,7 +38,7 @@ Feature: Users need to edit deposits so that they can keep track of their income
     When  I input <date> in the deposit date input
     When  I enter <description> in the deposit description input
     When  I enter <amount> in the deposit amount input
-    When  I enter the update deposit button
+    When  I click the update deposit button
     Then  I should be on the a page with the title <title>
 
     Examples:

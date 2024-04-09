@@ -13,7 +13,7 @@ Feature: Users need to edit expenses so that they can keep track of their expens
     When  I input <date> in the expense date input
     When  I enter <description> in the expense description input
     When  I enter <amount> in the expense amount input
-    When  I enter the update expense button
+    When  I click the update expense button
     Then  I should be on the a page with the title <title>
 
     Examples:
@@ -38,7 +38,7 @@ Feature: Users need to edit expenses so that they can keep track of their expens
     When  I input <date> in the expense date input
     When  I enter <description> in the expense description input
     When  I enter <amount> in the expense amount input
-    When  I enter the update expense button
+    When  I click the update expense button
     Then  I should be on the a page with the title <title>
 
     Examples:

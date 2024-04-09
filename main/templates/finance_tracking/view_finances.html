@@ -16,34 +16,7 @@
     <h2 class="text-center">Transactions</h2>
     <div class="mb-3 text-center">
         <p class="text-center">Total Income: {{ total_income }} - Total Expenses: {{ total_expenses }}</p>
-        <label for="order-by" class="form-label">Order by:</label>
-        <div class="btn-group">
-            <a href="{% url 'view-finances' %}" class="btn btn-primary {% if current_order_by == 'date' %}active{% endif %}">
-                <i class="bi bi-calendar"></i> Date
-            </a>
-            <a id="search-toggle" class="btn btn-primary {% if current_order_by == 'search' %}active{% endif %}">
-                <i class="bi bi-search"></i> Search
-            </a>
-        </div>
     </div>
-    <form class="mb-3" id="search-form" method="get" action="{% url 'view-finances' %}" style="display: none;">
-        <h3>Search By Date</h3>
-        <div class='row justify-content-center'>
-            <div class='col-md-4'>
-                <div class='text-center'>
-                    {{ form.start_date|as_crispy_field }}
-                </div>
-            </div>
-            <div class='col-md-4'>
-                <div class='text-center'>
-                    {{ form.end_date|as_crispy_field }}
-                </div>
-            </div>
-            <div class='col-md-1 mt-3'>
-                <button class='btn btn-primary' type="submit">Search</button>
-            </div>
-        </div>
-    </form>
     {% if transactions %}
         <table class="table">
             <thead>
@@ -56,7 +29,7 @@
                     <th class="text-center">Amount</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="text-center">
                 {% for transaction in transactions %}
                     <tr>
                         {% if transaction.category.group == 'deposit' %}
@@ -65,7 +38,7 @@
                             <td><a class="text-center" href="{% url 'deposit-detail' transaction.id %}">{{ transaction.category }}</a></td>
                             <td><a class="text-center" href="{% url 'deposit-detail' transaction.id %}">{{ transaction.description }}</a></td>
                             <td><a class="text-center text-success" href="{% url 'deposit-detail' transaction.id %}">Deposit</a></td>
-                            <td><a class="text-center" href="{% url 'deposit-detail' transaction.id}">{{ transaction.amount }}</a></td>
+                            <td><a class="text-center" href="{% url 'deposit-detail' transaction.id %}">{{ transaction.amount }}</a></td>
 
                         {% elif transaction.category.group == 'expense' %}
                             <td><a class="text-center" href="{% url 'expense-detail' transaction.id %}">{{ transaction.id }}</a></td>
@@ -73,12 +46,12 @@
                             <td><a class="text-center" href="{% url 'expense-detail' transaction.id %}">{{ transaction.category }}</a></td>
                             <td><a class="text-center" href="{% url 'expense-detail' transaction.id %}">{{ transaction.description }}</a></td>
                             <td><a class="text-center text-danger" href="{% url 'expense-detail' transaction.id %}">Expense</a></td>
-                            <td><a class="text-center" href="{% url 'deposit-detail' transaction.id}">{{ transaction.amount }}</a></td>
+                            <td><a class="text-center" href="{% url 'deposit-detail' transaction.id %}">{{ transaction.amount }}</a></td>
                         {% endif %}
                     </tr>
                 {% endfor %}
             </tbody>
-        </table>    
+        </table>
     {% else %}
         <p class="text-center text-danger">No transactions have been made yet. Create deposits or expenses with the Manage Deposits or Manage Expenses button, then come back!</p>
     {% endif %}
@@ -88,11 +61,11 @@
                 <a href="?page=1">&laquo; first</a>
                 <a href="?page={{ transactions.previous_page_number }}">previous</a>
             {% endif %}
-    
+
             <span class="current">
                 Page {{ transactions.number }} of {{ transactions.paginator.num_pages }}.
             </span>
-    
+
             {% if transactions.has_next %}
                 <a href="?page={{ transactions.next_page_number }}">next</a>
                 <a href="?page={{ transactions.paginator.num_pages }}">last &raquo;</a>
