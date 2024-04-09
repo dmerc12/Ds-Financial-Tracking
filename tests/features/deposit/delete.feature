@@ -8,8 +8,8 @@ Feature: Users need to delete deposits so that they can keep track of their inco
     When  I click track finances button
     When  I click the manage deposits buttton
     When  I click deposit ID <id>
+    When  I click the delete deposit navigation button
     When  I click the delete deposit button
-    When  I enter the delete deposit button
     Then  I should be on the a page with the title <title>
 
     Examples:

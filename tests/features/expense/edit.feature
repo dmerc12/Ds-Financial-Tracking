@@ -8,7 +8,7 @@ Feature: Users need to edit expenses so that they can keep track of their expens
     When  I click track finances button
     When  I click the manage expenses buttton
     When  I click expense ID <id>
-    When  I click the update expense button
+    When  I click the update expense navigation button
     When  I select <category> in the expense category select
     When  I input <date> in the expense date input
     When  I enter <description> in the expense description input
@@ -33,7 +33,7 @@ Feature: Users need to edit expenses so that they can keep track of their expens
     When  I click track finances button
     When  I click the manage expenses buttton
     When  I click expense ID <id>
-    When  I click the update expense button
+    When  I click the update expense navigation button
     When  I select <category> in the expense category select
     When  I input <date> in the expense date input
     When  I enter <description> in the expense description input

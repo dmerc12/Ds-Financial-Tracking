@@ -8,7 +8,7 @@ Feature: Users need to edit deposits so that they can keep track of their income
     When  I click track finances button
     When  I click the manage deposits buttton
     When  I click deposit ID <id>
-    When  I click the update deposit button
+    When  I click the update deposit navigation button
     When  I select <category> in the deposit category select
     When  I input <date> in the deposit date input
     When  I enter <description> in the deposit description input
@@ -33,7 +33,7 @@ Feature: Users need to edit deposits so that they can keep track of their income
     When  I click track finances button
     When  I click the manage deposits buttton
     When  I click deposit ID <id>
-    When  I click the update deposit button
+    When  I click the update deposit navigation button
     When  I select <category> in the deposit category select
     When  I input <date> in the deposit date input
     When  I enter <description> in the deposit description input

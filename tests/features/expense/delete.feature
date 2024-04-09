@@ -8,7 +8,7 @@ Feature: Users need to delete expenses so that they can keep track of their expe
     When  I click track finances button
     When  I click the manage expenses buttton
     When  I click expense ID <id>
-    When  I click the delete expense button
+    When  I click the delete expense navigation button
     When  I enter the delete expense button
     Then  I should be on the a page with the title <title>
 
