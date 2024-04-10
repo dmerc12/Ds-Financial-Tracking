@@ -6,12 +6,18 @@ from poms.users.delete import DeleteUserPOMs
 from poms.users.login import LoginPOMs
 from poms.navbar import NavbarPOMs
 from behave.runner import Context
+from poms.home import HomePOMs
 
 # Setup for webdriver and POM files before selenium tests
 def before_all(context: Context):
     context.driver = WebDriver()
 
     ## register POM files below
+    # home poms
+    context.home_poms = HomePOMs(context.driver)
+
+    # track finances poms
+    
     # users poms
     context.login_poms = LoginPOMs(context.driver)
     context.register_poms = RegisterPOMs(context.driver)

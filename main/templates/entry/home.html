@@ -6,8 +6,8 @@
     <h1 class="text-center pb-2">Welcome to D's Finance Tracking</h1>
     <div class="d-flex justify-content-center">
         <!-- Button to Manage Information -->
-        <a class="btn btn-primary btn-lg btn-outline-secondary p-3 m-3" href="{% url 'update-user' %}">Manage Information</a>
+        <a id="manageInfoButton" class="btn btn-primary btn-lg btn-outline-secondary p-3 m-3" href="{% url 'update-user' %}">Manage Information</a>
         <!-- Button to Track Finances -->
-        <a class="btn btn-primary btn-lg btn-outline-secondary p-3 m-3" href="{% url 'finance-home' %}">Track Finances</a>
+        <a id="trackFinancesButton" class="btn btn-primary btn-lg btn-outline-secondary p-3 m-3" href="{% url 'finance-home' %}">Track Finances</a>
     </div>
 {% endblock content %}
