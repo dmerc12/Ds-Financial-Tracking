@@ -49,3 +49,32 @@ def step_impl(context, password):
 @when(u'I click the login button')
 def step_impl(context):
     context.login_poms.click_login_button()
+
+# Steps for update feature file
+@when(u'I click the manage information button')
+def step_impl(context):
+    context.home_poms.click_manage_information_button()
+
+@when(u'I enter {new_username} in the update username input')
+def step_impl(context, new_username):
+    context.update_user_poms.enter_username_input(new_username)
+
+@when(u'I enter {first_name} in the update first name input')
+def step_impl(context, first_name):
+    context.update_user_poms.enter_first_name_input(first_name)
+
+@when(u'I enter {last_name} in the update last name input')
+def step_impl(context, last_name):
+    context.update_user_poms.enter_last_name_input(last_name)
+
+@when(u'I enter {email} in the update email input')
+def step_impl(context, email):
+    context.update_user_poms.enter_email_input(email)
+
+@when(u'I enter {phone_number} in the update phone number input')
+def step_impl(context, phone_number):
+    context.update_user_poms.enter_phone_number_input(phone_number)
+
+@when(u'I click the update information button')
+def step_impl(context):
+    context.update_user_poms.click_update_user_button()
