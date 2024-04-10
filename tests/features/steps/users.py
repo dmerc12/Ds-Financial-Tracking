@@ -95,3 +95,12 @@ def step_impl(context, new_password2):
 @when(u'I click the change password button')
 def step_impl(context):
     context.change_password_poms.click_change_password_button()
+
+# Steps for delete user feature
+@when(u'I click the delete user navigation button')
+def step_impl(context):
+    context.update_user_poms.click_delete_user_link()
+
+@when(u'I click the delete user button')
+def step_impl(context):
+    context.delete_user_poms.click_delete_user_button()
