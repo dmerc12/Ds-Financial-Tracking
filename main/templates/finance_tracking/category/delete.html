@@ -12,7 +12,7 @@
             </fieldset>
             <div class='form-group'>
                 <button id="deleteCategoryButton" class="btn btn-outline-info" type="submit">Delete Category</button>
-                <a class="btn btn-outline-secondary" href="{% if group == 'deposit' %}{% url 'deposit-home' %}{% elif group == 'expense' %}{% url 'expense-home' %}{% endif %}">Go Back</a>
+                <a id="backButton" class="btn btn-outline-secondary" href="{% if group == 'deposit' %}{% url 'deposit-home' %}{% elif group == 'expense' %}{% url 'expense-home' %}{% endif %}">Go Back</a>
             </div>
         </form>
     </div>
