@@ -1,16 +1,17 @@
-from poms.finance_tracking.deposit.manage_deposits import ManageDepositsPOMs
-from poms.finance_tracking.expense.manage_expenses import ManageExpensesPOMs
-from poms.finance_tracking.category.create import CreateCategoryPOMs
-from poms.users.change_password import ChangePasswordPOMs
+from tests.poms.finance_tracking.deposit.manage_deposits import ManageDepositsPOMs
+from tests.poms.finance_tracking.expense.manage_expenses import ManageExpensesPOMs
+from tests.poms.finance_tracking.category.create import CreateCategoryPOMs
+from tests.poms.finance_tracking.category.update import UpdateCategoryPOMs
+from tests.poms.users.change_password import ChangePasswordPOMs
+from tests.poms.finance_tracking.home import FinanceHomePOMs
 from selenium.webdriver.edge.webdriver import WebDriver
-from poms.finance_tracking.home import FinanceHomePOMs
-from poms.users.update import UpdateUserPOMs
-from poms.users.register import RegisterPOMs
-from poms.users.delete import DeleteUserPOMs
-from poms.users.login import LoginPOMs
-from poms.navbar import NavbarPOMs
+from tests.poms.users.update import UpdateUserPOMs
+from tests.poms.users.register import RegisterPOMs
+from tests.poms.users.delete import DeleteUserPOMs
+from tests.poms.users.login import LoginPOMs
+from tests.poms.navbar import NavbarPOMs
+from tests.poms.home import HomePOMs
 from behave.runner import Context
-from poms.home import HomePOMs
 
 # Setup for webdriver and POM files before selenium tests
 def before_all(context: Context):
@@ -32,6 +33,7 @@ def before_all(context: Context):
 
     # category poms
     context.create_category_poms = CreateCategoryPOMs(context.driver)
+    context.update_category_poms = UpdateCategoryPOMs(context.driver)
 
     # deposit poms
     context.manage_deposits_poms = ManageDepositsPOMs(context.driver)
