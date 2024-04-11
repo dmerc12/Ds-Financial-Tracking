@@ -7,8 +7,8 @@
     <h1 class='text-center pb-2'>Manage Deposits</h1>
     <div class='text-center'>
         <div class="align-items-center">
-            <a class='btn btn-primary btn-outline-primary p-1 mb-2 mt-1 ml-1' href="{% url  'create-deposit' %}">Create Deposit</a>
-            <a class='btn btn-primary btn-outline-primary p-1 mb-2 mt-1 ml-1' href="{% url  'create-category' 'deposit' %}">Create Category</a>
+            <a id="createDepositLink" class='btn btn-primary btn-outline-primary p-1 mb-2 mt-1 ml-1' href="{% url  'create-deposit' %}">Create Deposit</a>
+            <a id="createCategoryLink" class='btn btn-primary btn-outline-primary p-1 mb-2 mt-1 ml-1' href="{% url  'create-category' 'deposit' %}">Create Category</a>
             <select name='selected_category' id='category-select' class='btn btn-primary form-select-lg ml-1 mt-1 mb-2'>
                 {% for category in categories %}
                     <option value='{{ category.pk }}'>{{ category.name }}</option>
@@ -54,7 +54,7 @@
                         </div>
                     </div>
                     <div class='col-md-1 mt-3'>
-                        <button class='btn btn-primary' type="submit">Search</button>
+                        <button id="searchButton" class='btn btn-primary' type="submit">Search</button>
                     </div>
                 </div>
             </form>
@@ -76,7 +76,7 @@
                     <tbody>
                         {% for deposit in deposits %}
                             <tr>
-                                <td><a href="{% url 'deposit-detail' deposit.pk %}" class="deposit-link deposit-table">{{ deposit.pk }}</a></td>
+                                <td><a id="deposit-{{ deposit.pk }}" href="{% url 'deposit-detail' deposit.pk %}" class="deposit-link deposit-table">{{ deposit.pk }}</a></td>
                                 <td><a href="{% url 'deposit-detail' deposit.pk %}" class="deposit-link deposit-table">{{ deposit.date }}</a></td>
                                 <td><a href="{% url 'deposit-detail' deposit.pk %}" class="deposit-link deposit-table">{{ deposit.category }}</a></td>
                                 <td><a href="{% url 'deposit-detail' deposit.pk %}" class="deposit-link deposit-table">{{ deposit.description }}</a></td>
