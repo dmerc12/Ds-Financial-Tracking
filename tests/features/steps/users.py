@@ -78,3 +78,29 @@ def step_impl(context, phone_number):
 @when(u'I click the update information button')
 def step_impl(context):
     context.update_user_poms.click_update_user_button()
+
+# Steps for change password feature
+@when(u'I click the change password navigation button')
+def step_impl(context):
+    context.update_user_poms.click_change_password_link()
+
+@when(u'I enter {new_password1} in the new password 1 input')
+def step_impl(context, new_password1):
+    context.change_password_poms.enter_password1_input(new_password1)
+
+@when(u'I enter {new_password2} in the new password 2 input')
+def step_impl(context, new_password2):
+    context.change_password_poms.enter_password2_input(new_password2)
+
+@when(u'I click the change password button')
+def step_impl(context):
+    context.change_password_poms.click_change_password_button()
+
+# Steps for delete user feature
+@when(u'I click the delete user navigation button')
+def step_impl(context):
+    context.update_user_poms.click_delete_user_link()
+
+@when(u'I click the delete user button')
+def step_impl(context):
+    context.delete_user_poms.click_delete_user_button()
