@@ -1,5 +1,6 @@
 from poms.finance_tracking.deposit.manage_deposits import ManageDepositsPOMs
 from poms.finance_tracking.expense.manage_expenses import ManageExpensesPOMs
+from poms.finance_tracking.category.create import CreateCategoryPOMs
 from poms.users.change_password import ChangePasswordPOMs
 from selenium.webdriver.edge.webdriver import WebDriver
 from poms.finance_tracking.home import FinanceHomePOMs
@@ -30,6 +31,7 @@ def before_all(context: Context):
     context.delete_user_poms = DeleteUserPOMs(context.driver)
 
     # category poms
+    context.create_category_poms = CreateCategoryPOMs(context.driver)
 
     # deposit poms
     context.manage_deposits_poms = ManageDepositsPOMs(context.driver)
