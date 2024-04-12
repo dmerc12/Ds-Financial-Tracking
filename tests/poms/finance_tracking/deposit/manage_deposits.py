@@ -19,13 +19,6 @@ class ManageDepositsPOMs:
         element: WebElement = self.driver.find_element(By.ID, 'createCategoryLink')
         return element.click()
 
-    ## POM for selecting category on the manage deposits page
-    def select_category(self, category_id):
-        element: WebElement = self.driver.find_element(By.ID, 'category-select')
-        select = Select(element)
-        select.select_by_value(category_id)
-        return select.first_selected_option.text
-
     ## POM for clicking the update category link on the manage deposits page
     def click_update_category_link(self):
         element: WebElement = self.driver.find_element(By.ID, 'category-update-btn')
