@@ -41,3 +41,16 @@ def step_impl(context):
 @when(u'I enter the update category button')
 def step_impl(context):
     context.update_category_poms.click_update_category_button()
+
+# Steps for delete category feature file
+@when(u'I click the delete deposit category button')
+def step_impl(context):
+    context.manage_deposits_poms.click_delete_category_toggle()
+
+@when(u'I click the delete expense category button')
+def step_impl(context):
+    context.manage_expenses_poms.click_delete_category_toggle()
+
+@when(u'I click the delete category button')
+def step_impl(context):
+    context.delete_category_poms.click_delete_category_button()
