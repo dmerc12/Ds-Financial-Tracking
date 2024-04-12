@@ -24,7 +24,7 @@ Feature: Users need to create categories so that they can categorize their depos
     When  I click the login button
     When  I click track finances button
     When  I click the manage expenses buttton
-    When  I click the create deposit category button
+    When  I click the create expense category button
     When  I enter <name> in the category name input
     When  I enter the create category button
     Then  I should be on the a page with the title <title>
@@ -57,7 +57,7 @@ Feature: Users need to create categories so that they can categorize their depos
     When  I click the login button
     When  I click track finances button
     When  I click the manage expenses buttton
-    When  I click the create deposit category button
+    When  I click the create expense category button
     When  I enter <name> in the category name input
     When  I enter the create category button
     Then  I should be on the a page with the title <title>

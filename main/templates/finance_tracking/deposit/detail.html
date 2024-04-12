@@ -10,8 +10,8 @@
         <p>Description: {{ deposit.description }}</p>
         <p>Description: {{ deposit.description }}</p>
         <p>Amount: {{ deposit.amount }}</p>
-        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'update-deposit' deposit.pk %}">Update</a>
-        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'delete-deposit' deposit.pk %}">Delete</a>
-        <a class="btn btn-outline-secondary btn-sm mt-1 mb-1" href="{% url return_url %}">Go Back</a>
+        <a id="updateDepositLink" class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'update-deposit' deposit.pk %}">Update</a>
+        <a id="deleteDepositLink" class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'delete-deposit' deposit.pk %}">Delete</a>
+        <a id="backButton" class="btn btn-outline-secondary btn-sm mt-1 mb-1" href="{% url return_url %}">Go Back</a>
     </div>
 {% endblock content %}
