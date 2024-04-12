@@ -28,3 +28,16 @@ def step_impl(context, name):
 @when(u'I enter the create category button')
 def step_impl(context):
     context.create_category_poms.click_create_category_button()
+
+# Steps for update category feature file
+@when(u'I click the update deposit category button')
+def step_impl(context):
+    context.manage_deposits_poms.click_update_category_link()
+
+@when(u'I click the update expense category button')
+def step_impl(context):
+    context.manage_expenses_poms.click_update_category_link()
+
+@when(u'I enter the update category button')
+def step_impl(context):
+    context.update_category_poms.click_update_category_button()
