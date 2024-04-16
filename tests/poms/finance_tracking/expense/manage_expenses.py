@@ -36,11 +36,6 @@ class ManageExpensesPOMs:
         element: WebElement = self.driver.find_element(By.ID, 'category-delete-btn')
         return element.click()
 
-    ## POM for clicking the search toggle on the manage expenses page
-    def click_search_toggle(self):
-        element: WebElement = self.driver.find_element(By.ID, 'search-toggle')
-        return element.click()
-
     ## POM for inputting expense ID in search form on manage expenses page
     def input_expense_id_in_search(self, expense_id):
         element: WebElement = self.driver.find_element(By.ID, 'expense_id')

@@ -36,11 +36,6 @@ class ManageDepositsPOMs:
         element: WebElement = self.driver.find_element(By.ID, 'category-delete-btn')
         return element.click()
 
-    ## POM for clicking the search toggle on the manage deposits page
-    def click_search_toggle(self):
-        element: WebElement = self.driver.find_element(By.ID, 'search-toggle')
-        return element.click()
-
     ## POM for inputting deposit ID in search form on manage deposits page
     def enter_deposit_id_in_search_input(self, deposit_id):
         element: WebElement = self.driver.find_element(By.ID, 'deposit_id')

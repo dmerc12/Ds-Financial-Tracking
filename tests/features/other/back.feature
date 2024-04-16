@@ -80,7 +80,7 @@ Feature: Users need to use the back buttons so that they can navigate the site e
         When  I click the login button
         When  I click the track finances button
         When  I click the manage deposits button
-        When  I click the create deposit button
+        When  I click the create deposit navigation button
         When  I click the back button
         Then  I should be on the a page with the title <title>
 
@@ -187,7 +187,7 @@ Feature: Users need to use the back buttons so that they can navigate the site e
         When  I click the login button
         When  I click the track finances button
         When  I click the manage expenses button
-        When  I click the create expense button
+        When  I click the create expense navigation button
         When  I click the back button
         Then  I should be on the a page with the title <title>
 

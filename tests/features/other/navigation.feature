@@ -89,7 +89,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
         When  I click the login button
         When  I click the track finances button
         When  I click the manage deposits button
-        When  I click the create deposit button
+        When  I click the create deposit navigation button
         Then  I should be on the a page with the title <title>
 
         Examples:
@@ -202,7 +202,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
         When  I click the login button
         When  I click the track finances button
         When  I click the manage expenses button
-        When  I click the create expense button
+        When  I click the create expense navigation button
         Then  I should be on the a page with the title <title>
 
         Examples:

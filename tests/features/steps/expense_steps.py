@@ -1,7 +1,7 @@
 from behave import when
 
 # Steps for create expense feature file
-@when(u'I click the create expense button')
+@when(u'I click the create expense navigation button')
 def step_impl(context):
     context.manage_expenses_poms.click_create_expense_link()
 
@@ -46,11 +46,6 @@ def step_impl(context):
 @when(u'I click the delete expense button')
 def step_impl(context):
     context.delete_expense_poms.click_delete_expense_button()
-
-# Steps for expense search feature file
-@when(u'I click the search tab')
-def step_impl(context):
-    context.manage_expenses_poms.click_search_toggle()
 
 @when(u'I input {id} in the expense ID input')
 def step_impl(context, id):

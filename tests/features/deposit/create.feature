@@ -7,7 +7,7 @@ Feature: Users need to create deposits so that they can keep track of their inco
     When  I click the login button
     When  I click track finances button
     When  I click the manage deposits buttton
-    When  I click the create deposit button
+    When  I click the create deposit navigation button
     When  I select <category> in the deposit category select
     When  I input <date> in the deposit date input
     When  I enter <description> in the deposit description input
@@ -31,7 +31,7 @@ Feature: Users need to create deposits so that they can keep track of their inco
     When  I click the login button
     When  I click track finances button
     When  I click the manage deposits buttton
-    When  I click the create deposit button
+    When  I click the create deposit navigation button
     When  I select <category> in the deposit category select
     When  I input <date> in the deposit date input
     When  I enter <description> in the deposit description input

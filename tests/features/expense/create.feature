@@ -7,7 +7,7 @@ Feature: Users need to create expenses so that they can keep track of their expe
     When  I click the login button
     When  I click track finances button
     When  I click the manage expenses buttton
-    When  I click the create expense button
+    When  I click the create expense navigation button
     When  I select <category> in the expense category select
     When  I input <date> in the expense date input
     When  I enter <description> in the expense description input
@@ -31,7 +31,7 @@ Feature: Users need to create expenses so that they can keep track of their expe
     When  I click the login button
     When  I click track finances button
     When  I click the manage expenses buttton
-    When  I click the create expense button
+    When  I click the create expense navigation button
     When  I select <category> in the expense category select
     When  I input <date> in the expense date input
     When  I enter <description> in the expense description input

@@ -1,7 +1,7 @@
 from behave import when
 
 # Steps for create deposit feature file
-@when(u'I click the create deposit button')
+@when(u'I click the create deposit navigation button')
 def step_impl(context):
     context.manage_deposits_poms.click_create_deposit_link()
 
@@ -46,11 +46,6 @@ def step_impl(context):
 @when(u'I click the delete deposit button')
 def step_impl(context):
     context.delete_deposit_poms.click_delete_deposit_button()
-
-# Steps for deposit search feature file
-@when(u'I click the search tab')
-def step_impl(context):
-    context.manage_deposits_poms.click_search_toggle()
 
 @when(u'I input {id} in the deposit ID input')
 def step_impl(context, id):
