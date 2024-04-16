@@ -18,11 +18,6 @@ class ChangePasswordPOMs:
         element: WebElement = self.driver.find_element(By.ID, 'new_password2')
         return element.send_keys(password2)
 
-    ## POM for clicking the back button on the change password page
-    def click_back_button(self):
-        element: WebElement = self.driver.find_element(By.ID, 'backButton')
-        return element.click()
-
     ## POM for clicking the change password button on change password page
     def click_change_password_button(self):
         element: WebElement = self.driver.find_element(By.ID, 'changePasswordButton')

@@ -24,3 +24,34 @@ def step_impl(context, amount):
 @when(u'I click the create deposit button')
 def step_impl(context):
     context.create_deposit_poms.click_create_deposit_button()
+
+# Steps for update deposit feature file
+@when(u'I click deposit ID {id}')
+def step_impl(context, id):
+    context.manage_deposits_poms.click_deposit_id(id)
+
+@when(u'I click the update deposit navigation button')
+def step_impl(context):
+    context.deposit_detail_poms.click_update_deposit_link()
+
+@when(u'I click the update deposit button')
+def step_impl(context):
+    context.update_deposit_poms.click_update_deposit_button()
+
+# Steps for delete deposit feature file
+@when(u'I click the delete deposit navigation button')
+def step_impl(context):
+    context.deposit_detail_poms.click_delete_deposit_link()
+
+@when(u'I click the delete deposit button')
+def step_impl(context):
+    context.delete_deposit_poms.click_delete_deposit_button()
+
+# Steps for deposit search feature file
+@when(u'I click the search tab')
+def step_impl(context):
+    context.manage_deposits_poms.click_search_toggle()
+
+@when(u'I input {id} in the deposit ID input')
+def step_impl(context, id):
+    context.manage_deposits_poms.enter_deposit_id_in_search_input(id)
