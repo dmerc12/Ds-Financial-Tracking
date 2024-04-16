@@ -38,4 +38,11 @@ def step_impl(context):
 def step_impl(context):
     context.update_deposit_poms.click_update_deposit_button()
 
+# Steps for delete deposit feature file
+@when(u'I click the delete deposit navigation button')
+def step_impl(context):
+    context.deposit_detail_poms.click_delete_deposit_link()
 
+@when(u'I click the delete deposit button')
+def step_impl(context):
+    context.delete_deposit_poms.click_delete_deposit_button()
