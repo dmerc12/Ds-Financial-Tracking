@@ -36,8 +36,3 @@ class CreateExpensePOMs:
     def click_create_expense_button(self):
         element: WebElement = self.driver.find_element(By.ID, 'createExpenseButton')
         return element.click()
-
-    ## POM for clicking back button on create expense page
-    def click_back_button(self):
-        element: WebElement = self.driver.find_element(By.ID, 'backButton')
-        return element.click()

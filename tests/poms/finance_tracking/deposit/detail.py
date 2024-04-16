@@ -17,8 +17,3 @@ class DepositDetailPOMs:
     def click_delete_deposit_link(self):
         element: WebElement = self.driver.find_element(By.ID, 'deleteDepositLink')
         return element.click()
-
-    ## POM for clicking back button on deposit detail page
-    def click_back_button(self):
-        element: WebElement = self.driver.find_element(By.ID, 'backButton')
-        return element.click()

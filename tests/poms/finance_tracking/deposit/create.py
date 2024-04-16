@@ -37,7 +37,3 @@ class CreateDepositPOMs:
         element: WebElement = self.driver.find_element(By.ID, 'createDepositButton')
         return element.click()
 
-    ## POM for clicking back button on create deposit page
-    def click_back_button(self):
-        element: WebElement = self.driver.find_element(By.ID, 'backButton')
-        return element.click()

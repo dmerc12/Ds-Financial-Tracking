@@ -12,8 +12,3 @@ class UpdateCategoryPOMs:
     def click_update_category_button(self):
         element: WebElement = self.driver.find_element(By.ID, 'updateCategoryButton')
         return element.click()
-
-    ## POM for clicking the back button on the update category page
-    def click_back_button(self):
-        element: WebElement = self.driver.find_element(By.ID, 'backButton')
-        return element.click()

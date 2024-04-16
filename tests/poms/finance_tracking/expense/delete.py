@@ -12,8 +12,3 @@ class DeleteExpensePOMs:
     def click_delete_expense_button(self):
         element: WebElement = self.driver.find_element(By.ID, 'deleteExpenseButton')
         return element.click()
-
-    ## POM for clicking back button on delete expense page
-    def click_back_button(self):
-        element: WebElement = self.driver.find_element(By.ID, 'backButton')
-        return element.click()

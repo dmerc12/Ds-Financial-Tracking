@@ -12,8 +12,3 @@ class UpdateDepositPOMs:
     def click_update_deposit_button(self):
         element: WebElement = self.driver.find_element(By.ID, 'updateDepositButton')
         return element.click()
-
-    ## POM for clicking back button on update deposit page
-    def click_back_button(self):
-        element: WebElement = self.driver.find_element(By.ID, 'backButton')
-        return element.click()

@@ -18,7 +18,3 @@ class CreateCategoryPOMs:
         element: WebElement = self.driver.find_element(By.ID, 'createCategoryButton')
         return element.click()
 
-    ## POM for clicking the back button on the create category page
-    def click_back_button(self):
-        element: WebElement = self.driver.find_element(By.ID, 'backButton')
-        return element.click()

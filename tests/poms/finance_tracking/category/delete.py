@@ -12,8 +12,3 @@ class DeleteCategoryPOMs:
     def click_delete_category_button(self):
         element: WebElement = self.driver.find_element(By.ID, 'deleteCategoryButton')
         return element.click()
-
-    ## POM for clicking the back button on the delete category page
-    def click_back_button(self):
-        element: WebElement = self.driver.find_element(By.ID, 'backButton')
-        return element.click()
