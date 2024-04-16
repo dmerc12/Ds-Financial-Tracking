@@ -35,17 +35,17 @@ class ManageDepositsPOMs:
         return element.click()
 
     ## POM for inputting deposit ID in search form on manage deposits page
-    def input_deposit_id_in_search(self, deposit_id):
+    def enter_deposit_id_in_search_input(self, deposit_id):
         element: WebElement = self.driver.find_element(By.ID, 'deposit_id')
         return element.send_keys(deposit_id)
 
     ## POM for inputting start date in search form on manage deposits page
-    def input_start_date_in_search(self, start_date):
+    def enter_start_date_in_search_input(self, start_date):
         element: WebElement = self.driver.find_element(By.ID, 'start_date')
         return element.send_keys(start_date)
 
     ## POM for inputting end date in search form on manage deposits page
-    def input_end_date_in_search(self, end_date):
+    def enter_end_date_in_search_input(self, end_date):
         element: WebElement = self.driver.find_element(By.ID, 'end_date')
         return element.send_keys(end_date)
 
