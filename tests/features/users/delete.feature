@@ -12,4 +12,4 @@ Feature: Users need to delete their account so that they can remove their inform
 
     Examples:
     |username|password |title |
-    |test3   |pass12345|Log In|
+    |test    |pass12345|Log In|

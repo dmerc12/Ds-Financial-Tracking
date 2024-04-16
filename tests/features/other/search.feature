@@ -14,4 +14,4 @@ Feature: Users need to search finances so that they can better understand their 
 
         Examples:
         |username|password |start_date|end_date  |title             |
-        |test    |pass12345|2024-01-01|2024-02-01|Analyzing Finances|
+        |test3   |pass12345|2024-01-01|2024-02-01|Analyzing Finances|

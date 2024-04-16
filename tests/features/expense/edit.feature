@@ -18,12 +18,12 @@ Feature: Users need to edit expenses so that they can keep track of their expens
 
     Examples:
     |username|password |id|category|date       |description|amount|title         |
-    |test    |pass12345|1 |        |20224-01-05|test       |45.54 |Updating Expense|
-    |test    |pass12345|1 |test    |           |test       |45.54 |Updating Expense|
-    |test    |pass12345|1 |test    |20224-01-05|           |45.54 |Updating Expense|
-    |test    |pass12345|1 |test    |20224-01-05|test       |      |Updating Expense|
-    |test    |pass12345|1 |test    |20224-01-05|'t' * 256  |45.54 |Updating Expense|
-    |test    |pass12345|1 |test    |20224-01-05|test       |-45.54|Updating Expense|
+    |test    |pass12345|2 |        |20224-01-05|test       |45.54 |Updating Expense|
+    |test    |pass12345|2 |test    |           |test       |45.54 |Updating Expense|
+    |test    |pass12345|2 |test    |20224-01-05|           |45.54 |Updating Expense|
+    |test    |pass12345|2 |test    |20224-01-05|test       |      |Updating Expense|
+    |test    |pass12345|2 |test    |20224-01-05|'t' * 256  |45.54 |Updating Expense|
+    |test    |pass12345|2 |test    |20224-01-05|test       |-45.54|Updating Expense|
 
   Scenario Outline: As a user I should be able to edit a expense with valid information
     Given I am on the login page
@@ -43,4 +43,4 @@ Feature: Users need to edit expenses so that they can keep track of their expens
 
     Examples:
     |username|password |id|category|date      |description|amount|title            |
-    |test    |pass12345|1 |test    |2024-01-08|test       |45.58 |Managing Expenses|
+    |test    |pass12345|2 |test    |2024-01-08|test       |45.58 |Managing Expenses|

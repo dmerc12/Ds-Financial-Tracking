@@ -18,11 +18,11 @@ Feature: Users need to create expenses so that they can keep track of their expe
     Examples:
     |username|password |category|date       |description|amount|title         |
     |test    |pass12345|        |20224-01-05|test       |45.54 |Create Expenses|
-    |test    |pass12345|test    |           |test       |45.54 |Create Expenses|
-    |test    |pass12345|test    |20224-01-05|           |45.54 |Create Expenses|
-    |test    |pass12345|test    |20224-01-05|test       |      |Create Expenses|
-    |test    |pass12345|test    |20224-01-05|'t' * 256  |45.54 |Create Expenses|
-    |test    |pass12345|test    |20224-01-05|test       |-45.54|Create Expenses|
+    |test    |pass12345|test4   |           |test       |45.54 |Create Expenses|
+    |test    |pass12345|test4   |20224-01-05|           |45.54 |Create Expenses|
+    |test    |pass12345|test4   |20224-01-05|test       |      |Create Expenses|
+    |test    |pass12345|test4   |20224-01-05|'t' * 256  |45.54 |Create Expenses|
+    |test    |pass12345|test4   |20224-01-05|test       |-45.54|Create Expenses|
 
   Scenario Outline: As a user I should be able to create an expense with valid information
     Given I am on the login page
@@ -41,4 +41,4 @@ Feature: Users need to create expenses so that they can keep track of their expe
 
     Examples:
     |username|password |category|date      |description|amount|title            |
-    |test    |pass12345|test    |2024-01-08|test       |45.58 |Managing Expensess|
+    |test    |pass12345|test4   |2024-01-08|test       |45.58 |Managing Expensess|

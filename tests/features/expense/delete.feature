@@ -14,4 +14,4 @@ Feature: Users need to delete expenses so that they can keep track of their expe
 
     Examples:
     |username|password |id|title            |
-    |test    |pass12345|1 |Managing Expenses|
+    |test    |pass12345|2 |Managing Expenses|

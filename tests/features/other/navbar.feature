@@ -19,7 +19,7 @@ Feature: Users need to use the navigation bar so that they can navigate the site
 
         Examples:
         |username|password |title|
-        |test    |pass12345|Home |
+        |test3   |pass12345|Home |
 
     Scenario Outline: As a user I should not be able to use the manage information tab in the navbar when not logged in
         Given I am on the login page
@@ -40,7 +40,7 @@ Feature: Users need to use the navigation bar so that they can navigate the site
 
         Examples:
         |username|password |title               |
-        |test    |pass12345|Updating Information|
+        |test3   |pass12345|Updating Information|
 
     Scenario Outline: As a user I should not be able to use the manage deposits tab in the navbar when not logged in
         Given I am on the login page
@@ -63,7 +63,7 @@ Feature: Users need to use the navigation bar so that they can navigate the site
 
         Examples:
         |username|password |title            |
-        |test    |pass12345|Managing Deposits|
+        |test3   |pass12345|Managing Deposits|
 
     Scenario Outline: As a user I should not be able to use the manage expenses tab in the navbar when not logged in
         Given I am on the login page
@@ -86,7 +86,7 @@ Feature: Users need to use the navigation bar so that they can navigate the site
 
         Examples:
         |username|password |title            |
-        |test    |pass12345|Managing Expenses|
+        |test3   |pass12345|Managing Expenses|
 
     Scenario Outline: As a user I should not be able to use the view finances tab in the navbar when not logged in
         Given I am on the login page
@@ -109,7 +109,7 @@ Feature: Users need to use the navigation bar so that they can navigate the site
 
         Examples:
         |username|password |title           |
-        |test    |pass12345|Viewing Finances|
+        |test3   |pass12345|Viewing Finances|
 
     Scenario Outline: As a user I should not be able to use the analyze finances tab in the navbar when not logged in
         Given I am on the login page
@@ -132,7 +132,7 @@ Feature: Users need to use the navigation bar so that they can navigate the site
 
         Examples:
         |username|password |title             |
-        |test    |pass12345|Analyzing Finances|
+        |test3   |pass12345|Analyzing Finances|
 
     Scenario Outline: As a user I should be able to use the logout in the navbar
         Given I am on the login page
@@ -144,4 +144,4 @@ Feature: Users need to use the navigation bar so that they can navigate the site
 
         Examples:
         |username|password |title |
-        |test    |pass12345|Log In|
+        |test3   |pass12345|Log In|

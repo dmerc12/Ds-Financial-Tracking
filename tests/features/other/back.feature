@@ -12,7 +12,7 @@ Feature: Users need to use the back buttons so that they can navigate the site e
 
         Examples:
         |username|password |title               |
-        |test    |pass12345|Updating Information|
+        |test3   |pass12345|Updating Information|
 
     Scenario Outline: As a user I should be able to use the back button on the delete user page
         Given I am on the login page
@@ -26,7 +26,7 @@ Feature: Users need to use the back buttons so that they can navigate the site e
 
         Examples:
         |username|password |title               |
-        |test    |pass12345|Updating Information|
+        |test3   |pass12345|Updating Information|
 
     Scenario Outline: As a user I should be able to use the back button on the create deposit category page when coming from the manage deposits page
         Given I am on the login page
@@ -41,7 +41,7 @@ Feature: Users need to use the back buttons so that they can navigate the site e
 
         Examples:
         |username|password |title            |
-        |test    |pass12345|Managing Deposits|
+        |test3   |pass12345|Managing Deposits|
 
     Scenario Outline: As a user I should be able to use the back button on the update deposit category page when coming from the manage deposits page
         Given I am on the login page
@@ -56,7 +56,7 @@ Feature: Users need to use the back buttons so that they can navigate the site e
 
         Examples:
         |username|password |title            |
-        |test    |pass12345|Managing Deposits|
+        |test3   |pass12345|Managing Deposits|
 
     Scenario Outline: As a user I should be able to use the back button on the delete deposit category page when coming from the manage deposits page
         Given I am on the login page
@@ -71,7 +71,7 @@ Feature: Users need to use the back buttons so that they can navigate the site e
 
         Examples:
         |username|password |title            |
-        |test    |pass12345|Managing Deposits|
+        |test3   |pass12345|Managing Deposits|
 
     Scenario Outline: As a user I should be able to use the back button the create deposit page
         Given I am on the login page
@@ -86,7 +86,7 @@ Feature: Users need to use the back buttons so that they can navigate the site e
 
         Examples:
         |username|password |title         |
-        |test    |pass12345|Managing Deposits|
+        |test3   |pass12345|Managing Deposits|
 
     Scenario Outline: As a user I should be able to use the back button the deposit detail page
         Given I am on the login page
@@ -101,7 +101,7 @@ Feature: Users need to use the back buttons so that they can navigate the site e
 
         Examples:
         |username|password |id|title      |
-        |test    |pass12345|1 |Managing Deposits|
+        |test3   |pass12345|1 |Managing Deposits|
 
     Scenario Outline: As a user I should be able to use the back button the update deposit page
         Given I am on the login page
@@ -117,7 +117,7 @@ Feature: Users need to use the back buttons so that they can navigate the site e
 
         Examples:
         |username|password |id|title      |
-        |test    |pass12345|1 |Deposit - 1|
+        |test3   |pass12345|1 |Deposit - 1|
 
     Scenario Outline: As a user I should be able to use the back button the delete deposit page
         Given I am on the login page
@@ -133,7 +133,7 @@ Feature: Users need to use the back buttons so that they can navigate the site e
 
         Examples:
         |username|password |id|title      |
-        |test    |pass12345|1 |Deposit - 1|
+        |test3   |pass12345|1 |Deposit - 1|
 
     Scenario Outline: As a user I should be able to use the back button on the create expense category page when coming from the manage expenses page
         Given I am on the login page
@@ -148,7 +148,7 @@ Feature: Users need to use the back buttons so that they can navigate the site e
 
         Examples:
         |username|password |title            |
-        |test    |pass12345|Managing Expenses|
+        |test3   |pass12345|Managing Expenses|
 
     Scenario Outline: As a user I should be able to use the back button on the update expense category page when coming from the manage expenses page
         Given I am on the login page
@@ -163,7 +163,7 @@ Feature: Users need to use the back buttons so that they can navigate the site e
 
         Examples:
         |username|password |title            |
-        |test    |pass12345|Managing Expenses|
+        |test3   |pass12345|Managing Expenses|
 
     Scenario Outline: As a user I should be able to use the back button on the delete expense category page when coming from the manage expenses page
         Given I am on the login page
@@ -178,7 +178,7 @@ Feature: Users need to use the back buttons so that they can navigate the site e
 
         Examples:
         |username|password |title            |
-        |test    |pass12345|Managing Expenses|
+        |test3   |pass12345|Managing Expenses|
 
     Scenario Outline: As a user I should be able to use the back button the create expense page
         Given I am on the login page
@@ -193,7 +193,7 @@ Feature: Users need to use the back buttons so that they can navigate the site e
 
         Examples:
         |username|password |title            |
-        |test    |pass12345|Managing Expenses|
+        |test3   |pass12345|Managing Expenses|
 
     Scenario Outline: As a user I should be able to use the back button the expense detail page
         Given I am on the login page
@@ -208,7 +208,7 @@ Feature: Users need to use the back buttons so that they can navigate the site e
 
         Examples:
         |username|password |id|title            |
-        |test    |pass12345|1 |Managing Expenses|
+        |test3   |pass12345|1 |Managing Expenses|
 
     Scenario Outline: As a user I should be able to use the back button the update expense page
         Given I am on the login page
@@ -224,7 +224,7 @@ Feature: Users need to use the back buttons so that they can navigate the site e
 
         Examples:
         |username|password |id|title      |
-        |test    |pass12345|1 |Expense - 1|
+        |test3   |pass12345|1 |Expense - 1|
 
     Scenario Outline: As a user I should be able to use the back button the delete deposit page
         Given I am on the login page
@@ -240,4 +240,4 @@ Feature: Users need to use the back buttons so that they can navigate the site e
 
         Examples:
         |username|password |id|title      |
-        |test    |pass12345|1 |Expense - 1|
+        |test3   |pass12345|1 |Expense - 1|

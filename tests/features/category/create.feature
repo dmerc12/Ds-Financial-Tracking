@@ -14,8 +14,8 @@ Feature: Users need to create categories so that they can categorize their depos
 
     Examples:
     |username|password |name    |title          |
-    |test    |pass12345|        |Adding Category|
-    |test    |pass12345|'t' * 61|Adding Category|
+    |test3   |pass12345|        |Adding Category|
+    |test3   |pass12345|'t' * 61|Adding Category|
 
   Scenario Outline: As a user I should not be able to create an expense category with invalid information
     Given I am on the login page
@@ -31,8 +31,8 @@ Feature: Users need to create categories so that they can categorize their depos
 
     Examples:
     |username|password |name    |title          |
-    |test    |pass12345|        |Adding Category|
-    |test    |pass12345|'t' * 61|Adding Category|
+    |test3   |pass12345|        |Adding Category|
+    |test3   |pass12345|'t' * 61|Adding Category|
 
   Scenario Outline: As a user I should be able to create a deposit category with valid information
     Given I am on the login page
@@ -48,7 +48,7 @@ Feature: Users need to create categories so that they can categorize their depos
 
     Examples:
     |username|password |name|title            |
-    |test    |pass12345|test|Managing Deposits|
+    |test3   |pass12345|test|Managing Deposits|
 
   Scenario Outline: As a user I should be able to create an expense category with valid information
     Given I am on the login page
@@ -64,4 +64,4 @@ Feature: Users need to create categories so that they can categorize their depos
 
     Examples:
     |username|password |name|title            |
-    |test    |pass12345|test|Managing Expenses|
+    |test3   |pass12345|test|Managing Expenses|

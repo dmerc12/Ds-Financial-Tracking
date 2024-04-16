@@ -29,7 +29,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |title               |
-        |test    |pass12345|Updating Information|
+        |test3   |pass12345|Updating Information|
 
     Scenario Outline: As a user I should be able to navigate to the change password page
         Given I am on the login page
@@ -42,7 +42,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |title            |
-        |test    |pass12345|Changing Password|
+        |test3   |pass12345|Changing Password|
 
     Scenario Outline: As a user I should be able to navigate to the delete user page
         Given I am on the login page
@@ -55,7 +55,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |title           |
-        |test    |pass12345|Deleting Account|
+        |test3   |pass12345|Deleting Account|
 
     Scenario Outline: As a user I should be able to navigate to the track finances page
         Given I am on the login page
@@ -67,7 +67,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |title                |
-        |test    |pass12345|Finance Tracking Home|
+        |test3   |pass12345|Finance Tracking Home|
 
     Scenario Outline: As a user I should be able to navigate to the manage deposits page
         Given I am on the login page
@@ -80,7 +80,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |title            |
-        |test    |pass12345|Managing Deposits|
+        |test3   |pass12345|Managing Deposits|
 
     Scenario Outline: As a user I should be able to navigate to the create deposit page
         Given I am on the login page
@@ -94,7 +94,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |title         |
-        |test    |pass12345|Create Deposit|
+        |test3   |pass12345|Create Deposit|
 
     Scenario Outline: As a user I should be able to navigate to the deposit detail page
         Given I am on the login page
@@ -108,7 +108,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |id|title      |
-        |test    |pass12345|1 |Deposit - 1|
+        |test3   |pass12345|1 |Deposit - 1|
 
     Scenario Outline: As a user I should be able to navigate to the update deposit page
         Given I am on the login page
@@ -123,7 +123,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |id|title           |
-        |test    |pass12345|1 |Updating Deposit|
+        |test3   |pass12345|1 |Updating Deposit|
 
     Scenario Outline: As a user I should be able to navigate to the delete deposit page
         Given I am on the login page
@@ -138,7 +138,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |id|title           |
-        |test    |pass12345|1 |Deleting Deposit|
+        |test3   |pass12345|1 |Deleting Deposit|
 
     Scenario Outline: As a user I should be able to navigate to the create deposit category page
         Given I am on the login page
@@ -152,7 +152,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |title          |
-        |test    |pass12345|Adding Category|
+        |test3   |pass12345|Adding Category|
 
     Scenario Outline: As a user I should be able to navigate to the update deposit category page
         Given I am on the login page
@@ -166,7 +166,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |title            |
-        |test    |pass12345|Updating Category|
+        |test3   |pass12345|Updating Category|
 
     Scenario Outline: As a user I should be able to navigate to the delete deposit category page
         Given I am on the login page
@@ -180,7 +180,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |title            |
-        |test    |pass12345|Deleting Category|
+        |test3   |pass12345|Deleting Category|
 
     Scenario Outline: As a user I should be able to navigate to the manage expenses page
         Given I am on the login page
@@ -193,7 +193,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |title            |
-        |test    |pass12345|Managing Expenses|
+        |test3   |pass12345|Managing Expenses|
 
     Scenario Outline: As a user I should be able to navigate to the create expense page
         Given I am on the login page
@@ -207,7 +207,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |title         |
-        |test    |pass12345|Create Expense|
+        |test3   |pass12345|Create Expense|
 
     Scenario Outline: As a user I should be able to navigate to the expense detail page
         Given I am on the login page
@@ -221,7 +221,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |id|title      |
-        |test    |pass12345|1 |Expense - 1|
+        |test3   |pass12345|1 |Expense - 1|
 
     Scenario Outline: As a user I should be able to navigate to the update expense page
         Given I am on the login page
@@ -236,7 +236,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |id|title           |
-        |test    |pass12345|1 |Updating Expense|
+        |test3   |pass12345|1 |Updating Expense|
 
     Scenario Outline: As a user I should be able to navigate to the delete expense page
         Given I am on the login page
@@ -251,7 +251,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |id|title           |
-        |test    |pass12345|1 |Deleting Expense|
+        |test3   |pass12345|1 |Deleting Expense|
 
     Scenario Outline: As a user I should be able to navigate to the create expense category page
         Given I am on the login page
@@ -265,7 +265,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |title          |
-        |test    |pass12345|Adding Category|
+        |test3   |pass12345|Adding Category|
 
     Scenario Outline: As a user I should be able to navigate to the update expense category page
         Given I am on the login page
@@ -279,7 +279,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |title            |
-        |test    |pass12345|Updating Category|
+        |test3   |pass12345|Updating Category|
 
     Scenario Outline: As a user I should be able to navigate to the delete expense category page
         Given I am on the login page
@@ -293,7 +293,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |title            |
-        |test    |pass12345|Deleting Category|
+        |test3   |pass12345|Deleting Category|
 
     Scenario Outline: As a user I should be able to navigate to the view finances page
         Given I am on the login page
@@ -306,7 +306,7 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |title           |
-        |test    |pass12345|Viewing Finances|
+        |test3   |pass12345|Viewing Finances|
 
     Scenario Outline: As a user I should be able to navigate to the analyze finances page
         Given I am on the login page
@@ -319,4 +319,4 @@ Feature: Users need to use the navigation buttons so that they can navigate the 
 
         Examples:
         |username|password |title             |
-        |test    |pass12345|Analyzing Finances|
+        |test3   |pass12345|Analyzing Finances|

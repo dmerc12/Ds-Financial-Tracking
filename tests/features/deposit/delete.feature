@@ -14,4 +14,4 @@ Feature: Users need to delete deposits so that they can keep track of their inco
 
     Examples:
     |username|password |id|title            |
-    |test    |pass12345|1 |Managing Deposits|
+    |test    |pass12345|2 |Managing Deposits|

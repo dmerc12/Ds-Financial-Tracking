@@ -21,6 +21,14 @@ def step_impl(context):
 def step_impl(context):
     context.finance_poms.click_manage_expenses_link()
 
+@when(u'I select {category} in the manage deposit category dropdown')
+def step_impl(context, category):
+    context.manage_deposits_poms.select_category(category)
+
+@when(u'I select {category} in the manage expense category dropdown')
+def step_impl(context, category):
+    context.manage_expenses_poms.select_category(category)
+
 @when(u'I enter {name} in the category name input')
 def step_impl(context, name):
     context.create_category_poms.enter_name_input(name)

@@ -23,9 +23,15 @@ from tests.poms.users.login import LoginPOMs
 from tests.poms.navbar import NavbarPOMs
 from tests.poms.home import HomePOMs
 from behave.runner import Context
+from .cleanup import cleanup
+from .setup import setup
 
 # Setup for webdriver and POM files before selenium tests
 def before_all(context: Context):
+    ## Setup ptest environment
+    setup()
+
+    ## Setupp web driver
     context.driver = WebDriver()
 
     ## register POM files below
@@ -74,4 +80,8 @@ def before_all(context: Context):
 
 # Cleanup for webdriver after selenium tests
 def after_all(context: Context):
+    ## Close webdriver
     context.driver.close()
+
+    ## Clean up test environment
+    cleanup()
