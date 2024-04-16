@@ -7,6 +7,10 @@ from tests.poms.finance_tracking.deposit.create import CreateDepositPOMs
 from tests.poms.finance_tracking.deposit.update import UpdateDepositPOMs
 from tests.poms.finance_tracking.deposit.delete import DeleteDepositPOMs
 from tests.poms.finance_tracking.deposit.detail import DepositDetailPOMs
+from tests.poms.finance_tracking.expense.create import CreateExpensePOMs
+from tests.poms.finance_tracking.expense.update import UpdateExpensePOMs
+from tests.poms.finance_tracking.expense.delete import DeleteExpensePOMs
+from tests.poms.finance_tracking.expense.detail import ExpenseDetailPOMs
 from tests.poms.users.change_password import ChangePasswordPOMs
 from tests.poms.finance_tracking.home import FinanceHomePOMs
 from selenium.webdriver.edge.webdriver import WebDriver
@@ -50,6 +54,10 @@ def before_all(context: Context):
 
     # expense poms
     context.manage_expenses_poms = ManageExpensesPOMs(context.driver)
+    context.create_expense_poms = CreateExpensePOMs(context.driver)
+    context.update_expense_poms = UpdateExpensePOMs(context.driver)
+    context.delete_expense_poms = DeleteExpensePOMs(context.driver)
+    context.expense_detail_poms = ExpenseDetailPOMs(context.driver)
 
     # navigation poms
     context.navbar_poms = NavbarPOMs(context.driver)
