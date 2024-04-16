@@ -39,21 +39,6 @@ class ManageExpensesPOMs:
         element: WebElement = self.driver.find_element(By.ID, 'expense_id')
         return element.send_keys(expense_id)
 
-    ## POM for inputting start date in search form on manage expenses page
-    def input_start_date_in_search(self, start_date):
-        element: WebElement = self.driver.find_element(By.ID, 'start_date')
-        return element.send_keys(start_date)
-
-    ## POM for inputting end date in search form on manage expenses page
-    def input_end_date_in_search(self, end_date):
-        element: WebElement = self.driver.find_element(By.ID, 'end_date')
-        return element.send_keys(end_date)
-
-    ## POM for clicking the search button on the manage expenses page
-    def click_search_button(self):
-        element: WebElement = self.driver.find_element(By.ID, 'searchButton')
-        return element.click()
-
     ## POM for clicking ID of given expense on manage expenses page
     def click_expense_id(self, expense_id):
         element: WebElement = self.driver.find_element(By.ID, 'expense-{expense_id}')

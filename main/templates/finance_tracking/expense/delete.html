@@ -11,8 +11,8 @@
                 <h2>Are you sure you want to delete the expense {{ expense.pk }} with date {{ expense.date }} and amount {{ expense.amount }}?</h2>
             </fieldset>
             <div class='form-group'>
-                <button class="btn btn-outline-info" type="submit">Delete Expense</button>
-                <a class="btn btn-outline-secondary" href="{% url 'expense-detail' expense.pk %}">Go Back</a>
+                <button id="deleteExpenseButton" class="btn btn-outline-info" type="submit">Delete Expense</button>
+                <a id="backButton" class="btn btn-outline-secondary" href="{% url 'expense-detail' expense.pk %}">Go Back</a>
             </div>
         </form>
     </div>

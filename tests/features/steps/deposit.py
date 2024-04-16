@@ -55,15 +55,3 @@ def step_impl(context):
 @when(u'I input {id} in the deposit ID input')
 def step_impl(context, id):
     context.manage_deposits_poms.enter_deposit_id_in_search_input(id)
-
-@when(u'I input {start_date} in the start input')
-def step_impl(context, start_date):
-    context.manage_deposits_poms.enter_start_date_in_search_input(start_date)
-
-@when(u'I input {end_date} in the end date input')
-def step_impl(context, end_date):
-    context.manage_deposits_poms.enter_end_date_in_search_input(end_date)
-
-@when(u'I click the search button')
-def step_impl(context):
-    context.manage_deposits_poms.click_search_button()

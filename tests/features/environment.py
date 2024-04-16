@@ -1,5 +1,6 @@
 from tests.poms.finance_tracking.deposit.manage_deposits import ManageDepositsPOMs
 from tests.poms.finance_tracking.expense.manage_expenses import ManageExpensesPOMs
+from tests.poms.finance_tracking.analyze_finances import AnalyzeFinancesPOMs
 from tests.poms.finance_tracking.category.create import CreateCategoryPOMs
 from tests.poms.finance_tracking.category.update import UpdateCategoryPOMs
 from tests.poms.finance_tracking.category.delete import DeleteCategoryPOMs
@@ -60,9 +61,8 @@ def before_all(context: Context):
     context.delete_expense_poms = DeleteExpensePOMs(context.driver)
     context.expense_detail_poms = ExpenseDetailPOMs(context.driver)
 
-    ### view finances poms
-
     ### analyze finance poms
+    context.analyze_finances_poms = AnalyzeFinancesPOMs(context.driver)
 
     ### navigation poms
     context.navbar_poms = NavbarPOMs(context.driver)
