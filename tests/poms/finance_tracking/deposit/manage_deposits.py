@@ -19,6 +19,13 @@ class ManageDepositsPOMs:
         element: WebElement = self.driver.find_element(By.ID, 'createCategoryLink')
         return element.click()
 
+    ## POM for selecting category
+    def select_category(self, category):
+        element: WebElement = self.driver.find_element(By.ID, 'deposit-category-select')
+        select = Select(element)
+        select.select_by_visible_text(category)
+        return select.first_selected_option.text
+
     ## POM for clicking the update category link on the manage deposits page
     def click_update_category_link(self):
         element: WebElement = self.driver.find_element(By.ID, 'category-update-btn')
@@ -27,11 +34,6 @@ class ManageDepositsPOMs:
     ## POM for clicking the delete category link on the manage deposits page
     def click_delete_category_link(self):
         element: WebElement = self.driver.find_element(By.ID, 'category-delete-btn')
-        return element.click()
-
-    ## POM for clicking the search toggle on the manage deposits page
-    def click_search_toggle(self):
-        element: WebElement = self.driver.find_element(By.ID, 'search-toggle')
         return element.click()
 
     ## POM for inputting deposit ID in search form on manage deposits page

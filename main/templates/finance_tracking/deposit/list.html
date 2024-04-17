@@ -9,7 +9,7 @@
         <div class="align-items-center">
             <a id="createDepositLink" class='btn btn-primary btn-outline-primary p-1 mb-2 mt-1 ml-1' href="{% url  'create-deposit' %}">Create Deposit</a>
             <a id="createCategoryLink" class='btn btn-primary btn-outline-primary p-1 mb-2 mt-1 ml-1' href="{% url  'create-category' 'deposit' %}">Create Category</a>
-            <select name='selected_category' id='category-select' class='btn btn-primary form-select-lg ml-1 mt-1 mb-2'>
+            <select name='selected_category' id='deposit-category-select' class='btn btn-primary form-select-lg ml-1 mt-1 mb-2'>
                 {% for category in categories %}
                     <option value='{{ category.pk }}'>{{ category.name }}</option>
                 {% endfor %}
@@ -114,7 +114,7 @@
         </div>
     </div>
     <script>
-        document.getElementById('category-select').addEventListener('change', function() {
+        document.getElementById('deposit-category-select').addEventListener('change', function() {
                var selectedCategoryId = this.value;
                var updateUrl = "{% url 'update-category' 999 %}".replace('999', selectedCategoryId);
                var deleteUrl = "{% url 'delete-category' 999 %}".replace('999', selectedCategoryId);
