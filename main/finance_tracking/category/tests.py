@@ -14,11 +14,11 @@ class TestCategoryViews(TestCase):
         self.category1 = Category.objects.create(name='Category 1', group=DEPOSIT, user=self.user)
         self.category2 = Category.objects.create(name='Category 2', group=DEPOSIT, user=self.user)
         self.deposit =  Deposit.objects.create(amount=100, category=self.category2, date=datetime.now(), user=self.user)
-        
+
     ## Tests for create category view
     # Test create category view redirects if user not logged in
     def test_create_category_view_redirect(self):
-        response = self.client.get(reverse('create-category'))
+        response = self.client.get(reverse('create-category', args=['deposit']))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('login'))
         messages = [m.message for m in get_messages(response.wsgi_request)]
@@ -27,7 +27,7 @@ class TestCategoryViews(TestCase):
     # Test create category view returns correct template
     def test_create_category_view_rendering_success(self):
         self.client.force_login(self.user)
-        response = self.client.get(reverse('create-category'))
+        response = self.client.get(reverse('create-category', args=['deposit']))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'finance_tracking/category/create.html')
 
@@ -35,12 +35,12 @@ class TestCategoryViews(TestCase):
     def test_create_category_view_success(self):
         self.client.login(username='test_user', password='password')
         data = {'name': 'Testing 123', 'group': 'deposit'}
-        response = self.client.post(reverse('create-category'), data) 
-        self.assertEqual(response.status_code, 302) 
-        self.assertTrue(Category.objects.filter(name='Testing 123', group='deposit', user=self.user).exists()) 
+        response = self.client.post(reverse('create-category', args=['deposit']), data)
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(Category.objects.filter(name='Testing 123', group='deposit', user=self.user).exists())
         messages = [m.message for m in get_messages(response.wsgi_request)]
         self.assertIn('Category successfully created!', messages)
-        
+
     ## Tests for update category view
     # Test update category view redirects if user not logged in
     def test_update_category_view_redirect(self):
@@ -104,4 +104,3 @@ class TestCategoryViews(TestCase):
         self.assertTrue(Category.objects.filter(name='Category 2', group=DEPOSIT, user=self.user).exists())
         messages = [m.message for m in get_messages(response.wsgi_request)]
         self.assertIn('Category is currently being used and cannot be deleted!', messages)
-        
