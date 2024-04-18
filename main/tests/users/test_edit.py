@@ -3,7 +3,6 @@ from selenium.webdriver.common.by import By
 from django.contrib.auth.models import User
 from django.test import LiveServerTestCase
 from users.models import CustomUser
-import time
 
 # Tests for edit user feature
 class EditUserTests(LiveServerTestCase):
