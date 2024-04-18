@@ -1,7 +1,6 @@
 from selenium.webdriver.edge.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from django.test import LiveServerTestCase
-import time
 
 # Tests for register feature
 class RegisterTests(LiveServerTestCase):

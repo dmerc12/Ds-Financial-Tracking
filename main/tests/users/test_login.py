@@ -18,6 +18,8 @@ class LoginTests(LiveServerTestCase):
 
     def tearDown(self):
         self.driver.close()
+        User.objects.all().delete()
+        CustomUser.objects.all().delete()
 
     ## Test login feature with empty username
     def test_login_feature_empty_username(self):
