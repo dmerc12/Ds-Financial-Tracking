@@ -25,9 +25,11 @@ class Category(models.Model):
     def clean(self):
         if self.name.strip() == '':
             raise ValidationError('Name cannot be empty, please try again!')
+        if len(self.name.strip()) > 60:
+            raise ValidationError('Name cannot exceed 60 characters, please try again!')
         if self.group.strip() == '':
             raise ValidationError('Group cannot be empty, please try again!')
-    
+
     # Overriding save method
     def save(self, *args, **kwargs):
         self.clean()

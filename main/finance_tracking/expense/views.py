@@ -13,7 +13,7 @@ import pandas as pd
 def home(request):
     if request.user.is_authenticated:
         order_by = 'date'
-        categories = Category.objects.filter(user=request.user, group='expense')
+        categories = Category.objects.filter(group='expense', user=request.user)
         form = ExpenseSearchForm()
         expenses = Expense.objects.filter(user=request.user)
         order_by = 'date'

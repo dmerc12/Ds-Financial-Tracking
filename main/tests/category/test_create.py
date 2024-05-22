@@ -38,7 +38,7 @@ class CreateCategoryTests(LiveServerTestCase):
         self.driver.find_element(By.ID, 'trackFinancesButton').click()
         self.driver.find_element(By.ID, 'depositHomeLink').click()
         self.driver.find_element(By.ID, 'createCategoryLink').click()
-        self.driver.find_element(By.NAME, 'name').send_keys('t' * 61)
+        self.driver.find_element(By.NAME, 'name').send_keys('test' * 61)
         self.driver.find_element(By.ID, 'createCategoryButton').click()
         self.assertEqual(self.driver.title, 'Adding Category')
 
@@ -77,7 +77,7 @@ class CreateCategoryTests(LiveServerTestCase):
         self.driver.find_element(By.ID, 'trackFinancesButton').click()
         self.driver.find_element(By.ID, 'expenseHomeLink').click()
         self.driver.find_element(By.ID, 'createCategoryLink').click()
-        self.driver.find_element(By.NAME, 'name').send_keys('t' * 61)
+        self.driver.find_element(By.NAME, 'name').send_keys('test' * 61)
         self.driver.find_element(By.ID, 'createCategoryButton').click()
         self.assertEqual(self.driver.title, 'Adding Category')
 

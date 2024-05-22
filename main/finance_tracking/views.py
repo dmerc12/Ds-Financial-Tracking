@@ -87,8 +87,8 @@ def analyze_finances(request):
             # Default to the most recent month
             end_date = datetime.now().replace(day=1)
             start_date = end_date - timedelta(days=30)
-        expenses = Expense.objects.filter(date__range=[start_date, end_date])
-        deposits = Deposit.objects.filter(date__range=[start_date, end_date])
+        expenses = Expense.objects.filter(user=request.user, date__range=[start_date, end_date])
+        deposits = Deposit.objects.filter(user=request.user, date__range=[start_date, end_date])
         # Calculate totals for expenses and deposits by category
         expense_totals_by_category = expenses.values('category__name').annotate(total=Sum('amount')).order_by('category__name')
         deposit_totals_by_category = deposits.values('category__name').annotate(total=Sum('amount')).order_by('category__name')
