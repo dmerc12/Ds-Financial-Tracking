@@ -1,12 +1,11 @@
-from finance_tracking.models import Category, EXPENSE, DEPOSIT
 from selenium.webdriver.edge.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from django.contrib.auth.models import User
 from django.test import LiveServerTestCase
 from users.models import CustomUser
 
-# Tests for create category feature
-class CreateCategoryTests(LiveServerTestCase):
+# Tests for edit category feature
+class EditCategoryTests(LiveServerTestCase):
 
     def setUp(self):
         ### Setup test data
