@@ -34,7 +34,7 @@ class CreateDepositTests(LiveServerTestCase):
         self.driver.find_element(By.NAME, 'description').send_keys('description')
         self.driver.find_element(By.NAME, 'amount').send_keys(45.62)
         self.driver.find_element(By.ID, 'createDepositButton').click()
-        self.assertEqual(self.driver.title, 'Create Deposit')
+        self.assertEqual(self.driver.title, 'Creating Deposit')
 
     ## Test create deposit feature with empty date
     def test_create_deposit_feature_empty_date(self):
@@ -54,7 +54,7 @@ class CreateDepositTests(LiveServerTestCase):
         self.driver.find_element(By.NAME, 'description').send_keys('description')
         self.driver.find_element(By.NAME, 'amount').send_keys(45.62)
         self.driver.find_element(By.ID, 'createDepositButton').click()
-        self.assertEqual(self.driver.title, 'Create Deposit')
+        self.assertEqual(self.driver.title, 'Creating Deposit')
 
     ## Test create deposit feature with description empty
     def test_create_deposit_feature_empty_description(self):
@@ -74,7 +74,7 @@ class CreateDepositTests(LiveServerTestCase):
         self.driver.find_element(By.NAME, 'date').send_keys(datetime.now().strftime('%m-%d-%Y'))
         self.driver.find_element(By.NAME, 'amount').send_keys(45.62)
         self.driver.find_element(By.ID, 'createDepositButton').click()
-        self.assertEqual(self.driver.title, 'Create Deposit')
+        self.assertEqual(self.driver.title, 'Creating Deposit')
 
     ## Test create deposit feature with empty amount
     def test_create_deposit_feature_empty_amount(self):
@@ -94,7 +94,7 @@ class CreateDepositTests(LiveServerTestCase):
         self.driver.find_element(By.NAME, 'date').send_keys(datetime.now().strftime('%m-%d-%Y'))
         self.driver.find_element(By.NAME, 'description').send_keys('description')
         self.driver.find_element(By.ID, 'createDepositButton').click()
-        self.assertEqual(self.driver.title, 'Create Deposit')
+        self.assertEqual(self.driver.title, 'Creating Deposit')
 
     ## Test create deposit feature with negative amount
     def test_create_deposit_feature_negative_amount(self):
@@ -115,7 +115,7 @@ class CreateDepositTests(LiveServerTestCase):
         self.driver.find_element(By.NAME, 'description').send_keys('description')
         self.driver.find_element(By.NAME, 'amount').send_keys(-45.62)
         self.driver.find_element(By.ID, 'createDepositButton').click()
-        self.assertEqual(self.driver.title, 'Create Deposit')
+        self.assertEqual(self.driver.title, 'Creating Deposit')
 
     ## Test create deposit feature success
     def test_create_deposit_feature_success(self):
