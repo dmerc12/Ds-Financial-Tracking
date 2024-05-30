@@ -76,7 +76,7 @@
                     <tbody>
                         {% for expense in expenses %}
                             <tr>
-                                <td><a href="{% url 'expense-detail' expense.pk %}" class="expense-link expense-table">{{ expense.pk }}</a></td>
+                                <td><a id="expense-{{ expense.pk }}"  href="{% url 'expense-detail' expense.pk %}" class="expense-link expense-table">{{ expense.pk }}</a></td>
                                 <td><a href="{% url 'expense-detail' expense.pk %}" class="expense-link expense-table">{{ expense.date }}</a></td>
                                 <td><a href="{% url 'expense-detail' expense.pk %}" class="expense-link expense-table">{{ expense.category }}</a></td>
                                 <td><a href="{% url 'expense-detail' expense.pk %}" class="expense-link expense-table">{{ expense.description }}</a></td>
