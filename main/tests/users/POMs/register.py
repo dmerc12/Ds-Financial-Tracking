@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 
 # POM for register feature
-def register(self, title, username='', first_name='', last_name='', email='', phone_number='', password1='', password2=''):
+def register(self, title, username, first_name, last_name, email, phone_number, password1, password2):
     self.driver.get(self.live_server_url)
     self.driver.find_element(By.ID, 'registerLink').click()
     self.driver.find_element(By.NAME, 'username').send_keys(username)
