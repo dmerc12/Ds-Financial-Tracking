@@ -1,11 +1,13 @@
 from selenium.webdriver.edge.webdriver import WebDriver
+from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.by import By
 from django.contrib.auth.models import User
 from django.test import LiveServerTestCase
 from users.models import CustomUser
+from datetime import datetime
 
-# Tests for delete category feature
-class DeleteCategoryTests(LiveServerTestCase):
+# Tests for delete deposit feature
+class DeleteDepositTests(LiveServerTestCase):
 
     def setUp(self):
         ### Setup test data
@@ -16,8 +18,8 @@ class DeleteCategoryTests(LiveServerTestCase):
         ### Setup webdriver
         self.driver = WebDriver()
 
-    ## Test delete deposit category feature with success
-    def test_delete_deposit_category_feature_success(self):
+    ## Test delete deposit feature success
+    def test_delete_deposit_feature_success(self):
         self.driver.get(self.live_server_url)
         self.driver.find_element(By.NAME, 'username').send_keys(self.user.username)
         self.driver.find_element(By.NAME, 'password').send_keys(self.password)
@@ -27,21 +29,15 @@ class DeleteCategoryTests(LiveServerTestCase):
         self.driver.find_element(By.ID, 'createCategoryLink').click()
         self.driver.find_element(By.NAME, 'name').send_keys('test')
         self.driver.find_element(By.ID, 'createCategoryButton').click()
-        self.driver.find_element(By.ID, 'category-delete-btn').click()
-        self.driver.find_element(By.ID, 'deleteCategoryButton').click()
+        self.driver.find_element(By.ID, 'createDepositLink').click()
+        category_dropdown = self.driver.find_element(By.NAME, 'category')
+        category_select = Select(category_dropdown)
+        category_select.select_by_index(1)
+        self.driver.find_element(By.NAME, 'date').send_keys(datetime.now().strftime('%m-%d-%Y'))
+        self.driver.find_element(By.NAME, 'description').send_keys('description')
+        self.driver.find_element(By.NAME, 'amount').send_keys(45.62)
+        self.driver.find_element(By.ID, 'createDepositButton').click()
+        self.driver.find_element(By.ID, 'deposit-2').click()
+        self.driver.find_element(By.ID, 'deleteDepositLink').click()
+        self.driver.find_element(By.ID, 'deleteDepositButton').click()
         self.assertEqual(self.driver.title, 'Managing Deposits')
-
-    ## Test delete expense category feature with success
-    def test_delete_expense_category_feature_success(self):
-        self.driver.get(self.live_server_url)
-        self.driver.find_element(By.NAME, 'username').send_keys(self.user.username)
-        self.driver.find_element(By.NAME, 'password').send_keys(self.password)
-        self.driver.find_element(By.ID, 'loginButton').click()
-        self.driver.find_element(By.ID, 'trackFinancesButton').click()
-        self.driver.find_element(By.ID, 'expenseHomeLink').click()
-        self.driver.find_element(By.ID, 'createCategoryLink').click()
-        self.driver.find_element(By.NAME, 'name').send_keys('test')
-        self.driver.find_element(By.ID, 'createCategoryButton').click()
-        self.driver.find_element(By.ID, 'category-delete-btn').click()
-        self.driver.find_element(By.ID, 'deleteCategoryButton').click()
-        self.assertEqual(self.driver.title, 'Managing Expenses')

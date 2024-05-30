@@ -12,7 +12,7 @@ import pandas as pd
 # Deposit home view
 def home(request):
     if request.user.is_authenticated:
-        categories = Category.objects.filter(group='deposit')
+        categories = Category.objects.filter(group='deposit', user=request.user)
         form = DepositSearchForm()
         deposits = Deposit.objects.filter(user=request.user)
         order_by = 'date'

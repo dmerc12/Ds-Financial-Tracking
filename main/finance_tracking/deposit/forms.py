@@ -10,10 +10,10 @@ class DepositForm(forms.ModelForm):
         widgets = {
             'category': forms.Select(),
             'date': forms.TextInput(attrs={'type': 'date'}),
-            'description': forms.Textarea(attrs={'rows': 3}),
+            'description': forms.TextInput(),
             'amount': forms.NumberInput(attrs={'step': '0.01'})
         }
 
-# Deposit search form    
+# Deposit search form
 class DepositSearchForm(SearchForm):
     deposit_id = forms.IntegerField(required=False)
