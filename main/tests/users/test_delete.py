@@ -1,5 +1,5 @@
 from selenium.webdriver.edge.webdriver import WebDriver
-from selenium.webdriver.common.by import By
+from tests.users.POMs.delete import delete_user
 from django.contrib.auth.models import User
 from django.test import LiveServerTestCase
 from users.models import CustomUser
@@ -18,11 +18,4 @@ class DeleteUserTests(LiveServerTestCase):
 
     ## Test delete user feature success
     def test_delete_user_feature_success(self):
-        self.driver.get(self.live_server_url)
-        self.driver.find_element(By.NAME, 'username').send_keys(self.user.username)
-        self.driver.find_element(By.NAME, 'password').send_keys(self.password)
-        self.driver.find_element(By.ID, 'loginButton').click()
-        self.driver.find_element(By.ID, 'manageInfoButton').click()
-        self.driver.find_element(By.ID, 'deleteUserLink').click()
-        self.driver.find_element(By.ID, 'deleteUserButton').click()
-        self.assertEqual(self.driver.title, 'Log In')
+        delete_user(self, 'Log In', self.user.username, self.password)
