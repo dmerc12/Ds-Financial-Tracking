@@ -5,6 +5,7 @@ back-end/Logs/*
 .idea
 .vscode
 venv
+.venv
 **/*.sqlite3
 **/*/migrations/*
 .coverage
