@@ -2,7 +2,7 @@ from selenium.webdriver.common.by import By
 from tests.users.POMs.login import login
 
 # POM for edit user feature
-def edit_user(self, title, username='', password='', new_username='', new_first_name='', new_last_name='', new_email='', new_phone_number=''):
+def edit_user(self, title, username, password, new_username, new_first_name, new_last_name, new_email, new_phone_number):
     login(self, 'Home', username, password)
     self.driver.find_element(By.ID, 'manageInfoButton').click()
     username = self.driver.find_element(By.NAME, 'username')

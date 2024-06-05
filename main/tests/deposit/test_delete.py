@@ -1,6 +1,5 @@
 from selenium.webdriver.edge.webdriver import WebDriver
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.common.by import By
+from tests.deposit.POMs.delete import delete_deposit
 from django.contrib.auth.models import User
 from django.test import LiveServerTestCase
 from users.models import CustomUser
@@ -20,24 +19,4 @@ class DeleteDepositTests(LiveServerTestCase):
 
     ## Test delete deposit feature success
     def test_delete_deposit_feature_success(self):
-        self.driver.get(self.live_server_url)
-        self.driver.find_element(By.NAME, 'username').send_keys(self.user.username)
-        self.driver.find_element(By.NAME, 'password').send_keys(self.password)
-        self.driver.find_element(By.ID, 'loginButton').click()
-        self.driver.find_element(By.ID, 'trackFinancesButton').click()
-        self.driver.find_element(By.ID, 'depositHomeLink').click()
-        self.driver.find_element(By.ID, 'createCategoryLink').click()
-        self.driver.find_element(By.NAME, 'name').send_keys('test')
-        self.driver.find_element(By.ID, 'createCategoryButton').click()
-        self.driver.find_element(By.ID, 'createDepositLink').click()
-        category_dropdown = self.driver.find_element(By.NAME, 'category')
-        category_select = Select(category_dropdown)
-        category_select.select_by_index(1)
-        self.driver.find_element(By.NAME, 'date').send_keys(datetime.now().strftime('%m-%d-%Y'))
-        self.driver.find_element(By.NAME, 'description').send_keys('description')
-        self.driver.find_element(By.NAME, 'amount').send_keys(45.62)
-        self.driver.find_element(By.ID, 'createDepositButton').click()
-        self.driver.find_element(By.ID, 'deposit-2').click()
-        self.driver.find_element(By.ID, 'deleteDepositLink').click()
-        self.driver.find_element(By.ID, 'deleteDepositButton').click()
-        self.assertEqual(self.driver.title, 'Managing Deposits')
+        delete_deposit(self, 'Managing Deposits', self.user.username, self.password, 'category name', 1, datetime.now().strftime('%m-%d-%Y'), 'description', 45.62, 2)

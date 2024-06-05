@@ -1,5 +1,5 @@
+from tests.category.POMs.delete import delete_deposit_category, delete_expense_category
 from selenium.webdriver.edge.webdriver import WebDriver
-from selenium.webdriver.common.by import By
 from django.contrib.auth.models import User
 from django.test import LiveServerTestCase
 from users.models import CustomUser
@@ -18,30 +18,8 @@ class DeleteCategoryTests(LiveServerTestCase):
 
     ## Test delete deposit category feature with success
     def test_delete_deposit_category_feature_success(self):
-        self.driver.get(self.live_server_url)
-        self.driver.find_element(By.NAME, 'username').send_keys(self.user.username)
-        self.driver.find_element(By.NAME, 'password').send_keys(self.password)
-        self.driver.find_element(By.ID, 'loginButton').click()
-        self.driver.find_element(By.ID, 'trackFinancesButton').click()
-        self.driver.find_element(By.ID, 'depositHomeLink').click()
-        self.driver.find_element(By.ID, 'createCategoryLink').click()
-        self.driver.find_element(By.NAME, 'name').send_keys('test')
-        self.driver.find_element(By.ID, 'createCategoryButton').click()
-        self.driver.find_element(By.ID, 'category-delete-btn').click()
-        self.driver.find_element(By.ID, 'deleteCategoryButton').click()
-        self.assertEqual(self.driver.title, 'Managing Deposits')
+        delete_deposit_category(self, 'Managing Deposits', self.user.username, self.password, 'test')
 
     ## Test delete expense category feature with success
     def test_delete_expense_category_feature_success(self):
-        self.driver.get(self.live_server_url)
-        self.driver.find_element(By.NAME, 'username').send_keys(self.user.username)
-        self.driver.find_element(By.NAME, 'password').send_keys(self.password)
-        self.driver.find_element(By.ID, 'loginButton').click()
-        self.driver.find_element(By.ID, 'trackFinancesButton').click()
-        self.driver.find_element(By.ID, 'expenseHomeLink').click()
-        self.driver.find_element(By.ID, 'createCategoryLink').click()
-        self.driver.find_element(By.NAME, 'name').send_keys('test')
-        self.driver.find_element(By.ID, 'createCategoryButton').click()
-        self.driver.find_element(By.ID, 'category-delete-btn').click()
-        self.driver.find_element(By.ID, 'deleteCategoryButton').click()
-        self.assertEqual(self.driver.title, 'Managing Expenses')
+        delete_expense_category(self, 'Managing Expenses', self.user.username, self.password, 'test')

@@ -2,7 +2,7 @@ from selenium.webdriver.common.by import By
 from tests.users.POMs.login import login
 
 # POM for change password feature
-def change_password(self, title, username='', password='', new_password1='', new_password2=''):
+def change_password(self, title, username, password, new_password1, new_password2):
     login(self, 'Home', username, password)
     self.driver.find_element(By.ID, 'manageInfoButton').click()
     self.driver.find_element(By.ID, 'changePasswordLink').click()

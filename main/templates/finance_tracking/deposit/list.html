@@ -34,26 +34,32 @@
             </div>
             <form class="mb-3" id="search-form" method="POST" action="{% url 'deposit-home' %}" style="display: none;">
                 {% csrf_token %}
-                <div class='row justify-content-center'>
+                <div class="d-flex justify-content-center mb-3">
                     <h3 class="text-center">Search By Deposit ID or Date</h3>
-                    <h4 class="text-center">Search By Deposit ID</h4>
+                </div>
+                <div class="d-flex justify-content-center mb-3">
                     <div class='col-md-4'>
                         <div class='text-center'>
                             {{ form.deposit_id|as_crispy_field }}
                         </div>
                     </div>
-                    <h4 class="text-center">Search By Date</h4>
+                </div>
+                <div class="d-flex justify-content-center mb-3">
                     <div class='col-md-4'>
                         <div class='text-center'>
                             {{ form.start_date|as_crispy_field }}
                         </div>
                     </div>
+                </div>
+                <div class="d-flex justify-content-center mb-3">
                     <div class='col-md-4'>
                         <div class='text-center'>
                             {{ form.end_date|as_crispy_field }}
                         </div>
                     </div>
-                    <div class='col-md-1 mt-3'>
+                </div>
+                <div class="d-flex justify-content-center mb-3">
+                    <div class='col-md-1'>
                         <button id="searchButton" class='btn btn-primary' type="submit">Search</button>
                     </div>
                 </div>
@@ -121,5 +127,18 @@
                document.getElementById('category-update-btn').href = updateUrl;
                document.getElementById('category-delete-btn').href = deleteUrl;
            });
+
+           document.addEventListener("DOMContentLoaded", function() {
+            var searchToggle = document.getElementById("search-toggle");
+            var searchForm = document.getElementById("search-form");
+
+            searchToggle.addEventListener("click", function() {
+                if (searchForm.style.display === "none") {
+                    searchForm.style.display = "block";
+                } else {
+                    searchForm.style.display = "none";
+                }
+            });
+        });
     </script>
 {% endblock content %}
