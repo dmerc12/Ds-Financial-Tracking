@@ -5,8 +5,8 @@ echo "Please provide the database information:"
 read -p "Database Host: " dbhost
 read -p "Database Port: " dbport
 read -p "Database Name: " dbname
-read -p "Username: " dbuser
-read -s -p "Password: " dbpass
+read -p "Database Username: " dbuser
+read -s -p "Database Password: " dbpass
 echo
 
 # construct the PostgreSQL connection URL
@@ -22,7 +22,9 @@ echo
 
 # install dependencies
 echo "Installing dependencies... Please wait..."
-pip install django django-crispy-forms crispy-bootstrap5 plotly pandas selenium behave
+python -m venv .venv
+source .venv/bin/activate
+pip install django django-crispy-forms crispy-bootstrap5 plotly pandas selenium
 python3 manage.py makemigrations
 python3 manage.py migrate
 cd ./version2/
@@ -44,8 +46,9 @@ sed -i "s/DATABASES = {/DATABASES = {\
 echo "Creating admin user... Please Wait..."
 python3 manage.py createsuperuser --username $adminuser --email $adminemail --noinput
 
-# run unit tests
-echo "Running unit tests... Please Wait..."
+# run automated tests
+echo "Running automated tests... Please Wait... This may take a while, you will be notified when they are complete..."
+python3 manage.py test
 
-# run end to end tests
-echo "Running end to end tests... Please Wait..."
+# notify user of completion
+echo "Install complete. Please use the start and stop scripts to start and stop the application"
