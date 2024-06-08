@@ -4,7 +4,7 @@ from django.test import LiveServerTestCase
 from tests.other.POMs import navigation
 from users.models import CustomUser
 
-# Tests for create expense feature
+# Tests for navigation feature
 class NavigationTests(LiveServerTestCase):
 
     def setUp(self):
@@ -56,33 +56,33 @@ class NavigationTests(LiveServerTestCase):
         navigation.navigate_manage_deposits(self, 'Managing Deposits', self.user.username, self.password)
 
     def test_navigate_deposit_detail(self):
-        ID = 13
+        ID = 16
         navigation.navigate_deposit_detail(self, f'Deposit - {ID}', self.user.username, self.password, ID)
 
     def test_navigate_create_deposit(self):
         navigation.navigate_create_deposit(self, 'Creating Deposit', self.user.username, self.password)
 
     def test_navigate_update_deposit(self):
-        navigation.navigate_update_deposit(self, 'Updating Deposit', self.user.username, self.password, 14)
+        navigation.navigate_update_deposit(self, 'Updating Deposit', self.user.username, self.password, 17)
 
     def test_navigate_delete_deposit(self):
-        navigation.navigate_delete_deposit(self, 'Deleting Deposit', self.user.username, self.password, 12)
+        navigation.navigate_delete_deposit(self, 'Deleting Deposit', self.user.username, self.password, 15)
 
     def test_navigate_manage_expenses(self):
         navigation.navigate_manage_expenses(self, 'Managing Expenses', self.user.username, self.password)
 
     def test_navigate_expense_detail(self):
-        ID = 13
+        ID = 16
         navigation.navigate_expense_detail(self, f'Expense - {ID}', self.user.username, self.password, ID)
 
     def test_navigate_create_expense(self):
         navigation.navigate_create_expense(self, 'Creating Expense', self.user.username, self.password)
 
     def test_navigate_update_expense(self):
-        navigation.navigate_update_expense(self, 'Updating Expense', self.user.username, self.password, 14)
+        navigation.navigate_update_expense(self, 'Updating Expense', self.user.username, self.password, 17)
 
     def test_navigate_delete_expense(self):
-        navigation.navigate_delete_expense(self, 'Deleting Expense', self.user.username, self.password, 12)
+        navigation.navigate_delete_expense(self, 'Deleting Expense', self.user.username, self.password, 15)
 
     def test_navigate_view_finances(self):
         navigation.navigate_view_finances(self, 'Viewing Finances', self.user.username, self.password)

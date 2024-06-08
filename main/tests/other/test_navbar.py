@@ -4,7 +4,7 @@ from django.test import LiveServerTestCase
 from tests.other.POMs import navbar
 from users.models import CustomUser
 
-# Tests for create expense feature
+# Tests for navbar navigation feature
 class NavbarTests(LiveServerTestCase):
 
     def setUp(self):
